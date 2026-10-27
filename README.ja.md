@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
+<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -208,6 +208,7 @@ iOS 27.0 の iPhone 17 シミュレーター上の 4 つの fixture で、いず
 - **ビルド設定は project.pbxproj のみです。** `.xcconfig` ファイルは読み取りません。ターゲットの Info.plist を読み取れない場合、そのオプトアウトの状態は「不明」となり、レポートに理由が表示されます。
 - **Expo の設定はテキストとして扱います。** `app.config.js` と `app.config.ts` は実行しないため、変数や config plugin 経由で設定されたオプトアウトは検出されません。
 - **ファイルのみです。** glassready はアプリをビルドせず、画面も見ません。このリポジトリにあるシミュレーターの録画は、Mac で実行した `scripts/` のスクリプトによるものです。
+- **入力には上限があります。** プロジェクトは pull request から来ることもあるため、glassready が読み取るのはプロジェクトファイル 1 つあたり最大 32 MB、ソースはファイルあたり最大 4 MB・最大 20,000 ファイル・合計 128 MB までです。読み取らなかったものはレポートの注記に一覧表示されます。バイナリ plist が生成できる値は最大 100,000 個、plist の入れ子は最大 64 階層です。
 
 ## ドキュメント
 

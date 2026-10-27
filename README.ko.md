@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
+<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -217,6 +217,7 @@ iOS 27.0 iPhone 17 시뮬레이터에서 Xcode 27.1로 빌드한 fixture 네 개
 - **빌드 설정은 project.pbxproj에서만 읽습니다.** `.xcconfig` 파일은 읽지 않습니다. 타깃의 Info.plist를 읽을 수 없으면 옵트아웃 상태는 "알 수 없음"이 되며, 리포트가 그 이유를 알려 줍니다.
 - **Expo 설정은 텍스트로 읽습니다.** `app.config.js`와 `app.config.ts`는 실행하지 않으므로, 변수나 config plugin을 통해 설정한 옵트아웃은 찾지 못합니다.
 - **파일만 봅니다.** glassready는 앱을 빌드하거나 앱 화면을 보지 않습니다. 이 저장소의 시뮬레이터 녹화는 Mac에서 실행한 `scripts/`의 스크립트로 만든 것입니다.
+- **입력에는 한도가 있습니다.** 프로젝트는 pull request에서 올 수도 있으므로, glassready는 프로젝트 파일당 최대 32 MB, 소스는 파일당 4 MB, 최대 20,000개 파일, 합계 128 MB까지만 읽습니다. 읽지 않은 것은 리포트의 참고 사항에 나열됩니다. 바이너리 plist가 만들 수 있는 값은 최대 100,000개이고, plist는 최대 64단계까지 중첩될 수 있습니다.
 
 ## 문서
 

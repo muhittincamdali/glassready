@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
+<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -269,6 +269,10 @@ toolbar arka planlı SwiftUI uygulaması ve Flutter'ın çizdiği düz tab bar'l
   bir değişken veya config plugin ile ayarlanan opt-out görülmez.
 - **Yalnızca dosyalar.** glassready uygulamayı derlemez ve ekranlarına bakmaz. Bu depodaki simülatör
   kayıtları, bir Mac'te çalıştırılan `scripts/` altındaki betiklerden gelir.
+- **Sınırlı girdi.** Bir proje bir pull request'ten gelebilir; bu yüzden glassready proje dosyası
+  başına en fazla 32 MB, kaynaklardan da dosya başına 4 MB, 20.000 dosya ve toplam 128 MB okur;
+  dışarıda kalanlar raporun notlarında listelenir. Bir binary plist en fazla 100.000 değer
+  üretebilir ve bir plist en fazla 64 seviye iç içe olabilir.
 
 ## Dokümantasyon
 

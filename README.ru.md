@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
+<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -266,6 +266,10 @@ SwiftUI-приложение с зелёным фоном toolbar и Flutter-п�
   заданный через переменную или config plugin, не виден.
 - **Только файлы.** glassready не собирает приложение и не смотрит на его экраны. Записи симулятора в
   этом репозитории получены скриптами из `scripts/`, запущенными на Mac.
+- **Ограниченный ввод.** Проект может прийти из pull request, поэтому glassready читает не более
+  32 МБ на файл проекта, а из исходников — не более 4 МБ на файл, 20 000 файлов и 128 МБ
+  всего; то, что не прочитано, перечислено в заметках отчёта. Бинарный plist может дать не более
+  100 000 значений, а plist может быть вложен не глубже 64 уровней.
 
 ## Документация
 

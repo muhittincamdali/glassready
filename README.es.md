@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
+<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -269,6 +269,10 @@ tardó 0,17 segundos.
   ve un opt-out definido mediante una variable o un config plugin.
 - **Solo archivos.** glassready no compila la app ni mira sus pantallas. Las grabaciones del simulador de
   este repositorio proceden de los scripts de `scripts/`, ejecutados en un Mac.
+- **Entrada acotada.** Un proyecto puede venir de un pull request, así que glassready lee como
+  máximo 32 MB por archivo del proyecto y, de las fuentes, 4 MB por archivo, 20.000 archivos y
+  128 MB en total; lo que queda fuera aparece en las notas del informe. Un plist binario puede
+  producir como máximo 100.000 valores, y un plist puede anidarse 64 niveles.
 
 ## Documentación
 

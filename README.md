@@ -262,6 +262,10 @@ medians of the three sets were 0.12, 0.12 and 0.11 seconds; the slowest run took
   through a variable or a config plugin is not seen.
 - **Files only.** glassready does not build the app or look at its screens. The simulator
   recordings in this repository come from the scripts in `scripts/`, run on a Mac.
+- **Bounded input.** A project can come from a pull request, so glassready reads at most 32 MB
+  per project file and, of the sources, 4 MB per file, 20,000 files and 128 MB in total; what it
+  leaves out is listed in the report's notes. A binary plist may produce at most 100,000 values,
+  and a plist may nest 64 levels.
 
 ## Documentation
 
