@@ -13,6 +13,9 @@ All notable changes to glassready are listed here. The format follows
   Homebrew or from the GitHub release tarball and then run `glassready`. They used
   `npx @mcamdali/glassready`, which fails while the package is not on the npm registry; publishing
   there is planned. The GitHub Actions example runs the release tarball through npx.
+- The terminal recordings in the README and the guides type `glassready fixtures/<name>`, the
+  command Homebrew and the release tarball install. They showed `npx @mcamdali/glassready`, which
+  was not the command recorded and fails while the package is not on npm.
 
 ### Fixed
 

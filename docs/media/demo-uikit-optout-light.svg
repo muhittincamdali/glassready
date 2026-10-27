@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="839" height="1803" viewBox="0 0 839 1803" role="img" aria-label="npx @mcamdali/glassready fixtures/native-uikit-optout: terminal output">
+<svg xmlns="http://www.w3.org/2000/svg" width="839" height="1803" viewBox="0 0 839 1803" role="img" aria-label="glassready fixtures/native-uikit-optout: terminal output">
 <title>glassready · UIKit app that opts out of Liquid Glass</title>
 <style>
 text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;white-space:pre}
@@ -15,95 +15,95 @@ text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",mo
 <circle cx="20" cy="17" r="6" fill="#0071E3"/><circle cx="40" cy="17" r="6" fill="#5AC8FA"/><circle cx="60" cy="17" r="6" fill="#D0E2F7"/>
 <text x="419.5" y="22" text-anchor="middle" fill="#5A6B80" style="font-size:12px">glassready · UIKit app that opts out of Liquid Glass</text>
 <text x="20" y="67" fill="#5A6B80"># fixtures/native-uikit-optout: UIDesignRequiresCompatibility and opaque bars</text>
-<text x="20" y="86"><tspan fill="#0071E3" font-weight="700">$ </tspan><tspan fill="#0B1F33"><tspan class="t" style="animation-delay:0.40s">n</tspan><tspan class="t" style="animation-delay:0.45s">p</tspan><tspan class="t" style="animation-delay:0.49s">x</tspan><tspan class="t" style="animation-delay:0.54s"> </tspan><tspan class="t" style="animation-delay:0.58s">@</tspan><tspan class="t" style="animation-delay:0.63s">m</tspan><tspan class="t" style="animation-delay:0.67s">c</tspan><tspan class="t" style="animation-delay:0.72s">a</tspan><tspan class="t" style="animation-delay:0.76s">m</tspan><tspan class="t" style="animation-delay:0.80s">d</tspan><tspan class="t" style="animation-delay:0.85s">a</tspan><tspan class="t" style="animation-delay:0.90s">l</tspan><tspan class="t" style="animation-delay:0.94s">i</tspan><tspan class="t" style="animation-delay:0.98s">/</tspan><tspan class="t" style="animation-delay:1.03s">g</tspan><tspan class="t" style="animation-delay:1.07s">l</tspan><tspan class="t" style="animation-delay:1.12s">a</tspan><tspan class="t" style="animation-delay:1.17s">s</tspan><tspan class="t" style="animation-delay:1.21s">s</tspan><tspan class="t" style="animation-delay:1.25s">r</tspan><tspan class="t" style="animation-delay:1.30s">e</tspan><tspan class="t" style="animation-delay:1.34s">a</tspan><tspan class="t" style="animation-delay:1.39s">d</tspan><tspan class="t" style="animation-delay:1.44s">y</tspan><tspan class="t" style="animation-delay:1.48s"> </tspan><tspan class="t" style="animation-delay:1.52s">f</tspan><tspan class="t" style="animation-delay:1.57s">i</tspan><tspan class="t" style="animation-delay:1.61s">x</tspan><tspan class="t" style="animation-delay:1.66s">t</tspan><tspan class="t" style="animation-delay:1.71s">u</tspan><tspan class="t" style="animation-delay:1.75s">r</tspan><tspan class="t" style="animation-delay:1.79s">e</tspan><tspan class="t" style="animation-delay:1.84s">s</tspan><tspan class="t" style="animation-delay:1.88s">/</tspan><tspan class="t" style="animation-delay:1.93s">n</tspan><tspan class="t" style="animation-delay:1.98s">a</tspan><tspan class="t" style="animation-delay:2.02s">t</tspan><tspan class="t" style="animation-delay:2.06s">i</tspan><tspan class="t" style="animation-delay:2.11s">v</tspan><tspan class="t" style="animation-delay:2.15s">e</tspan><tspan class="t" style="animation-delay:2.20s">-</tspan><tspan class="t" style="animation-delay:2.25s">u</tspan><tspan class="t" style="animation-delay:2.29s">i</tspan><tspan class="t" style="animation-delay:2.33s">k</tspan><tspan class="t" style="animation-delay:2.38s">i</tspan><tspan class="t" style="animation-delay:2.42s">t</tspan><tspan class="t" style="animation-delay:2.47s">-</tspan><tspan class="t" style="animation-delay:2.51s">o</tspan><tspan class="t" style="animation-delay:2.56s">p</tspan><tspan class="t" style="animation-delay:2.60s">t</tspan><tspan class="t" style="animation-delay:2.65s">o</tspan><tspan class="t" style="animation-delay:2.69s">u</tspan><tspan class="t" style="animation-delay:2.74s">t</tspan></tspan></text>
-<text class="t" x="20" y="105" style="animation-delay:3.28s"><tspan fill="#5A6B80">glassready 0.1.0 · rules liquid-glass@2026.10.27</tspan></text>
-<text class="t" x="20" y="124" style="animation-delay:3.32s"></text>
-<text class="t" x="20" y="143" style="animation-delay:3.35s"><tspan fill="#00285C" font-weight="700">Harbor</tspan><tspan fill="#0B1F33"> · native iOS · fixtures/native-uikit-optout</tspan></text>
-<text class="t" x="20" y="162" style="animation-delay:3.39s"><tspan fill="#5A6B80">project settings last updated by Xcode 14.3 · deployment target iOS 17.0</tspan></text>
-<text class="t" x="20" y="181" style="animation-delay:3.42s"><tspan fill="#5A6B80">target Harbor: opts out of Liquid Glass (Harbor/Info.plist)</tspan></text>
-<text class="t" x="20" y="200" style="animation-delay:3.46s"></text>
-<text class="t" x="20" y="219" style="animation-delay:3.49s"><tspan fill="#00285C" font-weight="700">The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 4 custom styles to review first</tspan></text>
-<text class="t" x="20" y="238" style="animation-delay:3.53s"><tspan fill="#5A6B80">Impact: high (78 of 100)</tspan></text>
-<text class="t" x="20" y="257" style="animation-delay:3.56s"></text>
-<text class="t" x="20" y="276" style="animation-delay:3.60s"><tspan fill="#00285C" font-weight="700">ERROR    </tspan><tspan fill="#00285C" font-weight="700">GLS001 Liquid Glass opt-out that the iOS 27 SDK ignores</tspan></text>
-<text class="t" x="20" y="295" style="animation-delay:3.63s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/Info.plist:42</tspan></text>
-<text class="t" x="20" y="314" style="animation-delay:3.67s"><tspan fill="#0B1F33">         Harbor: UIDesignRequiresCompatibility is YES in the Info.plist.</tspan></text>
-<text class="t" x="20" y="333" style="animation-delay:3.70s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [A] Remove the opt-out and review the screens with Liquid Glass</tspan></text>
-<text class="t" x="20" y="352" style="animation-delay:3.74s"></text>
-<text class="t" x="20" y="371" style="animation-delay:3.77s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS002 Bar appearance with its own background</tspan></text>
-<text class="t" x="20" y="390" style="animation-delay:3.81s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:28</tspan></text>
-<text class="t" x="20" y="409" style="animation-delay:3.84s"><tspan fill="#0B1F33">         UINavigationBarAppearance navigation: configureWithOpaqueBackground(), backgroundColor,</tspan></text>
-<text class="t" x="20" y="428" style="animation-delay:3.88s"><tspan fill="#0B1F33">         shadowColor.</tspan></text>
-<text class="t" x="20" y="447" style="animation-delay:3.92s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [B] Let the system draw the bar background</tspan></text>
-<text class="t" x="20" y="466" style="animation-delay:3.95s"></text>
-<text class="t" x="20" y="485" style="animation-delay:3.98s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS002 Bar appearance with its own background</tspan></text>
-<text class="t" x="20" y="504" style="animation-delay:4.02s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:38</tspan></text>
-<text class="t" x="20" y="523" style="animation-delay:4.05s"><tspan fill="#0B1F33">         UITabBarAppearance tabs: configureWithOpaqueBackground(), backgroundColor.</tspan></text>
-<text class="t" x="20" y="542" style="animation-delay:4.09s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [B] Let the system draw the bar background</tspan></text>
-<text class="t" x="20" y="561" style="animation-delay:4.13s"></text>
-<text class="t" x="20" y="580" style="animation-delay:4.16s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS003 Bar colour or translucency set the old way</tspan></text>
-<text class="t" x="20" y="599" style="animation-delay:4.20s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:42</tspan></text>
-<text class="t" x="20" y="618" style="animation-delay:4.23s"><tspan fill="#0B1F33">         isTranslucent = false makes the bar opaque.</tspan></text>
-<text class="t" x="20" y="637" style="animation-delay:4.26s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Remove the bar colour and let the bar stay translucent</tspan></text>
-<text class="t" x="20" y="656" style="animation-delay:4.30s"></text>
-<text class="t" x="20" y="675" style="animation-delay:4.33s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS003 Bar colour or translucency set the old way</tspan></text>
-<text class="t" x="20" y="694" style="animation-delay:4.37s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:44</tspan></text>
-<text class="t" x="20" y="713" style="animation-delay:4.40s"><tspan fill="#0B1F33">         barTintColor paints the bar background.</tspan></text>
-<text class="t" x="20" y="732" style="animation-delay:4.44s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Remove the bar colour and let the bar stay translucent</tspan></text>
-<text class="t" x="20" y="751" style="animation-delay:4.47s"></text>
-<text class="t" x="20" y="770" style="animation-delay:4.51s"><tspan fill="#0071E3" font-weight="700">INFO     </tspan><tspan fill="#00285C" font-weight="700">GLS006 Blur layer without a Liquid Glass counterpart</tspan></text>
-<text class="t" x="20" y="789" style="animation-delay:4.54s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/PortMapViewController.swift:5</tspan></text>
-<text class="t" x="20" y="808" style="animation-delay:4.58s"><tspan fill="#0B1F33">         A UIBlurEffect view.</tspan></text>
-<text class="t" x="20" y="827" style="animation-delay:4.62s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [D] Decide what the blur is for</tspan></text>
-<text class="t" x="20" y="846" style="animation-delay:4.65s"></text>
-<text class="t" x="20" y="865" style="animation-delay:4.68s"><tspan fill="#0071E3" font-weight="700">INFO     </tspan><tspan fill="#00285C" font-weight="700">GLS008 Fixed bar height or safe-area arithmetic</tspan></text>
-<text class="t" x="20" y="884" style="animation-delay:4.72s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/PortMapViewController.swift:26</tspan></text>
-<text class="t" x="20" y="903" style="animation-delay:4.75s"><tspan fill="#0B1F33">         A number added to the safe-area insets.</tspan></text>
-<text class="t" x="20" y="922" style="animation-delay:4.79s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [E] Lay out against the safe area instead of a number</tspan></text>
-<text class="t" x="20" y="941" style="animation-delay:4.82s"></text>
-<text class="t" x="20" y="960" style="animation-delay:4.86s"><tspan fill="#00285C" font-weight="700">How to fix</tspan></text>
-<text class="t" x="20" y="979" style="animation-delay:4.89s"></text>
-<text class="t" x="20" y="998" style="animation-delay:4.93s"><tspan fill="#00285C" font-weight="700">[A]      </tspan><tspan fill="#00285C" font-weight="700">Remove the opt-out and review the screens with Liquid Glass</tspan></text>
-<text class="t" x="20" y="1017" style="animation-delay:4.96s"><tspan fill="#0B1F33">         1. Delete the UIDesignRequiresCompatibility key from the Info.plist.</tspan></text>
-<text class="t" x="20" y="1036" style="animation-delay:5.00s"><tspan fill="#0B1F33">         2. Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this</tspan></text>
-<text class="t" x="20" y="1055" style="animation-delay:5.04s"><tspan fill="#0B1F33">            report are the places to look at first.</tspan></text>
-<text class="t" x="20" y="1074" style="animation-delay:5.07s"><tspan fill="#0B1F33">         3. Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so</tspan></text>
-<text class="t" x="20" y="1093" style="animation-delay:5.11s"><tspan fill="#0B1F33">            the system can draw the bars.</tspan></text>
-<text class="t" x="20" y="1112" style="animation-delay:5.14s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md</tspan></text>
-<text class="t" x="20" y="1131" style="animation-delay:5.17s"></text>
-<text class="t" x="20" y="1150" style="animation-delay:5.21s"><tspan fill="#00285C" font-weight="700">[B]      </tspan><tspan fill="#00285C" font-weight="700">Let the system draw the bar background</tspan></text>
-<text class="t" x="20" y="1169" style="animation-delay:5.25s"><tspan fill="#0B1F33">         1. Remove configureWithOpaqueBackground() and the backgroundColor, backgroundImage,</tspan></text>
-<text class="t" x="20" y="1188" style="animation-delay:5.28s"><tspan fill="#0B1F33">            backgroundEffect and shadow settings of the appearance, or apply them only before iOS 26</tspan></text>
-<text class="t" x="20" y="1207" style="animation-delay:5.31s"><tspan fill="#0B1F33">            with if #available(iOS 26.0, *).</tspan></text>
-<text class="t" x="20" y="1226" style="animation-delay:5.35s"><tspan fill="#0B1F33">         2. Move the brand colour to tintColor and the title text attributes.</tspan></text>
-<text class="t" x="20" y="1245" style="animation-delay:5.38s"><tspan fill="#0B1F33">         3. Check the bar over scrolling content: the scroll edge effect replaces the hairline and</tspan></text>
-<text class="t" x="20" y="1264" style="animation-delay:5.42s"><tspan fill="#0B1F33">            the opaque background.</tspan></text>
-<text class="t" x="20" y="1283" style="animation-delay:5.46s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
-<text class="t" x="20" y="1302" style="animation-delay:5.49s"></text>
-<text class="t" x="20" y="1321" style="animation-delay:5.53s"><tspan fill="#00285C" font-weight="700">[C]      </tspan><tspan fill="#00285C" font-weight="700">Remove the bar colour and let the bar stay translucent</tspan></text>
-<text class="t" x="20" y="1340" style="animation-delay:5.56s"><tspan fill="#0B1F33">         1. Remove barTintColor, isTranslucent = false and the bar background and shadow images, or</tspan></text>
-<text class="t" x="20" y="1359" style="animation-delay:5.59s"><tspan fill="#0B1F33">            apply them only before iOS 26 with if #available(iOS 26.0, *).</tspan></text>
-<text class="t" x="20" y="1378" style="animation-delay:5.63s"><tspan fill="#0B1F33">         2. Use tintColor for the brand colour of the bar's buttons.</tspan></text>
-<text class="t" x="20" y="1397" style="animation-delay:5.67s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
-<text class="t" x="20" y="1416" style="animation-delay:5.70s"></text>
-<text class="t" x="20" y="1435" style="animation-delay:5.73s"><tspan fill="#00285C" font-weight="700">[D]      </tspan><tspan fill="#00285C" font-weight="700">Decide what the blur is for</tspan></text>
-<text class="t" x="20" y="1454" style="animation-delay:5.77s"><tspan fill="#0B1F33">         1. Behind a popover or sheet's content: remove it and let the presentation draw its</tspan></text>
-<text class="t" x="20" y="1473" style="animation-delay:5.80s"><tspan fill="#0B1F33">            background.</tspan></text>
-<text class="t" x="20" y="1492" style="animation-delay:5.84s"><tspan fill="#0B1F33">         2. Behind a floating control or panel: use UIGlassEffect on iOS 26 and later (if</tspan></text>
-<text class="t" x="20" y="1511" style="animation-delay:5.88s"><tspan fill="#0B1F33">            #available(iOS 26.0, *)) and keep the blur as the fallback.</tspan></text>
-<text class="t" x="20" y="1530" style="animation-delay:5.91s"><tspan fill="#0B1F33">         3. Over content (a photo, a map): keep it.</tspan></text>
-<text class="t" x="20" y="1549" style="animation-delay:5.95s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
-<text class="t" x="20" y="1568" style="animation-delay:5.98s"></text>
-<text class="t" x="20" y="1587" style="animation-delay:6.02s"><tspan fill="#00285C" font-weight="700">[E]      </tspan><tspan fill="#00285C" font-weight="700">Lay out against the safe area instead of a number</tspan></text>
-<text class="t" x="20" y="1606" style="animation-delay:6.05s"><tspan fill="#0B1F33">         1. Constrain to safeAreaLayoutGuide (or the keyboard and bar layout guides) instead of</tspan></text>
-<text class="t" x="20" y="1625" style="animation-delay:6.08s"><tspan fill="#0B1F33">            adding a bar height to the insets.</tspan></text>
-<text class="t" x="20" y="1644" style="animation-delay:6.12s"><tspan fill="#0B1F33">         2. Do not read the tab bar's frame for layout; check the screen with the tab bar minimized</tspan></text>
-<text class="t" x="20" y="1663" style="animation-delay:6.15s"><tspan fill="#0B1F33">            as well.</tspan></text>
-<text class="t" x="20" y="1682" style="animation-delay:6.19s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
-<text class="t" x="20" y="1701" style="animation-delay:6.22s"></text>
-<text class="t" x="20" y="1720" style="animation-delay:6.26s"><tspan fill="#00285C" font-weight="700">1 error, 4 warnings, 2 info</tspan></text>
-<text class="t" x="20" y="1739" style="animation-delay:6.29s"><tspan fill="#0B1F33">Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
-<text class="t" x="20" y="1758" style="animation-delay:6.33s"><tspan fill="#5A6B80">Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)</tspan></text>
-<text class="t" x="20" y="1777" style="animation-delay:6.57s"><tspan fill="#0071E3" font-weight="700">$ </tspan></text>
-<rect class="caret" x="35.66" y="1765" width="7.83" height="16" fill="#0071E3" style="animation-delay:6.57s"/>
+<text x="20" y="86"><tspan fill="#0071E3" font-weight="700">$ </tspan><tspan fill="#0B1F33"><tspan class="t" style="animation-delay:0.40s">g</tspan><tspan class="t" style="animation-delay:0.45s">l</tspan><tspan class="t" style="animation-delay:0.49s">a</tspan><tspan class="t" style="animation-delay:0.54s">s</tspan><tspan class="t" style="animation-delay:0.58s">s</tspan><tspan class="t" style="animation-delay:0.63s">r</tspan><tspan class="t" style="animation-delay:0.67s">e</tspan><tspan class="t" style="animation-delay:0.72s">a</tspan><tspan class="t" style="animation-delay:0.76s">d</tspan><tspan class="t" style="animation-delay:0.80s">y</tspan><tspan class="t" style="animation-delay:0.85s"> </tspan><tspan class="t" style="animation-delay:0.90s">f</tspan><tspan class="t" style="animation-delay:0.94s">i</tspan><tspan class="t" style="animation-delay:0.98s">x</tspan><tspan class="t" style="animation-delay:1.03s">t</tspan><tspan class="t" style="animation-delay:1.07s">u</tspan><tspan class="t" style="animation-delay:1.12s">r</tspan><tspan class="t" style="animation-delay:1.17s">e</tspan><tspan class="t" style="animation-delay:1.21s">s</tspan><tspan class="t" style="animation-delay:1.25s">/</tspan><tspan class="t" style="animation-delay:1.30s">n</tspan><tspan class="t" style="animation-delay:1.34s">a</tspan><tspan class="t" style="animation-delay:1.39s">t</tspan><tspan class="t" style="animation-delay:1.44s">i</tspan><tspan class="t" style="animation-delay:1.48s">v</tspan><tspan class="t" style="animation-delay:1.52s">e</tspan><tspan class="t" style="animation-delay:1.57s">-</tspan><tspan class="t" style="animation-delay:1.61s">u</tspan><tspan class="t" style="animation-delay:1.66s">i</tspan><tspan class="t" style="animation-delay:1.71s">k</tspan><tspan class="t" style="animation-delay:1.75s">i</tspan><tspan class="t" style="animation-delay:1.79s">t</tspan><tspan class="t" style="animation-delay:1.84s">-</tspan><tspan class="t" style="animation-delay:1.88s">o</tspan><tspan class="t" style="animation-delay:1.93s">p</tspan><tspan class="t" style="animation-delay:1.98s">t</tspan><tspan class="t" style="animation-delay:2.02s">o</tspan><tspan class="t" style="animation-delay:2.06s">u</tspan><tspan class="t" style="animation-delay:2.11s">t</tspan></tspan></text>
+<text class="t" x="20" y="105" style="animation-delay:2.65s"><tspan fill="#5A6B80">glassready 0.1.0 · rules liquid-glass@2026.10.27</tspan></text>
+<text class="t" x="20" y="124" style="animation-delay:2.69s"></text>
+<text class="t" x="20" y="143" style="animation-delay:2.72s"><tspan fill="#00285C" font-weight="700">Harbor</tspan><tspan fill="#0B1F33"> · native iOS · fixtures/native-uikit-optout</tspan></text>
+<text class="t" x="20" y="162" style="animation-delay:2.76s"><tspan fill="#5A6B80">project settings last updated by Xcode 14.3 · deployment target iOS 17.0</tspan></text>
+<text class="t" x="20" y="181" style="animation-delay:2.79s"><tspan fill="#5A6B80">target Harbor: opts out of Liquid Glass (Harbor/Info.plist)</tspan></text>
+<text class="t" x="20" y="200" style="animation-delay:2.83s"></text>
+<text class="t" x="20" y="219" style="animation-delay:2.86s"><tspan fill="#00285C" font-weight="700">The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 4 custom styles to review first</tspan></text>
+<text class="t" x="20" y="238" style="animation-delay:2.90s"><tspan fill="#5A6B80">Impact: high (78 of 100)</tspan></text>
+<text class="t" x="20" y="257" style="animation-delay:2.93s"></text>
+<text class="t" x="20" y="276" style="animation-delay:2.97s"><tspan fill="#00285C" font-weight="700">ERROR    </tspan><tspan fill="#00285C" font-weight="700">GLS001 Liquid Glass opt-out that the iOS 27 SDK ignores</tspan></text>
+<text class="t" x="20" y="295" style="animation-delay:3.00s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/Info.plist:42</tspan></text>
+<text class="t" x="20" y="314" style="animation-delay:3.04s"><tspan fill="#0B1F33">         Harbor: UIDesignRequiresCompatibility is YES in the Info.plist.</tspan></text>
+<text class="t" x="20" y="333" style="animation-delay:3.07s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [A] Remove the opt-out and review the screens with Liquid Glass</tspan></text>
+<text class="t" x="20" y="352" style="animation-delay:3.11s"></text>
+<text class="t" x="20" y="371" style="animation-delay:3.15s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS002 Bar appearance with its own background</tspan></text>
+<text class="t" x="20" y="390" style="animation-delay:3.18s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:28</tspan></text>
+<text class="t" x="20" y="409" style="animation-delay:3.21s"><tspan fill="#0B1F33">         UINavigationBarAppearance navigation: configureWithOpaqueBackground(), backgroundColor,</tspan></text>
+<text class="t" x="20" y="428" style="animation-delay:3.25s"><tspan fill="#0B1F33">         shadowColor.</tspan></text>
+<text class="t" x="20" y="447" style="animation-delay:3.29s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [B] Let the system draw the bar background</tspan></text>
+<text class="t" x="20" y="466" style="animation-delay:3.32s"></text>
+<text class="t" x="20" y="485" style="animation-delay:3.35s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS002 Bar appearance with its own background</tspan></text>
+<text class="t" x="20" y="504" style="animation-delay:3.39s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:38</tspan></text>
+<text class="t" x="20" y="523" style="animation-delay:3.42s"><tspan fill="#0B1F33">         UITabBarAppearance tabs: configureWithOpaqueBackground(), backgroundColor.</tspan></text>
+<text class="t" x="20" y="542" style="animation-delay:3.46s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [B] Let the system draw the bar background</tspan></text>
+<text class="t" x="20" y="561" style="animation-delay:3.50s"></text>
+<text class="t" x="20" y="580" style="animation-delay:3.53s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS003 Bar colour or translucency set the old way</tspan></text>
+<text class="t" x="20" y="599" style="animation-delay:3.56s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:42</tspan></text>
+<text class="t" x="20" y="618" style="animation-delay:3.60s"><tspan fill="#0B1F33">         isTranslucent = false makes the bar opaque.</tspan></text>
+<text class="t" x="20" y="637" style="animation-delay:3.63s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Remove the bar colour and let the bar stay translucent</tspan></text>
+<text class="t" x="20" y="656" style="animation-delay:3.67s"></text>
+<text class="t" x="20" y="675" style="animation-delay:3.71s"><tspan fill="#0058D4" font-weight="700">WARNING  </tspan><tspan fill="#00285C" font-weight="700">GLS003 Bar colour or translucency set the old way</tspan></text>
+<text class="t" x="20" y="694" style="animation-delay:3.74s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/AppDelegate.swift:44</tspan></text>
+<text class="t" x="20" y="713" style="animation-delay:3.77s"><tspan fill="#0B1F33">         barTintColor paints the bar background.</tspan></text>
+<text class="t" x="20" y="732" style="animation-delay:3.81s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [C] Remove the bar colour and let the bar stay translucent</tspan></text>
+<text class="t" x="20" y="751" style="animation-delay:3.84s"></text>
+<text class="t" x="20" y="770" style="animation-delay:3.88s"><tspan fill="#0071E3" font-weight="700">INFO     </tspan><tspan fill="#00285C" font-weight="700">GLS006 Blur layer without a Liquid Glass counterpart</tspan></text>
+<text class="t" x="20" y="789" style="animation-delay:3.92s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/PortMapViewController.swift:5</tspan></text>
+<text class="t" x="20" y="808" style="animation-delay:3.95s"><tspan fill="#0B1F33">         A UIBlurEffect view.</tspan></text>
+<text class="t" x="20" y="827" style="animation-delay:3.98s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [D] Decide what the blur is for</tspan></text>
+<text class="t" x="20" y="846" style="animation-delay:4.02s"></text>
+<text class="t" x="20" y="865" style="animation-delay:4.05s"><tspan fill="#0071E3" font-weight="700">INFO     </tspan><tspan fill="#00285C" font-weight="700">GLS008 Fixed bar height or safe-area arithmetic</tspan></text>
+<text class="t" x="20" y="884" style="animation-delay:4.09s"><tspan fill="#0B1F33">         </tspan><tspan fill="#0058D4">Harbor/PortMapViewController.swift:26</tspan></text>
+<text class="t" x="20" y="903" style="animation-delay:4.13s"><tspan fill="#0B1F33">         A number added to the safe-area insets.</tspan></text>
+<text class="t" x="20" y="922" style="animation-delay:4.16s"><tspan fill="#0B1F33">         </tspan><tspan fill="#00285C" font-weight="700">Fix: [E] Lay out against the safe area instead of a number</tspan></text>
+<text class="t" x="20" y="941" style="animation-delay:4.20s"></text>
+<text class="t" x="20" y="960" style="animation-delay:4.23s"><tspan fill="#00285C" font-weight="700">How to fix</tspan></text>
+<text class="t" x="20" y="979" style="animation-delay:4.26s"></text>
+<text class="t" x="20" y="998" style="animation-delay:4.30s"><tspan fill="#00285C" font-weight="700">[A]      </tspan><tspan fill="#00285C" font-weight="700">Remove the opt-out and review the screens with Liquid Glass</tspan></text>
+<text class="t" x="20" y="1017" style="animation-delay:4.33s"><tspan fill="#0B1F33">         1. Delete the UIDesignRequiresCompatibility key from the Info.plist.</tspan></text>
+<text class="t" x="20" y="1036" style="animation-delay:4.37s"><tspan fill="#0B1F33">         2. Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this</tspan></text>
+<text class="t" x="20" y="1055" style="animation-delay:4.41s"><tspan fill="#0B1F33">            report are the places to look at first.</tspan></text>
+<text class="t" x="20" y="1074" style="animation-delay:4.44s"><tspan fill="#0B1F33">         3. Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so</tspan></text>
+<text class="t" x="20" y="1093" style="animation-delay:4.47s"><tspan fill="#0B1F33">            the system can draw the bars.</tspan></text>
+<text class="t" x="20" y="1112" style="animation-delay:4.51s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md</tspan></text>
+<text class="t" x="20" y="1131" style="animation-delay:4.54s"></text>
+<text class="t" x="20" y="1150" style="animation-delay:4.58s"><tspan fill="#00285C" font-weight="700">[B]      </tspan><tspan fill="#00285C" font-weight="700">Let the system draw the bar background</tspan></text>
+<text class="t" x="20" y="1169" style="animation-delay:4.62s"><tspan fill="#0B1F33">         1. Remove configureWithOpaqueBackground() and the backgroundColor, backgroundImage,</tspan></text>
+<text class="t" x="20" y="1188" style="animation-delay:4.65s"><tspan fill="#0B1F33">            backgroundEffect and shadow settings of the appearance, or apply them only before iOS 26</tspan></text>
+<text class="t" x="20" y="1207" style="animation-delay:4.69s"><tspan fill="#0B1F33">            with if #available(iOS 26.0, *).</tspan></text>
+<text class="t" x="20" y="1226" style="animation-delay:4.72s"><tspan fill="#0B1F33">         2. Move the brand colour to tintColor and the title text attributes.</tspan></text>
+<text class="t" x="20" y="1245" style="animation-delay:4.75s"><tspan fill="#0B1F33">         3. Check the bar over scrolling content: the scroll edge effect replaces the hairline and</tspan></text>
+<text class="t" x="20" y="1264" style="animation-delay:4.79s"><tspan fill="#0B1F33">            the opaque background.</tspan></text>
+<text class="t" x="20" y="1283" style="animation-delay:4.83s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1302" style="animation-delay:4.86s"></text>
+<text class="t" x="20" y="1321" style="animation-delay:4.89s"><tspan fill="#00285C" font-weight="700">[C]      </tspan><tspan fill="#00285C" font-weight="700">Remove the bar colour and let the bar stay translucent</tspan></text>
+<text class="t" x="20" y="1340" style="animation-delay:4.93s"><tspan fill="#0B1F33">         1. Remove barTintColor, isTranslucent = false and the bar background and shadow images, or</tspan></text>
+<text class="t" x="20" y="1359" style="animation-delay:4.96s"><tspan fill="#0B1F33">            apply them only before iOS 26 with if #available(iOS 26.0, *).</tspan></text>
+<text class="t" x="20" y="1378" style="animation-delay:5.00s"><tspan fill="#0B1F33">         2. Use tintColor for the brand colour of the bar's buttons.</tspan></text>
+<text class="t" x="20" y="1397" style="animation-delay:5.04s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1416" style="animation-delay:5.07s"></text>
+<text class="t" x="20" y="1435" style="animation-delay:5.11s"><tspan fill="#00285C" font-weight="700">[D]      </tspan><tspan fill="#00285C" font-weight="700">Decide what the blur is for</tspan></text>
+<text class="t" x="20" y="1454" style="animation-delay:5.14s"><tspan fill="#0B1F33">         1. Behind a popover or sheet's content: remove it and let the presentation draw its</tspan></text>
+<text class="t" x="20" y="1473" style="animation-delay:5.18s"><tspan fill="#0B1F33">            background.</tspan></text>
+<text class="t" x="20" y="1492" style="animation-delay:5.21s"><tspan fill="#0B1F33">         2. Behind a floating control or panel: use UIGlassEffect on iOS 26 and later (if</tspan></text>
+<text class="t" x="20" y="1511" style="animation-delay:5.25s"><tspan fill="#0B1F33">            #available(iOS 26.0, *)) and keep the blur as the fallback.</tspan></text>
+<text class="t" x="20" y="1530" style="animation-delay:5.28s"><tspan fill="#0B1F33">         3. Over content (a photo, a map): keep it.</tspan></text>
+<text class="t" x="20" y="1549" style="animation-delay:5.31s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1568" style="animation-delay:5.35s"></text>
+<text class="t" x="20" y="1587" style="animation-delay:5.38s"><tspan fill="#00285C" font-weight="700">[E]      </tspan><tspan fill="#00285C" font-weight="700">Lay out against the safe area instead of a number</tspan></text>
+<text class="t" x="20" y="1606" style="animation-delay:5.42s"><tspan fill="#0B1F33">         1. Constrain to safeAreaLayoutGuide (or the keyboard and bar layout guides) instead of</tspan></text>
+<text class="t" x="20" y="1625" style="animation-delay:5.46s"><tspan fill="#0B1F33">            adding a bar height to the insets.</tspan></text>
+<text class="t" x="20" y="1644" style="animation-delay:5.49s"><tspan fill="#0B1F33">         2. Do not read the tab bar's frame for layout; check the screen with the tab bar minimized</tspan></text>
+<text class="t" x="20" y="1663" style="animation-delay:5.53s"><tspan fill="#0B1F33">            as well.</tspan></text>
+<text class="t" x="20" y="1682" style="animation-delay:5.56s"><tspan fill="#0B1F33">         </tspan><tspan fill="#5A6B80">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1701" style="animation-delay:5.60s"></text>
+<text class="t" x="20" y="1720" style="animation-delay:5.63s"><tspan fill="#00285C" font-weight="700">1 error, 4 warnings, 2 info</tspan></text>
+<text class="t" x="20" y="1739" style="animation-delay:5.67s"><tspan fill="#0B1F33">Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1758" style="animation-delay:5.70s"><tspan fill="#5A6B80">Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)</tspan></text>
+<text class="t" x="20" y="1777" style="animation-delay:5.93s"><tspan fill="#0071E3" font-weight="700">$ </tspan></text>
+<rect class="caret" x="35.66" y="1765" width="7.83" height="16" fill="#0071E3" style="animation-delay:5.93s"/>
 </svg>
