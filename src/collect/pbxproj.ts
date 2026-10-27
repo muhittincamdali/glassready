@@ -211,12 +211,13 @@ export function readTargets(pbxproj: OpenStepValue): XcodeTarget[] {
 
 /**
  * Reads `<path>.xcodeproj/project.pbxproj` when it is a regular file inside `root` (by default
- * the .xcodeproj folder itself).
+ * the .xcodeproj folder itself). Errors name the file as `project.pbxproj`; the caller knows
+ * which .xcodeproj it asked for and how to show that path.
  */
 export async function readXcodeProject(path: string, root = path): Promise<XcodeProject> {
   const file = join(path, 'project.pbxproj');
   const read = await readProjectFile(file, root);
-  if (!read.found) throw new XcodeProjectError(`${file} ${NOT_READ[read.reason]}`);
+  if (!read.found) throw new XcodeProjectError(`project.pbxproj ${NOT_READ[read.reason]}`);
   const parsed = parseOpenStep(read.bytes.toString('utf8'));
   return {
     path,

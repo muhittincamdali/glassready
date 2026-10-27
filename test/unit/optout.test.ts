@@ -45,7 +45,18 @@ describe('Info.plist and build settings', () => {
   it('marks the opt-out unknown when the named Info.plist cannot be read', async () => {
     const app = await nativeApp({});
     expect(app.targets[0] && targetOptOut(app.targets[0])).toBe('unknown');
-    expect(app.notes.join('\n')).toContain('is named in INFOPLIST_FILE but does not exist.');
+    expect(app.notes).toEqual(['App/Info.plist is named in INFOPLIST_FILE but does not exist.']);
+  });
+
+  it('names unreadable project files relative to the project folder', async () => {
+    const broken = await nativeApp({ 'App/Info.plist': 'not a plist' });
+    expect(broken.notes).toHaveLength(1);
+    expect(broken.notes[0]).toMatch(/^App\/Info\.plist could not be read as a property list: /);
+
+    const root = tree({ 'App.xcodeproj/README': '' });
+    const missing = await collectApp(await detectProject(root));
+    expect(missing.notes[0]).toBe('App.xcodeproj: project.pbxproj does not exist.');
+    expect([...broken.notes, ...missing.notes].join('\n')).not.toContain(root);
   });
 
   it('reports INFOPLIST_KEY_UIDesignRequiresCompatibility in project.pbxproj', async () => {

@@ -1,6 +1,6 @@
 // Everything the rules look at for one project: its iOS app targets with their Info.plist and
 // build settings, and the app's own source files.
-import { join } from 'node:path';
+import { join, relative, sep } from 'node:path';
 import { NOT_READ, readProjectFile, readProjectText } from '../core/files.js';
 import { compareVersions } from '../core/versions.js';
 import type { Project } from '../detect/project.js';
@@ -57,6 +57,14 @@ export const OPT_OUT_KEY = 'UIDesignRequiresCompatibility';
 export const OPT_OUT_SETTING = `INFOPLIST_KEY_${OPT_OUT_KEY}`;
 
 /**
+ * How a note names a file: relative to the project folder, with forward slashes. Reports are
+ * committed and shared, and an absolute path would carry the home folder (and user name) of
+ * whoever ran glassready.
+ */
+const shownPath = (path: string, projectRoot: string) =>
+  relative(projectRoot, path).split(sep).join('/') || '.';
+
+/**
  * Reads the Info.plist a target names. INFOPLIST_FILE comes from the checked project, so a path
  * that leads outside the project folder is not read, and neither is anything but a regular file.
  */
@@ -66,8 +74,9 @@ async function readInfoPlist(
   notes: string[],
 ): Promise<InfoPlistFile | null> {
   const file = await readProjectFile(path, projectRoot);
+  const shown = shownPath(path, projectRoot);
   if (!file.found) {
-    notes.push(`${path} is named in INFOPLIST_FILE but ${NOT_READ[file.reason]}`);
+    notes.push(`${shown} is named in INFOPLIST_FILE but ${NOT_READ[file.reason]}`);
     return null;
   }
   try {
@@ -75,7 +84,7 @@ async function readInfoPlist(
     if (!isDict(value)) throw new Error('the top level is not a dictionary');
     return { path, dict: value, keyLines };
   } catch (error) {
-    notes.push(`${path} could not be read as a property list: ${(error as Error).message}`);
+    notes.push(`${shown} could not be read as a property list: ${(error as Error).message}`);
     return null;
   }
 }
@@ -163,7 +172,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
     try {
       xcode = await readXcodeProject(path, project.root);
     } catch (error) {
-      notes.push(`${path}: ${(error as Error).message}`);
+      notes.push(`${shownPath(path, project.root)}: ${(error as Error).message}`);
       continue;
     }
     if (xcode.lastUpgradeCheck) upgrades.push(xcode.lastUpgradeCheck);
