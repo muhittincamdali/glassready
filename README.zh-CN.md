@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -207,7 +207,7 @@ iOS 27.0 的 iPhone 17 模拟器上的四个 fixture，均由 Xcode 27.1 构建�
 ## 局限
 
 - **是模式匹配，不是编译器。** 规则是作用于源码文本的正则表达式，其中的注释和字符串已被置空。生成的代码、藏在宏后面的代码、运行时才构造的代码，或写法不常见的代码，可能被漏掉，也可能被误匹配。
-- **只检查应用自己的源码。** 不会读取 Pods、应用文件夹之外的 Swift package、`node_modules` 和 Flutter 插件。
+- **只检查应用自己的源码。** 规则只作用于应用自己的代码：不会读取 Pods、应用文件夹之外的 Swift package、`node_modules` 和 Flutter 插件的源码。glassready 只从 `node_modules` 中读取它关注的 React Native 和 Expo 包（`react-native`、`expo`、`react-native-screens` 等共 11 个）的 `<name>/package.json`，以获得已安装的版本；链接到 `node_modules/<name>` 文件夹之外的此类文件不会被读取。
 - **构建设置只来自 project.pbxproj。** 不会读取 `.xcconfig` 文件。如果无法读取某个 target 的 Info.plist，其退出状态为"未知"，报告会说明原因。无法读取 Xcode 项目时也是如此；此时结论为 "Opt-out not known"，绝不会显示为已就绪。
 - **Expo 配置按文本处理。** `app.config.js` 和 `app.config.ts` 不会被执行，因此通过变量或 config plugin 设置的退出键不会被发现。
 - **只看文件。** glassready 不会构建应用，也不会查看应用的界面。本仓库中的模拟器录屏来自 `scripts/` 中的脚本，在 Mac 上运行。

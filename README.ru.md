@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -266,8 +266,12 @@ SwiftUI-приложение с зелёным фоном toolbar и Flutter-п�
 - **Шаблоны, а не компилятор.** Правила — это регулярные выражения над исходным текстом, в котором
   комментарии и строки заменены пустым местом. Сгенерированный код, код за макросами, собираемый во время
   выполнения или написанный необычным образом, может быть пропущен или распознан по ошибке.
-- **Только собственный исходный код приложения.** Pods, пакеты Swift вне папки приложения,
-  `node_modules` и плагины Flutter не читаются.
+- **Только собственный исходный код приложения.** Правила проверяют код самого приложения:
+  исходники Pods, пакетов Swift вне папки приложения, `node_modules` и плагинов Flutter не
+  читаются. Из `node_modules` glassready читает только `<name>/package.json` тех пакетов React
+  Native и Expo, на которые смотрит (`react-native`, `expo`, `react-native-screens` и ещё
+  восемь), ради установленной версии; такой файл, ссылающийся за пределы папки
+  `node_modules/<name>`, не читается.
 - **Настройки сборки только из project.pbxproj.** Файлы `.xcconfig` не читаются. Если Info.plist
   таргета прочитать нельзя, состояние его opt-out — «неизвестно», и отчёт объясняет почему. То же
   верно, если нельзя прочитать проект Xcode; тогда вердикт — «Opt-out not known», а не «готово».

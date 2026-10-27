@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -269,8 +269,12 @@ toolbar arka planlı SwiftUI uygulaması ve Flutter'ın çizdiği düz tab bar'l
 - **Derleyici değil, kalıplar.** Kurallar, yorumları ve string'leri boşaltılmış kaynak metni
   üzerinde çalışan düzenli ifadelerdir. Üretilen, makroların arkasına gizlenen, çalışma zamanında
   oluşturulan ya da alışılmadık biçimde yazılan kod gözden kaçabilir veya yanlışlıkla eşleşebilir.
-- **Yalnızca uygulamanın kendi kaynakları.** Pods, uygulama klasörünün dışındaki Swift paketleri,
-  `node_modules` ve Flutter eklentileri okunmaz.
+- **Yalnızca uygulamanın kendi kaynakları.** Kurallar uygulamanın kendi kodunda çalışır: Pods,
+  uygulama klasörünün dışındaki Swift paketleri, `node_modules` ve Flutter eklentilerinin
+  kaynakları okunmaz. glassready `node_modules` içinden yalnızca baktığı React Native ve Expo
+  paketlerinin (`react-native`, `expo`, `react-native-screens` ve sekiz paket daha)
+  `<name>/package.json` dosyasını, kurulu sürüm için okur; `node_modules/<name>` klasörü
+  dışına bağlanan böyle bir dosya okunmaz.
 - **Build ayarları yalnızca project.pbxproj'dan.** `.xcconfig` dosyaları okunmaz. Bir hedefin
   Info.plist dosyası okunamazsa opt-out durumu "bilinmiyor" olur ve rapor nedenini söyler. Bir Xcode
   projesi okunamadığında da aynısı geçerlidir; karar o zaman "Opt-out not known" olur, asla hazır

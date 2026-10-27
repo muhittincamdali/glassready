@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -269,8 +269,12 @@ seconde.
   code source, dont les commentaires et les chaînes sont vidés. Le code généré, caché derrière des macros,
   construit à l’exécution ou écrit sous une forme inhabituelle peut passer inaperçu ou correspondre par
   erreur.
-- **Uniquement le code source de l’app.** Les Pods, les paquets Swift hors du dossier de l’app,
-  `node_modules` et les plugins Flutter ne sont pas lus.
+- **Uniquement le code source de l’app.** Les règles portent sur le code de l’app elle-même : le
+  code source des Pods, des paquets Swift hors du dossier de l’app, de `node_modules` et des
+  plugins Flutter n’est pas lu. Dans `node_modules`, glassready lit seulement
+  `<name>/package.json` des paquets React Native et Expo qu’il examine (`react-native`, `expo`,
+  `react-native-screens` et huit autres), pour la version installée ; un tel fichier qui pointe
+  hors d’un dossier `node_modules/<name>` n’est pas lu.
 - **Réglages de build lus uniquement dans project.pbxproj.** Les fichiers `.xcconfig` ne sont pas
   lus. Quand l’Info.plist d’une target est illisible, son état d’opt-out est « inconnu » et le
   rapport en donne la raison. Il en va de même quand un projet Xcode est illisible ; le verdict est
