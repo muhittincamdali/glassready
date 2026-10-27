@@ -1,0 +1,66 @@
+# Copy to .github/workflows/glassready.yml in an app repository. On every pull request that changes
+# the app, the glassready report is added to the job summary and kept as an artifact, and the job
+# fails when glassready finds the ignored opt-out or a custom style that covers Liquid Glass
+# (errors and warnings). Use `--fail-on error` to fail only on the opt-out, or `--fail-on none` to
+# report only.
+#
+# The job runs the latest 0.1 release of the npm package @mcamdali/glassready (the command is
+# glassready). To run one fixed release instead, put its GitHub release tarball in place of
+# @mcamdali/glassready@0.1, e.g.
+# https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz.
+name: glassready
+
+on:
+  pull_request:
+    paths:
+      - 'ios/**'
+      - 'lib/**'
+      - 'src/**'
+      - 'app/**'
+      - '*.xcodeproj/**'
+      - '**/Info.plist'
+      - '**/*.swift'
+      - '**/*.m'
+      - '**/*.tsx'
+      - 'package.json'
+      - 'app.json'
+      - 'pubspec.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    # Ends the job if a run waits on something in the checked repository, instead of GitHub's
+    # default limit of six hours.
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+
+      - name: Check what Liquid Glass changes
+        run: |
+          status=0
+          npx --yes @mcamdali/glassready@0.1 \
+            --format markdown --output glassready.md || status=$?
+          # Exit code 2 (the project could not be read) can come without a report.
+          if [ -f glassready.md ]; then
+            cat glassready.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "glassready exited with $status and wrote no report; see the step log." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$status"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: glassready-report
+          path: glassready.md
+          if-no-files-found: ignore
