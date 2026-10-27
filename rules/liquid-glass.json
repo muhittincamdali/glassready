@@ -1,0 +1,500 @@
+{
+  "$schema": "./schema.json",
+  "ruleSet": "liquid-glass",
+  "dataVersion": "2026.10.27",
+  "sdk": "iOS 27 SDK (checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators)",
+  "rules": [
+    {
+      "id": "GLS001",
+      "severity": "error",
+      "title": "Liquid Glass opt-out that the iOS 27 SDK ignores",
+      "summary": "UIDesignRequiresCompatibility is YES, so the app asks to keep the design of earlier SDKs. Apple: the system ignores this key when you build for iOS 27 or later. Built with Xcode 27, the app shows Liquid Glass on iOS 27 whatever the key says; on iOS 26 the same build still keeps the old design, so two looks ship at once.",
+      "sources": [
+        {
+          "title": "Apple: UIDesignRequiresCompatibility",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uidesignrequirescompatibility"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ],
+      "fixes": {
+        "info-plist": {
+          "title": "Remove the opt-out and review the screens with Liquid Glass",
+          "steps": [
+            "Delete the UIDesignRequiresCompatibility key from the Info.plist.",
+            "Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this report are the places to look at first.",
+            "Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so the system can draw the bars."
+          ],
+          "guide": "docs/guides/opt-out.md"
+        },
+        "build-setting": {
+          "title": "Remove the build setting and review the screens with Liquid Glass",
+          "steps": [
+            "Delete INFOPLIST_KEY_UIDesignRequiresCompatibility from the target's build settings. Xcode 27.1 does not copy it into the Info.plist it generates, so it has no effect there in any case.",
+            "Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this report are the places to look at first."
+          ],
+          "guide": "docs/guides/opt-out.md"
+        },
+        "expo-config": {
+          "title": "Remove the opt-out from the Expo config and rebuild the native project",
+          "steps": [
+            "Delete UIDesignRequiresCompatibility from ios.infoPlist in the Expo config.",
+            "Run npx expo prebuild --clean -p ios (or let EAS Build do it) so the generated Info.plist no longer has it.",
+            "Run the app on an iOS 27 simulator; the other findings in this report are the places to look at first."
+          ],
+          "guide": "docs/guides/react-native-expo.md"
+        }
+      }
+    },
+    {
+      "id": "GLS002",
+      "severity": "warning",
+      "title": "Bar appearance with its own background",
+      "summary": "A UINavigationBarAppearance, UITabBarAppearance or UIToolbarAppearance gets an opaque configuration or its own background colour, image, blur or shadow. Apple asks to reduce custom backgrounds in navigation elements: they can overlay or interfere with Liquid Glass and the scroll edge effect.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: configureWithOpaqueBackground()",
+          "url": "https://developer.apple.com/documentation/uikit/uibarappearance/configurewithopaquebackground()"
+        },
+        {
+          "title": "Apple: UIBarAppearance.backgroundEffect",
+          "url": "https://developer.apple.com/documentation/uikit/uibarappearance/backgroundeffect"
+        }
+      ],
+      "fixes": {
+        "uikit": {
+          "title": "Let the system draw the bar background",
+          "steps": [
+            "Remove configureWithOpaqueBackground() and the backgroundColor, backgroundImage, backgroundEffect and shadow settings of the appearance, or apply them only before iOS 26 with if #available(iOS 26.0, *).",
+            "Move the brand colour to tintColor and the title text attributes.",
+            "Check the bar over scrolling content: the scroll edge effect replaces the hairline and the opaque background."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        }
+      }
+    },
+    {
+      "id": "GLS003",
+      "severity": "warning",
+      "title": "Bar colour or translucency set the old way",
+      "summary": "barTintColor, isTranslucent = false, a bar background image (setBackgroundImage with bar metrics) or a shadow image paints the bar itself. Like a custom appearance background, it covers the material the system draws for navigation elements.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UINavigationBar.barTintColor",
+          "url": "https://developer.apple.com/documentation/uikit/uinavigationbar/bartintcolor"
+        },
+        {
+          "title": "Apple: UINavigationBar.isTranslucent",
+          "url": "https://developer.apple.com/documentation/uikit/uinavigationbar/istranslucent"
+        }
+      ],
+      "fixes": {
+        "uikit": {
+          "title": "Remove the bar colour and let the bar stay translucent",
+          "steps": [
+            "Remove barTintColor, isTranslucent = false and the bar background and shadow images, or apply them only before iOS 26 with if #available(iOS 26.0, *).",
+            "Use tintColor for the brand colour of the bar's buttons."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        }
+      }
+    },
+    {
+      "id": "GLS004",
+      "severity": "warning",
+      "title": "SwiftUI bar background set by the app",
+      "summary": "toolbarBackground or toolbarBackgroundVisibility sets the background of a navigation bar, tab bar or bottom bar. Apple asks to remove custom backgrounds from bars and let the system determine the background appearance.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: toolbarBackground(_:for:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/toolbarbackground(_:for:)"
+        },
+        {
+          "title": "Apple: toolbarBackgroundVisibility(_:for:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/toolbarbackgroundvisibility(_:for:)"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Remove the bar background modifiers",
+          "steps": [
+            "Remove toolbarBackground(_:for:) and toolbarBackgroundVisibility(_:for:), or apply them only before iOS 26.",
+            "Keep the brand colour on tint(_:) and on the content, not on the bar."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        }
+      }
+    },
+    {
+      "id": "GLS005",
+      "severity": "warning",
+      "title": "Custom tab bar or bottom bar",
+      "summary": "The app hides the system tab bar or draws its own (a UITabBar or UIToolbar subclass, a hidden tabBar, toolbar(.hidden, for: .tabBar)). A custom bar does not become Liquid Glass and, unless it is registered for it, content scrolling under it gets no scroll edge effect, so it looks different from every system bar around it.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Controls, Navigation)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UIScrollEdgeElementContainerInteraction",
+          "url": "https://developer.apple.com/documentation/uikit/uiscrolledgeelementcontainerinteraction"
+        },
+        {
+          "title": "Apple: safeAreaBar(edge:alignment:spacing:content:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/safeareabar(edge:alignment:spacing:content:)"
+        }
+      ],
+      "fixes": {
+        "uikit": {
+          "title": "Use the system tab bar, or give the custom bar a scroll edge effect",
+          "steps": [
+            "Where the custom bar only restyles tabs, go back to UITabBarController's tab bar; tabBarMinimizeBehavior and UITab cover many reasons for custom bars.",
+            "If the bar stays custom, add a UIScrollEdgeElementContainerInteraction to its container view and consider UIGlassEffect for its background."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        },
+        "swiftui": {
+          "title": "Use the system tab bar, or attach the custom bar with safeAreaBar",
+          "steps": [
+            "Where the custom bar only restyles tabs, use TabView with Tab and tabBarMinimizeBehavior(_:) instead.",
+            "If the bar stays custom, attach it with safeAreaBar(edge:alignment:spacing:content:) so content under it gets the scroll edge effect, and consider glassEffect(_:in:) for its background."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        }
+      }
+    },
+    {
+      "id": "GLS006",
+      "severity": "info",
+      "title": "Blur layer without a Liquid Glass counterpart",
+      "summary": "A UIVisualEffectView with a UIBlurEffect, in a file that does not use UIGlassEffect. If it backs a popover, a sheet or a floating control, Apple asks to remove such background views from popovers and to use the glass effect for custom controls; a plain content blur can stay.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Windows and modals)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UIGlassEffect",
+          "url": "https://developer.apple.com/documentation/uikit/uiglasseffect"
+        }
+      ],
+      "fixes": {
+        "uikit": {
+          "title": "Decide what the blur is for",
+          "steps": [
+            "Behind a popover or sheet's content: remove it and let the presentation draw its background.",
+            "Behind a floating control or panel: use UIGlassEffect on iOS 26 and later (if #available(iOS 26.0, *)) and keep the blur as the fallback.",
+            "Over content (a photo, a map): keep it."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        }
+      }
+    },
+    {
+      "id": "GLS007",
+      "severity": "warning",
+      "title": "Custom sheet or popover background",
+      "summary": "presentationBackground or a popover's backgroundColor replaces the background of a sheet or popover. Sheets and popovers adopt Liquid Glass (a half sheet is inset with content showing around it); Apple asks to audit and remove custom backgrounds there.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Windows and modals)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: presentationBackground(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/presentationbackground(_:)"
+        },
+        {
+          "title": "Apple: UIPopoverPresentationController.backgroundColor",
+          "url": "https://developer.apple.com/documentation/uikit/uipopoverpresentationcontroller/backgroundcolor"
+        }
+      ],
+      "fixes": {
+        "uikit": {
+          "title": "Let the popover draw its own background",
+          "steps": [
+            "Remove the popover's backgroundColor (or set it only before iOS 26).",
+            "Check content near the rounder corners of sheets and popovers."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        },
+        "swiftui": {
+          "title": "Remove presentationBackground for iOS 26 and later",
+          "steps": [
+            "Remove presentationBackground(_:), or apply it only before iOS 26.",
+            "Look at the half-height detent: the sheet is inset and the content behind it shows around the edges."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        }
+      }
+    },
+    {
+      "id": "GLS008",
+      "severity": "info",
+      "title": "Fixed bar height or safe-area arithmetic",
+      "summary": "A tab bar height written as a number (49 or 83 points), a bar's frame height read to lay out content, or a number added to the safe-area insets. Liquid Glass tab bars float above the content and change shape (and can minimize on scroll), so geometry copied from the old bars puts content in the wrong place.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Controls, Windows and modals)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UIView.safeAreaLayoutGuide",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/safearealayoutguide"
+        }
+      ],
+      "fixes": {
+        "uikit": {
+          "title": "Lay out against the safe area instead of a number",
+          "steps": [
+            "Constrain to safeAreaLayoutGuide (or the keyboard and bar layout guides) instead of adding a bar height to the insets.",
+            "Do not read the tab bar's frame for layout; check the screen with the tab bar minimized as well."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        },
+        "swiftui": {
+          "title": "Let the safe area carry the bar's height",
+          "steps": [
+            "Remove the fixed height; place bottom content with safeAreaInset(edge:) or safeAreaBar(edge:alignment:spacing:content:)."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        },
+        "react-native": {
+          "title": "Use the bar's measured height",
+          "steps": [
+            "Remove the fixed height and read the height the navigator measures (useBottomTabBarHeight, useHeaderHeight) or the safe-area insets."
+          ],
+          "guide": "docs/guides/react-native-expo.md"
+        }
+      }
+    },
+    {
+      "id": "GLS009",
+      "severity": "info",
+      "title": "Section header written in capitals",
+      "summary": "A SwiftUI list or form section header written in capital letters. Lists, tables and forms now use title-style capitalization for section headers instead of rendering them in capitals, so a header written as \"ACCOUNT\" stays in capitals while every other header shows as written.",
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Organization and layout)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: Section init(content:header:)",
+          "url": "https://developer.apple.com/documentation/swiftui/section/init(content:header:)"
+        }
+      ],
+      "fixes": {
+        "swiftui": {
+          "title": "Write the header in title case",
+          "steps": [
+            "Write the header as \"Account\" instead of \"ACCOUNT\"; the system styles it."
+          ],
+          "guide": "docs/guides/native-ios.md"
+        }
+      }
+    },
+    {
+      "id": "GLS101",
+      "severity": "warning",
+      "title": "Native stack header with its own background",
+      "summary": "A native stack (React Navigation's native-stack or Expo Router's Stack) sets headerStyle.backgroundColor, headerBackground or headerBlurEffect. The header is a UINavigationBar, so this paints over the bar the system draws with Liquid Glass; React Navigation notes that headerBlurEffect and the iOS 26 scroll edge effects can overlap.",
+      "sources": [
+        {
+          "title": "React Navigation: Native Stack Navigator (headerStyle, headerBlurEffect, scrollEdgeEffects)",
+          "url": "https://reactnavigation.org/docs/native-stack-navigator/"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Leave the header background to the system on iOS",
+          "steps": [
+            "Set headerStyle.backgroundColor, headerBackground and headerBlurEffect only for Android (Platform.select) or for iOS before 26.",
+            "Keep the brand colour on headerTintColor."
+          ],
+          "guide": "docs/guides/react-native-expo.md"
+        }
+      }
+    },
+    {
+      "id": "GLS102",
+      "severity": "info",
+      "title": "Tab bar drawn in JavaScript",
+      "summary": "createBottomTabNavigator, Expo Router's Tabs or a custom tabBar draws the tab bar in React Native, not with UIKit. It keeps its look when the app is built with the iOS 27 SDK while the native headers and sheets around it become Liquid Glass. React Navigation and Expo point to their native tab navigators for the platform look.",
+      "sources": [
+        {
+          "title": "React Navigation: Bottom Tabs Navigator",
+          "url": "https://reactnavigation.org/docs/bottom-tab-navigator/"
+        },
+        {
+          "title": "React Navigation: Native Bottom Tabs Navigator",
+          "url": "https://reactnavigation.org/docs/native-bottom-tab-navigator/"
+        },
+        {
+          "title": "Expo: JavaScript tabs",
+          "url": "https://docs.expo.dev/router/advanced/tabs/"
+        },
+        {
+          "title": "Expo: Native tabs",
+          "url": "https://docs.expo.dev/router/advanced/native-tabs/"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Move to the native bottom tabs, or keep the JavaScript bar on purpose",
+          "steps": [
+            "For the system tab bar, use createNativeBottomTabNavigator from @react-navigation/bottom-tabs/unstable (React Native 0.79 or later, react-native-screens 4.30.0 or later).",
+            "If the custom bar is part of the brand, keep it and check it next to the Liquid Glass headers on an iOS 27 simulator."
+          ],
+          "guide": "docs/guides/react-native-expo.md"
+        },
+        "expo": {
+          "title": "Move to Expo Router's native tabs, or keep the JavaScript bar on purpose",
+          "steps": [
+            "For the system tab bar, use NativeTabs from expo-router/native-tabs (SDK 58 and later; expo-router/unstable-native-tabs in SDK 54 to 57).",
+            "If the custom bar is part of the brand, keep it and check it next to the Liquid Glass headers on an iOS 27 simulator."
+          ],
+          "guide": "docs/guides/react-native-expo.md"
+        }
+      }
+    },
+    {
+      "id": "GLS103",
+      "severity": "info",
+      "title": "Native tab bar style iOS 26 and later ignore",
+      "summary": "A native tab bar (NativeTabs or createNativeBottomTabNavigator) sets a background colour, blur or shadow. On iOS 26 and later the system draws the tab bar with Liquid Glass and takes its background from the content behind it; these props only apply on iOS 18 and earlier.",
+      "sources": [
+        {
+          "title": "Expo: Native tabs",
+          "url": "https://docs.expo.dev/router/advanced/native-tabs/"
+        },
+        {
+          "title": "React Navigation: Native Bottom Tabs Navigator (tabBarStyle, tabBarBlurEffect)",
+          "url": "https://reactnavigation.org/docs/native-bottom-tab-navigator/"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Expect the system background on iOS 26 and later",
+          "steps": [
+            "Keep the prop for Android and older iOS if you need it, but do not rely on it for contrast on iOS 26 and later.",
+            "Use dynamic colours (PlatformColor or DynamicColorIOS) for icons and labels, which sit on light or dark content."
+          ],
+          "guide": "docs/guides/react-native-expo.md"
+        }
+      }
+    },
+    {
+      "id": "GLS104",
+      "severity": "warning",
+      "title": "react-native-screens too old for native bottom tabs",
+      "summary": "The app uses React Navigation's native bottom tabs, which need react-native-screens 4.30.0 or later, and an older version is installed or declared.",
+      "sources": [
+        {
+          "title": "React Navigation: Native Bottom Tabs Navigator (installation)",
+          "url": "https://reactnavigation.org/docs/native-bottom-tab-navigator/"
+        }
+      ],
+      "fixes": {
+        "react-native": {
+          "title": "Update react-native-screens",
+          "steps": [
+            "Install react-native-screens 4.30.0 or later (npx expo install react-native-screens in an Expo app), then run pod install."
+          ],
+          "guide": "docs/guides/react-native-expo.md"
+        }
+      }
+    },
+    {
+      "id": "GLS201",
+      "severity": "info",
+      "title": "Cupertino bar drawn by Flutter",
+      "summary": "CupertinoNavigationBar, CupertinoSliverNavigationBar, CupertinoTabBar and CupertinoTabScaffold are drawn by Flutter, not by UIKit, so they keep their look when the app is built with the iOS 27 SDK, while the system's own UI (keyboard, share sheet, permission alerts) and UIKit platform views use Liquid Glass. Liquid Glass for the Cupertino widgets is an open Flutter issue, and the cupertino_ui package's changelog has no Liquid Glass entry (both read on 27 October 2026).",
+      "sources": [
+        {
+          "title": "Flutter issue 170310: Support for iOS 26 Liquid Glass design in Cupertino widgets",
+          "url": "https://github.com/flutter/flutter/issues/170310"
+        },
+        {
+          "title": "pub.dev: cupertino_ui changelog",
+          "url": "https://pub.dev/packages/cupertino_ui/changelog"
+        }
+      ],
+      "fixes": {
+        "flutter": {
+          "title": "Decide whether the Cupertino bars should follow the system",
+          "steps": [
+            "Run the app on an iOS 27 simulator next to a system app and decide whether the Flutter-drawn bars may look different.",
+            "To follow the system, restyle the bars yourself (translucent background, floating tab bar) or follow flutter/flutter#170310 for framework support."
+          ],
+          "guide": "docs/guides/flutter.md"
+        }
+      }
+    },
+    {
+      "id": "GLS202",
+      "severity": "info",
+      "title": "UIKit view inside Flutter",
+      "summary": "A UiKitView embeds a native iOS view. Its UIKit controls and bars take the Liquid Glass design when the app is built with the iOS 27 SDK, next to Flutter-drawn widgets that do not.",
+      "sources": [
+        {
+          "title": "Flutter: Hosting native iOS views with platform views",
+          "url": "https://docs.flutter.dev/platform-integration/ios/platform-views"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ],
+      "fixes": {
+        "flutter": {
+          "title": "Check the native view next to the Flutter UI",
+          "steps": [
+            "Open the screen with the platform view on an iOS 27 simulator and compare its controls with the Flutter widgets around it."
+          ],
+          "guide": "docs/guides/flutter.md"
+        }
+      }
+    }
+  ],
+  "adoption": [
+    { "pattern": "\\bUIGlassEffect\\b", "label": "UIGlassEffect" },
+    { "pattern": "\\.glassEffect\\s*\\(", "label": "glassEffect(_:in:)" },
+    { "pattern": "\\bGlassEffectContainer\\b", "label": "GlassEffectContainer" },
+    { "pattern": "\\.buttonStyle\\s*\\(\\s*\\.glass", "label": "glass button styles" },
+    {
+      "pattern": "\\.(?:glass|prominentGlass|clearGlass|prominentClearGlass)\\s*\\(\\s*\\)",
+      "label": "UIButton glass configurations"
+    },
+    {
+      "pattern": "\\bUIScrollEdgeElementContainerInteraction\\b",
+      "label": "UIScrollEdgeElementContainerInteraction"
+    },
+    { "pattern": "\\.safeAreaBar\\s*\\(", "label": "safeAreaBar" },
+    { "pattern": "\\btabBarMinimizeBehavior\\b", "label": "tabBarMinimizeBehavior" },
+    { "pattern": "\\bNativeTabs\\b", "label": "Expo Router NativeTabs" },
+    {
+      "pattern": "\\bcreateNativeBottomTabNavigator\\b",
+      "label": "React Navigation native bottom tabs"
+    },
+    { "pattern": "\\bGlassView\\b", "label": "GlassView" },
+    { "pattern": "\\bLiquidGlassView\\b", "label": "LiquidGlassView" }
+  ]
+}
