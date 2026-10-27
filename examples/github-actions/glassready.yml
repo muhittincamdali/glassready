@@ -12,19 +12,32 @@ name: glassready
 
 on:
   pull_request:
+    # Every file glassready reads: the Xcode project and Info.plist, Swift, Objective-C,
+    # JavaScript, TypeScript and Dart sources at any depth, and the manifests and config files
+    # that carry versions or the opt-out.
     paths:
       - 'ios/**'
-      - 'lib/**'
-      - 'src/**'
-      - 'app/**'
-      - '*.xcodeproj/**'
+      - '**/*.xcodeproj/**'
       - '**/Info.plist'
       - '**/*.swift'
       - '**/*.m'
+      - '**/*.mm'
+      - '**/*.h'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
       - '**/*.tsx'
+      - '**/*.mjs'
+      - '**/*.cjs'
+      - '**/*.dart'
       - 'package.json'
+      - 'package-lock.json'
       - 'app.json'
+      - 'app.config.*'
       - 'pubspec.yaml'
+      - '.fvmrc'
+      - '.fvm/fvm_config.json'
+      - '.xcode-version'
   workflow_dispatch:
 
 permissions:

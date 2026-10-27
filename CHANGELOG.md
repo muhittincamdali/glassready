@@ -9,6 +9,9 @@ All notable changes to glassready are listed here. The format follows
 
 ### Fixed
 
+- The GitHub Actions example runs when any file glassready reads changes. Its `paths` filter
+  missed `.ts`, `.js` and `.jsx` files outside `src/` and `app/`, `.mm` and `.h` files, Dart files
+  outside `lib/`, `app.config.*`, `package-lock.json`, `.fvmrc` and `.xcode-version`.
 - Report notes about an Info.plist or project.pbxproj that could not be read name the file relative
   to the project folder. They used the absolute path, so a committed report carried the home folder
   and user name of whoever ran glassready.
