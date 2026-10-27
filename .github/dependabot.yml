@@ -16,6 +16,11 @@ updates:
       interval: "monthly"
     commit-message:
       prefix: "chore"
+    ignore:
+      # The types follow the oldest Node.js line the package supports (engines: >=22.12), so a
+      # newer major would let code use APIs that Node 22 and 24 do not have.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       npm:
         patterns:
