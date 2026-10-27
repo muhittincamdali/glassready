@@ -40,6 +40,10 @@ export {
   type RuleFix,
   type RuleId,
   type RuleSource,
+  ruleDataSchema,
+  ruleFixSchema,
+  ruleSchema,
+  ruleSourceSchema,
   SEVERITIES,
   type Severity,
 } from './rules/data.js';
