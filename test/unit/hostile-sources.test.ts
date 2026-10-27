@@ -28,6 +28,7 @@ const RN_PROJECT: Project = {
   flutter: null,
   expoConfig: null,
   xcodeVersionFile: null,
+  notes: [],
 };
 
 // The imports that switch on every React Native rule.

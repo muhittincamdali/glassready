@@ -1,6 +1,7 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { detectProject, ProjectError } from '../../src/detect/project.js';
+import { collectApp } from '../../src/collect/app.js';
+import { detectProject, MANIFEST_NOT_CHECKED, ProjectError } from '../../src/detect/project.js';
 import { minimalPbxproj, tree } from '../helpers/tree.js';
 
 const PBXPROJ = minimalPbxproj();
@@ -88,6 +89,31 @@ describe('detectProject', () => {
       file: 'app.json',
       json: null,
     });
+  });
+
+  it('notes a package.json it cannot use instead of quietly checking a native app', async () => {
+    const app = (packageJson: string) =>
+      tree({ 'package.json': packageJson, 'ios/App.xcodeproj/project.pbxproj': PBXPROJ });
+    const broken = await detectProject(app('{"dependencies": {"react-native": "0.88.1",}}'));
+    expect(broken.ecosystem).toBe('native');
+    expect(broken.notes).toEqual([`package.json is not valid JSON. ${MANIFEST_NOT_CHECKED}`]);
+    expect((await detectProject(app('["react-native"]'))).notes).toEqual([
+      `package.json does not hold a JSON object. ${MANIFEST_NOT_CHECKED}`,
+    ]);
+    // The note says what is wrong, not what the file says.
+    expect(broken.notes.join(' ')).not.toContain('dependencies');
+    const native = await detectProject(tree({ 'App.xcodeproj/project.pbxproj': PBXPROJ }));
+    expect(native.notes).toEqual([]);
+    expect((await detectProject(app('{"name": "tools"}'))).notes).toEqual([]);
+    await expect(detectProject(tree({ 'package.json': '{' }))).rejects.toThrow(
+      /package\.json\. package\.json is not valid JSON\.$/,
+    );
+  });
+
+  it('carries the package.json note into the report notes', async () => {
+    const root = tree({ 'package.json': '{', 'ios/App.xcodeproj/project.pbxproj': PBXPROJ });
+    const app = await collectApp(await detectProject(root));
+    expect(app.notes[0]).toBe(`package.json is not valid JSON. ${MANIFEST_NOT_CHECKED}`);
   });
 
   it('explains what is missing', async () => {
