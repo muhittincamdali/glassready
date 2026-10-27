@@ -3,7 +3,7 @@
 // the comments); the limit leaves room for a slow CI runner.
 import { describe, expect, it } from 'vitest';
 import { sourceFile } from '../../src/collect/sources.js';
-import { type Project } from '../../src/detect/project.js';
+import { isFlutterPlugin, type Project } from '../../src/detect/project.js';
 import { checkNativeFile } from '../../src/rules/native.js';
 import { checkReactNative } from '../../src/rules/react-native.js';
 
@@ -91,5 +91,21 @@ describe('React Native rules on hostile JavaScript', () => {
   ])('%s', (_, text) => {
     const file = sourceFile('/app/App.tsx', RN_IMPORTS + text);
     expect(timed(() => checkReactNative(RN_PROJECT, [file]))).toBeLessThan(LIMIT_MS);
+  });
+});
+
+describe('isFlutterPlugin', () => {
+  it.each([
+    ['a plugin', 'name: x\nflutter:\n  plugin:\n    platforms:\n', true],
+    ['a plugin after blank lines', 'flutter:\n\n  assets:\n\n  plugin:\n', true],
+    ['an app', 'name: x\nflutter:\n  uses-material-design: true\n', false],
+    ['plugin: outside the flutter section', 'flutter:\n  assets:\nother:\n  plugin:\n', false],
+    ['a nested flutter key', 'dependencies:\n  flutter:\n    plugin:\n', false],
+  ])('%s', (_, pubspec, expected) => {
+    expect(isFlutterPlugin(pubspec)).toBe(expected);
+  });
+
+  it('reads a pubspec of blank lines in linear time', () => {
+    expect(timed(() => isFlutterPlugin(`flutter:\n${repeat(' \n')}`))).toBeLessThan(LIMIT_MS);
   });
 });
