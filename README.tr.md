@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@0c7045cc9b1acc9943580c05a9dd3383c5d48cbc status=reviewed -->
+<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -279,7 +279,11 @@ toolbar arka planlı SwiftUI uygulaması ve Flutter'ın çizdiği düz tab bar'l
 - **Sınırlı girdi.** Bir proje bir pull request'ten gelebilir; bu yüzden glassready proje dosyası
   başına en fazla 32 MB, kaynaklardan da dosya başına 4 MB, 20.000 dosya ve toplam 128 MB okur;
   dışarıda kalanlar raporun notlarında listelenir. Bir binary plist en fazla 100.000 değer
-  üretebilir ve bir plist en fazla 64 seviye iç içe olabilir.
+  üretebilir; bir plist ya da JSON dosyası (package.json, package-lock.json, app.json) en fazla 64
+  seviye iç içe olabilir, daha derin bir JSON dosyası ayrıştırılmaz. Mac (Apple silicon) ve Node
+  26 üzerinde package.json, package-lock.json ve `node_modules` içindeki dört package.json
+  dosyasının her biri 31 MB iç içe dizi olan bir proje 0,2 sn'de ve en fazla 190 MB bellekle
+  denetlenir.
 
 ## Dokümantasyon
 

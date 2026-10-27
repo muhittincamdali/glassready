@@ -7,6 +7,15 @@ All notable changes to glassready are listed here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- package.json, package-lock.json, app.json, the `node_modules` package.json files and the Flutter
+  pins may nest 64 levels, as plists may; a deeper file is not parsed. They had no limit, and
+  JSON.parse of 31 MB of nested arrays per file took 4.1 s and 3.9 GB of memory for one project
+  and 8.9 s and 5.0 GB for another. On a Mac (Apple silicon) with Node 26 both now take 0.2 s and
+  at most 190 MB. A package.json that nests too deep gets the same report note as one that is not
+  JSON, and an app.json that does is read as text.
+
 ## [0.1.1] - 2026-10-28
 
 ### Changed

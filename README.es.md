@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@0c7045cc9b1acc9943580c05a9dd3383c5d48cbc status=reviewed -->
+<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -279,7 +279,11 @@ tardó 0,17 segundos.
 - **Entrada acotada.** Un proyecto puede venir de un pull request, así que glassready lee como
   máximo 32 MB por archivo del proyecto y, de las fuentes, 4 MB por archivo, 20.000 archivos y
   128 MB en total; lo que queda fuera aparece en las notas del informe. Un plist binario puede
-  producir como máximo 100.000 valores, y un plist puede anidarse 64 niveles.
+  producir como máximo 100.000 valores, y un plist o un archivo JSON (package.json,
+  package-lock.json, app.json) puede anidarse 64 niveles; un JSON más profundo no se analiza. En un
+  Mac (Apple silicon) con Node 26, un proyecto cuyo package.json, package-lock.json y cuatro
+  package.json de `node_modules` son 31 MB de arrays anidados cada uno se revisa en 0,2 s con
+  como máximo 190 MB de memoria.
 
 ## Documentación
 

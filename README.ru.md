@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@0c7045cc9b1acc9943580c05a9dd3383c5d48cbc status=reviewed -->
+<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -275,7 +275,10 @@ SwiftUI-приложение с зелёным фоном toolbar и Flutter-п�
 - **Ограниченный ввод.** Проект может прийти из pull request, поэтому glassready читает не более
   32 МБ на файл проекта, а из исходников — не более 4 МБ на файл, 20 000 файлов и 128 МБ
   всего; то, что не прочитано, перечислено в заметках отчёта. Бинарный plist может дать не более
-  100 000 значений, а plist может быть вложен не глубже 64 уровней.
+  100 000 значений, а plist или JSON-файл (package.json, package-lock.json, app.json) может быть
+  вложен не глубже 64 уровней; более глубокий JSON не разбирается. На Mac (Apple silicon) с Node 26
+  проект, в котором package.json, package-lock.json и четыре package.json из `node_modules` — это
+  по 31 МБ вложенных массивов, проверяется за 0,2 с и не более чем 190 МБ памяти.
 
 ## Документация
 
