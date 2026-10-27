@@ -7,9 +7,7 @@ All notable changes to glassready are listed here. The format follows
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-10-27
-
-First release.
+First release, to be tagged as 0.1.0.
 
 ### Added
 
@@ -34,5 +32,4 @@ First release.
 - Guides for the opt-out, native iOS, React Native and Expo, and Flutter; an API reference site;
   examples for JavaScript, `jq` and GitHub Actions.
 
-[Unreleased]: https://github.com/muhittincamdali/glassready/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0
+[Unreleased]: https://github.com/muhittincamdali/glassready/commits/main
