@@ -2,6 +2,7 @@
 // rules look at, and the Expo config.
 import { join } from 'node:path';
 import { NOT_READ, readProjectFile, readProjectText } from '../core/files.js';
+import { JsonDepthError, parseJson } from '../core/json.js';
 import { lowestAllowed } from '../core/versions.js';
 
 export interface PackageVersion {
@@ -43,12 +44,15 @@ export const record = (value: unknown): Record<string, unknown> =>
     ? (value as Record<string, unknown>)
     : {};
 
-/** Parses `path` read with readProjectText; undefined when it is not read or is not JSON. */
+/**
+ * Parses `path` read with readProjectText; undefined when it is not read, is not JSON or nests too
+ * deep (see parseJson).
+ */
 export async function readJson(path: string, root: string | null): Promise<unknown> {
   const text = await readProjectText(path, root);
   if (text === null) return undefined;
   try {
-    return JSON.parse(text) as unknown;
+    return parseJson(text);
   } catch {
     return undefined;
   }
@@ -72,8 +76,10 @@ export async function readManifest(
   }
   let value: unknown;
   try {
-    value = JSON.parse(file.bytes.toString('utf8'));
-  } catch {
+    value = parseJson(file.bytes.toString('utf8'));
+  } catch (error) {
+    if (error instanceof JsonDepthError)
+      return { manifest: {}, problem: `${error.message}; it was not read.` };
     // The parser's message quotes the file; the note says only what is wrong with it.
     return { manifest: {}, problem: 'is not valid JSON.' };
   }
@@ -134,7 +140,7 @@ export async function expoConfig(root: string): Promise<ExpoConfig | null> {
   if (text === null) return null;
   let config: Record<string, unknown> = {};
   try {
-    config = record(JSON.parse(text) as unknown);
+    config = record(parseJson(text));
   } catch {
     return { file: 'app.json', text, json: null };
   }

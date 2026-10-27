@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@0c7045cc9b1acc9943580c05a9dd3383c5d48cbc status=reviewed -->
+<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -279,7 +279,11 @@ seconde.
 - **Entrée bornée.** Un projet peut venir d’une pull request ; glassready lit donc au plus 32 Mo
   par fichier du projet et, pour les sources, 4 Mo par fichier, 20 000 fichiers et 128 Mo au
   total ; ce qui est laissé de côté figure dans les notes du rapport. Un plist binaire peut
-  produire au plus 100 000 valeurs, et un plist peut s’imbriquer sur 64 niveaux.
+  produire au plus 100 000 valeurs, et un plist ou un fichier JSON (package.json,
+  package-lock.json, app.json) peut s’imbriquer sur 64 niveaux ; un JSON plus profond n’est pas
+  analysé. Sur un Mac (Apple silicon) avec Node 26, un projet dont le package.json, le
+  package-lock.json et quatre package.json de `node_modules` font chacun 31 Mo de tableaux
+  imbriqués est vérifié en 0,2 s avec au plus 190 Mo de mémoire.
 
 ## Documentation
 

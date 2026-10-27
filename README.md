@@ -271,7 +271,10 @@ medians of the three sets were 0.12, 0.12 and 0.11 seconds; the slowest run took
 - **Bounded input.** A project can come from a pull request, so glassready reads at most 32 MB
   per project file and, of the sources, 4 MB per file, 20,000 files and 128 MB in total; what it
   leaves out is listed in the report's notes. A binary plist may produce at most 100,000 values,
-  and a plist may nest 64 levels.
+  and a plist or a JSON file (package.json, package-lock.json, app.json) may nest 64 levels; a
+  deeper JSON file is not parsed. On a Mac (Apple silicon) with Node 26, a project whose
+  package.json, package-lock.json and four `node_modules` package.json files are 31 MB of nested
+  arrays each is checked in 0.2 s with at most 190 MB of memory.
 
 ## Documentation
 

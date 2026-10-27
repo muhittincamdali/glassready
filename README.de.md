@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@0c7045cc9b1acc9943580c05a9dd3383c5d48cbc status=reviewed -->
+<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -279,7 +279,11 @@ Lauf dauerte 0,17 Sekunden.
 - **Begrenzte Eingabe.** Ein Projekt kann aus einem Pull Request stammen, daher liest glassready
   höchstens 32 MB pro Projektdatei und bei den Quellen 4 MB pro Datei, 20.000 Dateien und 128 MB
   insgesamt; was dabei ausgelassen wird, steht in den Hinweisen des Berichts. Eine binäre Plist
-  darf höchstens 100.000 Werte erzeugen und eine Plist höchstens 64 Ebenen tief verschachtelt sein.
+  darf höchstens 100.000 Werte erzeugen, und eine Plist oder eine JSON-Datei (package.json,
+  package-lock.json, app.json) darf höchstens 64 Ebenen tief verschachtelt sein; eine tiefere
+  JSON-Datei wird nicht geparst. Auf einem Mac (Apple silicon) mit Node 26 wird ein Projekt, dessen
+  package.json, package-lock.json und vier package.json-Dateien in `node_modules` je 31 MB
+  verschachtelte Arrays sind, in 0,2 s mit höchstens 190 MB Speicher geprüft.
 
 ## Dokumentation
 
