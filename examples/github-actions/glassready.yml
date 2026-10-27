@@ -4,10 +4,9 @@
 # (errors and warnings). Use `--fail-on error` to fail only on the opt-out, or `--fail-on none` to
 # report only.
 #
-# The job runs the latest 0.1 release of the npm package @mcamdali/glassready (the command is
-# glassready). To run one fixed release instead, put its GitHub release tarball in place of
-# @mcamdali/glassready@0.1, e.g.
-# https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz.
+# The job runs glassready 0.1.0 from its GitHub release tarball with npx (the command is
+# glassready). Publishing the package to npm as @mcamdali/glassready is planned; until then npx
+# cannot find it by that name.
 name: glassready
 
 on:
@@ -61,8 +60,8 @@ jobs:
       - name: Check what Liquid Glass changes
         run: |
           status=0
-          npx --yes @mcamdali/glassready@0.1 \
-            --format markdown --output glassready.md || status=$?
+          npx --yes --package=https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz \
+            glassready --format markdown --output glassready.md || status=$?
           # Exit code 2 (the project could not be read) can come without a report.
           if [ -f glassready.md ]; then
             cat glassready.md >> "$GITHUB_STEP_SUMMARY"

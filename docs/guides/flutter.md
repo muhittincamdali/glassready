@@ -7,7 +7,7 @@ views you embed with `UiKitView`. The `UIDesignRequiresCompatibility` opt-out in
 no longer holds those back ([why](opt-out.md)).
 
 ```sh
-npx @mcamdali/glassready path/to/your_app
+glassready path/to/your_app
 ```
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="../media/demo-flutter-dark.svg"><source media="(prefers-color-scheme: light)" srcset="../media/demo-flutter-light.svg"><img src="../media/demo-flutter-light.svg" alt="glassready run on a Flutter app: the opt-out ignored, four Cupertino bars drawn by Flutter and a UiKitView"></picture>

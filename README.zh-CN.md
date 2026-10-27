@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
+<!-- i18n-source: README.md@7b79d29107740ed3f7f4dd400d7e9f2ad0a740a5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -43,23 +43,33 @@ fixture</a>，这是一个为测试编写的 UIKit 应用（<code>npm run demo</
 
 ## 快速开始
 
-你需要 [Node.js](https://nodejs.org/) 22.12 或更高版本（`node --version` 可查看版本；在 Mac 上用 `brew install node` 安装）。不需要其他任何东西。
+**1. 安装 glassready。** 用 [Homebrew](https://brew.sh/) 安装（它会一并安装 Node.js）：
 
-**1. 在应用所在的文件夹中打开终端**，也就是包含 `.xcodeproj`、`pubspec.yaml` 或 `package.json` 的那个文件夹：
+```sh
+brew install muhittincamdali/tap/glassready
+```
+
+或者用 npm 从 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0) 安装，这需要 [Node.js](https://nodejs.org/) 22.12 或更高版本（`node --version` 可查看版本）：
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+这个包还没有发布到 npm registry；计划以 `@mcamdali/glassready` 的名字发布。两条命令安装的是同一个 release tarball。
+
+**2. 在应用所在的文件夹中打开终端**，也就是包含 `.xcodeproj`、`pubspec.yaml` 或 `package.json` 的那个文件夹：
 
 ```sh
 cd path/to/YourApp
 ```
 
-**2. 运行 glassready：**
+**3. 运行 glassready：**
 
 ```sh
-npx @mcamdali/glassready
+glassready
 ```
 
-npm 包名为 `@mcamdali/glassready`，它安装的命令是 `glassready`。
-
-**3. 阅读项目名称下面的那一行。** 看到 "The Liquid Glass opt-out is ignored"（Liquid Glass 退出键被忽略），说明这个应用即使设置了退出，在 iOS 27 上也会发生变化：先看 **ERROR**，再看 **WARNING** 发现，这些是你的代码覆盖新栏的位置。**INFO** 发现值得在 iOS 27 模拟器上看一眼。每条发现都会按名称指向 "How to fix" 列表中的修复办法。
+**4. 阅读项目名称下面的那一行。** 看到 "The Liquid Glass opt-out is ignored"（Liquid Glass 退出键被忽略），说明这个应用即使设置了退出，在 iOS 27 上也会发生变化：先看 **ERROR**，再看 **WARNING** 发现，这些是你的代码覆盖新栏的位置。**INFO** 发现值得在 iOS 27 模拟器上看一眼。每条发现都会按名称指向 "How to fix" 列表中的修复办法。
 
 ## 用 iOS 27 SDK 构建时会发生什么变化
 
@@ -105,20 +115,13 @@ npm 包名为 `@mcamdali/glassready`，它安装的命令是 `glassready`。
 
 ## 安装
 
-可以免安装直接运行（见上文），也可以从 npm 安装 `glassready` 命令：
+“快速开始”中的命令会从 GitHub release 安装 `glassready` 命令。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带这个包，并附有 `SHA256SUMS` 文件。要在项目中固定某个 release：
 
 ```sh
-npm i -g @mcamdali/glassready
-glassready
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
 ```
 
-在项目中，`npm install --save-dev @mcamdali/glassready` 会固定版本，之后 `npx glassready` 就会运行这份副本。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带同一个包，并附有 `SHA256SUMS` 文件，npm 也可以直接从那里安装：
-
-```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
-```
-
-使用 Homebrew 时：`brew install muhittincamdali/tap/glassready`。
+之后 `npx glassready` 会运行这份副本。这个包以 `@mcamdali/glassready` 的名字安装，下面的 JavaScript API 导入的也是这个名字。发布到 npm registry 已在计划中；在那之前，`npx @mcamdali/glassready` 找不到这个包。
 
 ## 使用方法
 
@@ -142,13 +145,13 @@ glassready 会自动找到 iOS 应用：原生应用是根目录或下一级文�
 ### 把 Markdown 报告与代码放在一起
 
 ```sh
-npx @mcamdali/glassready --format markdown --output glassready.md
+glassready --format markdown --output glassready.md
 ```
 
 ### 在脚本中使用 JSON 报告
 
 ```sh
-npx @mcamdali/glassready --json > glassready.json
+glassready --json > glassready.json
 ```
 
 每条发现都有 `rule`、`severity`、`title`、`message`、`file`、`line`、`target`，以及包含步骤和指南的 `fix` 和 `sources`。其结构为 `schemaVersion` 0，在 1.0 之前可能会改变。[examples/shell/opt-out-targets.sh](examples/shell/opt-out-targets.sh) 用 `jq` 对它进行筛选。

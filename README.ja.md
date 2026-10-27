@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
+<!-- i18n-source: README.md@7b79d29107740ed3f7f4dd400d7e9f2ad0a740a5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -43,23 +43,33 @@ fixture</a> を実行して記録したものです。これはテスト用に�
 
 ## クイックスタート
 
-[Node.js](https://nodejs.org/) 22.12 以降が必要です（`node --version` で確認できます。Mac では `brew install node` でインストールできます）。ほかに必要なものはありません。
+**1. glassready をインストールします。** Node.js も一緒にインストールされる [Homebrew](https://brew.sh/) の場合：
 
-**1. アプリのフォルダーでターミナルを開きます。** `.xcodeproj`、`pubspec.yaml`、または `package.json` があるフォルダーです。
+```sh
+brew install muhittincamdali/tap/glassready
+```
+
+または npm で [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0) からインストールします。[Node.js](https://nodejs.org/) 22.12 以降が必要です（`node --version` で確認できます）：
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+このパッケージはまだ npm レジストリにありません。`@mcamdali/glassready` として公開する予定です。どちらのコマンドも同じ release の tarball をインストールします。
+
+**2. アプリのフォルダーでターミナルを開きます。** `.xcodeproj`、`pubspec.yaml`、または `package.json` があるフォルダーです。
 
 ```sh
 cd path/to/YourApp
 ```
 
-**2. glassready を実行します。**
+**3. glassready を実行します。**
 
 ```sh
-npx @mcamdali/glassready
+glassready
 ```
 
-npm パッケージ名は `@mcamdali/glassready` で、インストールされるコマンドは `glassready` です。
-
-**3. プロジェクト名の下の行を読みます。** "The Liquid Glass opt-out is ignored"（Liquid Glass のオプトアウトは無視される）と表示された場合、オプトアウトしていても iOS 27 でアプリの見た目が変わります。まず **ERROR** を確認し、次に **WARNING** の検出に進んでください。これは、コードが新しいバーを塗りつぶしている箇所です。**INFO** の検出は、iOS 27 シミュレーターで確認する価値があります。各検出には、"How to fix" の一覧にある対処方法の名前が付いています。
+**4. プロジェクト名の下の行を読みます。** "The Liquid Glass opt-out is ignored"（Liquid Glass のオプトアウトは無視される）と表示された場合、オプトアウトしていても iOS 27 でアプリの見た目が変わります。まず **ERROR** を確認し、次に **WARNING** の検出に進んでください。これは、コードが新しいバーを塗りつぶしている箇所です。**INFO** の検出は、iOS 27 シミュレーターで確認する価値があります。各検出には、"How to fix" の一覧にある対処方法の名前が付いています。
 
 ## iOS 27 SDK でビルドすると何が変わるか
 
@@ -105,20 +115,13 @@ Apple の [UIDesignRequiresCompatibility](https://developer.apple.com/documentat
 
 ## インストール
 
-インストールせずに実行するか（上記）、npm から `glassready` コマンドをインストールします。
+「クイックスタート」のコマンドは、GitHub release から `glassready` コマンドをインストールします。各 [GitHub release](https://github.com/muhittincamdali/glassready/releases) には、パッケージが `glassready-<version>.tgz` として `SHA256SUMS` ファイルと一緒に含まれています。プロジェクトで release を固定するには：
 
 ```sh
-npm i -g @mcamdali/glassready
-glassready
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
 ```
 
-プロジェクト内では、`npm install --save-dev @mcamdali/glassready` でバージョンを固定でき、その後は `npx glassready` がそのコピーを実行します。各 [GitHub release](https://github.com/muhittincamdali/glassready/releases) には、同じパッケージが `glassready-<version>.tgz` として `SHA256SUMS` ファイルとともに添付されており、npm でそこから直接インストールすることもできます:
-
-```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
-```
-
-Homebrew の場合: `brew install muhittincamdali/tap/glassready`。
+その後は `npx glassready` がそのコピーを実行します。パッケージは `@mcamdali/glassready` という名前でインストールされ、後述の JavaScript API もこの名前で import します。npm レジストリへの公開は予定です。それまでは `npx @mcamdali/glassready` ではパッケージが見つかりません。
 
 ## 使い方
 
@@ -142,13 +145,13 @@ glassready は iOS アプリを自動で見つけます。ネイティブアプ�
 ### Markdown レポートをコードと一緒に残す
 
 ```sh
-npx @mcamdali/glassready --format markdown --output glassready.md
+glassready --format markdown --output glassready.md
 ```
 
 ### JSON レポートをスクリプトで使う
 
 ```sh
-npx @mcamdali/glassready --json > glassready.json
+glassready --json > glassready.json
 ```
 
 各検出には `rule`、`severity`、`title`、`message`、`file`、`line`、`target` と、手順とガイドを含む `fix`、そして `sources` があります。形式は `schemaVersion` 0 で、1.0 より前に変更される可能性があります。[examples/shell/opt-out-targets.sh](examples/shell/opt-out-targets.sh) は、これを `jq` で絞り込みます。

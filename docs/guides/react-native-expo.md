@@ -5,7 +5,7 @@ are UIKit views take the Liquid Glass design and the parts drawn in JavaScript d
 `UIDesignRequiresCompatibility` opt-out no longer holds either back ([why](opt-out.md)).
 
 ```sh
-npx @mcamdali/glassready path/to/your-app
+glassready path/to/your-app
 ```
 
 | Part of the app                                                                 | Drawn by     | With the iOS 27 SDK                         |

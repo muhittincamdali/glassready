@@ -56,25 +56,37 @@ fixture</a>, a UIKit app written for the tests (<code>npm run demo</code>).</sub
 
 ## Quick start
 
-You need [Node.js](https://nodejs.org/) 22.12 or later (`node --version` prints it; on a Mac,
-`brew install node` installs it). Nothing else.
+**1. Install glassready.** With [Homebrew](https://brew.sh/), which also installs Node.js:
 
-**1. Open a terminal in your app's folder**, the one with the `.xcodeproj`, `pubspec.yaml` or
+```sh
+brew install muhittincamdali/tap/glassready
+```
+
+Or with npm from the
+[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0), which needs
+[Node.js](https://nodejs.org/) 22.12 or later (`node --version` prints it):
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+The package is not on the npm registry yet; publishing it there as `@mcamdali/glassready` is
+planned. Both commands install the same release tarball.
+
+**2. Open a terminal in your app's folder**, the one with the `.xcodeproj`, `pubspec.yaml` or
 `package.json`:
 
 ```sh
 cd path/to/YourApp
 ```
 
-**2. Run glassready:**
+**3. Run glassready:**
 
 ```sh
-npx @mcamdali/glassready
+glassready
 ```
 
-The npm package is `@mcamdali/glassready`; the command it installs is `glassready`.
-
-**3. Read the line under your project's name.** "The Liquid Glass opt-out is ignored" means the
+**4. Read the line under your project's name.** "The Liquid Glass opt-out is ignored" means the
 app changes on iOS 27 even though it opts out: start with the **ERROR**, then the **WARNING**
 findings, which are the places your code paints over the new bars. **INFO** findings are worth a
 look on an iOS 27 simulator. Each finding names its fix from the "How to fix" list.
@@ -135,23 +147,17 @@ per info finding, at most 100. The score sorts projects; it does not grade the d
 
 ## Installation
 
-Run it without installing (above), or install the `glassready` command from npm:
+The commands under Quick start install the `glassready` command from the GitHub release. Each
+[GitHub release](https://github.com/muhittincamdali/glassready/releases) carries the package as
+`glassready-<version>.tgz` with a `SHA256SUMS` file. To pin a release in a project:
 
 ```sh
-npm i -g @mcamdali/glassready
-glassready
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
 ```
 
-In a project, `npm install --save-dev @mcamdali/glassready` pins a version, and `npx glassready`
-then runs that copy. Each [GitHub release](https://github.com/muhittincamdali/glassready/releases)
-carries the same package as `glassready-<version>.tgz` with a `SHA256SUMS` file, and npm installs
-it from there too:
-
-```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
-```
-
-With Homebrew: `brew install muhittincamdali/tap/glassready`.
+`npx glassready` then runs that copy. The package installs under the name `@mcamdali/glassready`,
+the name the JavaScript API below imports. Publishing to the npm registry is planned; until then
+`npx @mcamdali/glassready` does not find the package.
 
 ## Usage
 
@@ -181,13 +187,13 @@ its config.
 ### Keep a Markdown report with the code
 
 ```sh
-npx @mcamdali/glassready --format markdown --output glassready.md
+glassready --format markdown --output glassready.md
 ```
 
 ### Use the JSON report in scripts
 
 ```sh
-npx @mcamdali/glassready --json > glassready.json
+glassready --json > glassready.json
 ```
 
 Each finding has `rule`, `severity`, `title`, `message`, `file`, `line`, `target`, the `fix` with

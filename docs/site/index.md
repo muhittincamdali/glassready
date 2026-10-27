@@ -6,8 +6,19 @@ will change: the opt-out, and every place where the app paints over, hides or me
 sheets it draws, with the fix for each.
 
 ```sh
-npx @mcamdali/glassready
+brew install muhittincamdali/tap/glassready
+glassready
 ```
+
+Without Homebrew, npm installs the same package from the
+[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0) (Node.js 22.12
+or later):
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+Publishing to the npm registry as `@mcamdali/glassready` is planned.
 
 ## Guides
 
