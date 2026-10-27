@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { MAX_BINARY_PLIST_VALUES, MAX_PLIST_DEPTH } from '../../src/collect/plist-binary.js';
 import { isDict, type PlistDict, PlistError, parsePlist } from '../../src/collect/plist.js';
+import { type BinaryObject, binaryPlist, sharedReferencePlist } from '../helpers/bplist.js';
 
 const data = (name: string) => readFileSync(new URL(`../data/${name}`, import.meta.url));
 
@@ -96,6 +98,53 @@ describe('parsePlist (binary)', () => {
     const view = new DataView(bytes.buffer);
     view.setBigUint64(bytes.length - 8, BigInt(bytes.length));
     expect(() => parsePlist(bytes)).toThrow(PlistError);
+  });
+
+  it('rejects an object count larger than the file', () => {
+    const bytes = Uint8Array.from(data('Info.binary.plist'));
+    const view = new DataView(bytes.buffer);
+    view.setBigUint64(bytes.length - 24, 2n ** 40n);
+    expect(() => parsePlist(bytes)).toThrow(PlistError);
+  });
+
+  it('reads shared references within the value budget', () => {
+    const { value } = parsePlist(sharedReferencePlist(2, 100));
+    if (!isDict(value)) throw new Error('not a dict');
+    const outer = value.k as boolean[][];
+    expect(outer).toHaveLength(100);
+    expect(outer.every((inner) => inner.length === 100 && inner.every(Boolean))).toBe(true);
+  });
+
+  it('stops a shared-reference amplification at the value budget, quickly', () => {
+    // The audit's 1.7 KB file: 200^4 values without a budget; it ran out of memory after 25 s.
+    const bytes = sharedReferencePlist(4, 200);
+    expect(bytes.length).toBeLessThan(2000);
+    const started = performance.now();
+    expect(() => parsePlist(bytes)).toThrow(
+      new PlistError(`Binary plist has more than ${MAX_BINARY_PLIST_VALUES} values.`),
+    );
+    expect(performance.now() - started).toBeLessThan(1000);
+  });
+
+  it('shares a string that many references name', () => {
+    const text = 'x'.repeat(5000);
+    const bytes = binaryPlist([
+      { dict: [[1, 2]] },
+      { ascii: 'k' },
+      { array: Array.from({ length: 1000 }, () => 3) },
+      { ascii: text },
+    ]);
+    const { value } = parsePlist(bytes);
+    if (!isDict(value)) throw new Error('not a dict');
+    expect(value.k).toEqual(Array.from({ length: 1000 }, () => text));
+  });
+
+  it('rejects nesting deeper than the limit', () => {
+    const depth = MAX_PLIST_DEPTH + 1;
+    const objects: BinaryObject[] = [{ dict: [[1, 2]] }, { ascii: 'k' }];
+    for (let level = 0; level < depth; level++) objects.push({ array: [3 + level] });
+    objects.push({ true: true });
+    expect(() => parsePlist(binaryPlist(objects))).toThrow(/nests more than/);
   });
 });
 

@@ -1,8 +1,25 @@
 // Binary property lists (bplist00), the format found in built apps:
 // https://opensource.apple.com/source/CF/CF-1153.18/CFBinaryPList.c
-import { BINARY_MAGIC, type PlistDict, PlistError, type PlistValue } from './plist-value.js';
+import {
+  BINARY_MAGIC,
+  isDict,
+  type PlistDict,
+  PlistError,
+  type PlistValue,
+} from './plist-value.js';
 
 const APPLE_EPOCH_MS = Date.UTC(2001, 0, 1);
+
+/**
+ * How many values one plist may produce. Objects are shared by reference, so a file of a few
+ * hundred bytes can name the same array thousands of times at every level: without a budget, a
+ * 1.7 KB Info.plist from a pull request expands into billions of values. Real Info.plist files
+ * produce a few hundred.
+ */
+export const MAX_BINARY_PLIST_VALUES = 100_000;
+
+/** How deep arrays and dictionaries may nest; Info.plist files nest a handful of levels. */
+export const MAX_PLIST_DEPTH = 64;
 
 export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
   if (bytes.length < BINARY_MAGIC.length + 32) throw new PlistError('Binary plist is too short.');
@@ -16,7 +33,11 @@ export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
   if (offsetSize < 1 || offsetSize > 8 || refSize < 1 || refSize > 8) {
     throw new PlistError('Binary plist trailer is not valid.');
   }
-  if (tableOffset + objectCount * offsetSize > trailer || topObject >= objectCount) {
+  if (
+    objectCount > trailer ||
+    tableOffset + objectCount * offsetSize > trailer ||
+    topObject >= objectCount
+  ) {
     throw new PlistError('Binary plist offset table is out of range.');
   }
 
@@ -28,6 +49,10 @@ export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
   };
   const offsetOf = (ref: number) => readUint(tableOffset + ref * offsetSize, offsetSize);
   const visiting = new Set<number>();
+  // Strings, data and numbers are read once per object and shared, so a large string that many
+  // references name costs its bytes once; arrays and dictionaries count against the budget.
+  const leaves = new Map<number, PlistValue>();
+  let produced = 0;
 
   const lengthAt = (at: number, info: number): [number, number] => {
     if (info !== 0xf) return [info, at + 1];
@@ -40,9 +65,19 @@ export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
   const read = (ref: number): PlistValue => {
     if (ref >= objectCount) throw new PlistError('Binary plist object reference is out of range.');
     if (visiting.has(ref)) throw new PlistError('Binary plist contains a reference cycle.');
+    if (visiting.size >= MAX_PLIST_DEPTH) {
+      throw new PlistError(`Binary plist nests more than ${MAX_PLIST_DEPTH} levels.`);
+    }
+    if (++produced > MAX_BINARY_PLIST_VALUES) {
+      throw new PlistError(`Binary plist has more than ${MAX_BINARY_PLIST_VALUES} values.`);
+    }
+    const leaf = leaves.get(ref);
+    if (leaf !== undefined) return leaf;
     visiting.add(ref);
     try {
-      return readObject(offsetOf(ref));
+      const value = readObject(offsetOf(ref));
+      if (!Array.isArray(value) && !isDict(value)) leaves.set(ref, value);
+      return value;
     } finally {
       visiting.delete(ref);
     }
