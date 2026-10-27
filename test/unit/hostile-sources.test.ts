@@ -2,7 +2,7 @@
 // seconds to minutes at this size before the patterns were made linear (see the audit numbers in
 // the comments); the limit leaves room for a slow CI runner.
 import { describe, expect, it } from 'vitest';
-import { sourceFile } from '../../src/collect/sources.js';
+import { blankCommentsAndStrings, sourceFile } from '../../src/collect/sources.js';
 import { isFlutterPlugin, type Project } from '../../src/detect/project.js';
 import { checkNativeFile } from '../../src/rules/native.js';
 import { checkReactNative } from '../../src/rules/react-native.js';
@@ -107,5 +107,15 @@ describe('isFlutterPlugin', () => {
 
   it('reads a pubspec of blank lines in linear time', () => {
     expect(timed(() => isFlutterPlugin(`flutter:\n${repeat(' \n')}`))).toBeLessThan(LIMIT_MS);
+  });
+});
+
+describe('blankCommentsAndStrings', () => {
+  it('blanks Swift raw strings with many hashes', () => {
+    expect(blankCommentsAndStrings('let a = ##"x"## + b', 'swift')).toBe('let a = ##" "## + b');
+  });
+
+  it('reads a file of raw string openings in linear time', () => {
+    expect(timed(() => blankCommentsAndStrings(repeat('#"'), 'swift'))).toBeLessThan(LIMIT_MS);
   });
 });
