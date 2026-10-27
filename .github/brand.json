@@ -1,0 +1,19 @@
+{
+  "name": "glassready",
+  "repository": "muhittincamdali/glassready",
+  "tagline": {
+    "en": "Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."
+  },
+  "tags": {
+    "en": ["Liquid Glass", "iOS 27 SDK", "Flutter", "React Native"]
+  },
+  "motif": "phone",
+  "buttons": ["start", "docs", "guides", "examples"],
+  "links": {
+    "docs": "https://muhittincamdali.github.io/glassready/",
+    "guides": "docs/guides/",
+    "examples": "examples/"
+  },
+  "languages": ["en", "tr", "zh-CN", "ja", "ko", "es", "de", "fr", "pt-BR", "ru"],
+  "socialTheme": "dark"
+}
