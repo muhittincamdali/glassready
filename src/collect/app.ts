@@ -168,7 +168,7 @@ export const PROJECT_NOT_CHECKED =
 
 /** Reads the app targets and sources of a detected project. */
 export async function collectApp(project: Project): Promise<AppModel> {
-  const notes: string[] = [];
+  const notes = [...project.notes];
   const targets: AppTarget[] = [];
   const upgrades: string[] = [];
   for (const path of project.xcodeProjects) {

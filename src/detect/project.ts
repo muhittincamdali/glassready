@@ -2,7 +2,7 @@
 // where its iOS app project is, and the package versions and configuration the rules look at.
 import { readdir, stat } from 'node:fs/promises';
 import { basename, dirname, join, resolve } from 'node:path';
-import { readProjectText } from '../core/files.js';
+import { NOT_READ, readProjectFile, readProjectText } from '../core/files.js';
 import { lowestAllowed } from '../core/versions.js';
 
 export type Ecosystem = 'native' | 'flutter' | 'react-native' | 'expo';
@@ -46,6 +46,8 @@ export interface Project {
   expoConfig: ExpoConfig | null;
   /** The Xcode version in .xcode-version (the file xcodes and CI setups read), when there is one. */
   xcodeVersionFile: string | null;
+  /** Report notes about project files that are there but could not be used, e.g. package.json. */
+  notes: string[];
 }
 
 export class ProjectError extends Error {
@@ -87,6 +89,33 @@ async function readJson(path: string, root: string | null): Promise<unknown> {
   } catch {
     return undefined;
   }
+}
+
+/** What a note about an unusable package.json adds: what the report could not check. */
+export const MANIFEST_NOT_CHECKED =
+  'React Native and Expo apps are recognised by it, so the app was checked as native iOS: the React Native rules (GLS101 to GLS104) and the JavaScript sources were not checked.';
+
+/**
+ * The package.json of `root`, and why it cannot be used when it is there but is not read, is not
+ * JSON or is not an object (null when it is missing or fine). A broken package.json must not turn
+ * a React Native app into a native one without a word in the report.
+ */
+async function readManifest(
+  root: string,
+): Promise<{ manifest: Record<string, unknown>; problem: string | null }> {
+  const file = await readProjectFile(join(root, 'package.json'), root);
+  if (!file.found) {
+    return { manifest: {}, problem: file.reason === 'missing' ? null : NOT_READ[file.reason] };
+  }
+  let value: unknown;
+  try {
+    value = JSON.parse(file.bytes.toString('utf8'));
+  } catch {
+    // The parser's message quotes the file; the note says only what is wrong with it.
+    return { manifest: {}, problem: 'is not valid JSON.' };
+  }
+  const manifest = record(value);
+  return { manifest, problem: manifest === value ? null : 'does not hold a JSON object.' };
 }
 
 const record = (value: unknown): Record<string, unknown> =>
@@ -240,10 +269,11 @@ export async function detectProject(path: string): Promise<Project> {
       flutter,
       expoConfig: null,
       xcodeVersionFile: await xcodeVersionFile(target),
+      notes: [],
     };
   }
 
-  const manifest = record(await readJson(join(target, 'package.json'), target));
+  const { manifest, problem } = await readManifest(target);
   const packages = await packageVersions(target, manifest);
   if (packages.has('expo') || packages.has('react-native')) {
     const ecosystem = packages.has('expo') ? 'expo' : 'react-native';
@@ -262,16 +292,18 @@ export async function detectProject(path: string): Promise<Project> {
       flutter: null,
       expoConfig: ecosystem === 'expo' ? await expoConfig(target) : null,
       xcodeVersionFile: await xcodeVersionFile(target),
+      notes: [],
     };
   }
 
   const xcodeProjects = await nativeXcodeProjects(target);
   if (xcodeProjects.length === 0) {
     throw new ProjectError(
-      `No iOS project found in ${path}: expected an .xcodeproj, a Flutter pubspec.yaml or a React Native or Expo package.json.`,
+      `No iOS project found in ${path}: expected an .xcodeproj, a Flutter pubspec.yaml or a React Native or Expo package.json.${problem ? ` package.json ${problem}` : ''}`,
     );
   }
-  return nativeProject(target, xcodeProjects, await xcodeVersionFile(target));
+  const notes = problem ? [`package.json ${problem} ${MANIFEST_NOT_CHECKED}`] : [];
+  return nativeProject(target, xcodeProjects, await xcodeVersionFile(target), notes);
 }
 
 /** The first line of .xcode-version, e.g. "26.4" or "27.1". */
@@ -285,6 +317,7 @@ function nativeProject(
   root: string,
   xcodeProjects: string[],
   xcodeVersion: string | null,
+  notes: string[] = [],
 ): Project {
   const first = xcodeProjects[0] ?? root;
   return {
@@ -297,5 +330,6 @@ function nativeProject(
     flutter: null,
     expoConfig: null,
     xcodeVersionFile: xcodeVersion,
+    notes,
   };
 }

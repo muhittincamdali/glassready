@@ -24,6 +24,7 @@ function project(
     flutter: null,
     expoConfig: null,
     xcodeVersionFile: null,
+    notes: [],
   };
 }
 

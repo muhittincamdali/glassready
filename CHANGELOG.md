@@ -31,6 +31,10 @@ All notable changes to glassready are listed here. The format follows
   deeply nested file overflowed the stack, and the report showed only "Maximum call stack size
   exceeded" while the opt-out set in that project's build settings went unchecked. The note for any
   .xcodeproj that cannot be read now says its targets and their opt-out were not checked.
+- A React Native or Expo app whose package.json is not valid JSON, is not an object or is not read
+  (too large, a link out of the project) gets a report note saying so. It was checked as a native
+  iOS app without a word: GLS101 to GLS104 and the JavaScript sources were skipped. When no
+  .xcodeproj is found either, the error names the package.json problem.
 
 ## [0.1.0] - 2026-10-28
 
