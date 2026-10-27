@@ -69,8 +69,29 @@ describe('parsePlist (XML)', () => {
     ['an unknown element', wrap('<set/>')],
     ['a bad integer', wrap('<integer>12a</integer>')],
     ['a missing closing tag', '<plist version="1.0"><string>a</string>'],
+    ['an unclosed comment', wrap('<dict><!-- note</dict>')],
+    ['an unclosed DOCTYPE', '<!DOCTYPE plist <plist><dict/></plist'],
+    ['an unclosed tag', wrap('<dict><key')],
   ])('rejects %s', (_, text) => {
     expect(() => parsePlist(text)).toThrow(PlistError);
+  });
+
+  it('keeps a "<" that starts no markup in the text', () => {
+    expect(parsePlist(wrap('<string>a < b</string>')).value).toBe('a < b');
+  });
+
+  // The audit's 1 MB files took 40 s each with the regex tokenizer.
+  it.each([
+    ['<a', '<a'],
+    ['<!--', '<!--'],
+    ['<!DOCTYPE', '<!DOCTYPE'],
+    ['<?', '<?'],
+    ['<![CDATA[', '<![CDATA['],
+  ])('reads a megabyte of unclosed %s in linear time', (_, unit) => {
+    const text = `<plist><dict>${unit.repeat(Math.ceil(1_100_000 / unit.length))}</dict></plist>`;
+    const started = performance.now();
+    expect(() => parsePlist(text)).toThrow(PlistError);
+    expect(performance.now() - started).toBeLessThan(1000);
   });
 });
 
