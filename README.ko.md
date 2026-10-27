@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -216,7 +216,7 @@ iOS 27.0 iPhone 17 시뮬레이터에서 Xcode 27.1로 빌드한 fixture 네 개
 ## 한계
 
 - **컴파일러가 아니라 패턴입니다.** 규칙은 주석과 문자열을 비워 둔 소스 텍스트에 대한 정규식입니다. 생성된 코드, 매크로 뒤에 숨은 코드, 실행 중에 만들어지는 코드, 특이한 형태로 작성된 코드는 놓치거나 잘못 일치시킬 수 있습니다.
-- **앱 자체의 소스만 봅니다.** Pods, 앱 폴더 밖의 Swift 패키지, `node_modules`, Flutter 플러그인은 읽지 않습니다.
+- **앱 자체의 소스만 봅니다.** 규칙은 앱 자체의 코드에 적용됩니다. Pods, 앱 폴더 밖의 Swift 패키지, `node_modules`, Flutter 플러그인의 소스는 읽지 않습니다. `node_modules`에서는 glassready가 살펴보는 React Native와 Expo 패키지(`react-native`, `expo`, `react-native-screens` 외 8개)의 `<name>/package.json`만 설치된 버전을 알기 위해 읽습니다. `node_modules/<name>` 폴더 밖을 가리키는 링크인 파일은 읽지 않습니다.
 - **빌드 설정은 project.pbxproj에서만 읽습니다.** `.xcconfig` 파일은 읽지 않습니다. 타깃의 Info.plist를 읽을 수 없으면 옵트아웃 상태는 "알 수 없음"이 되며, 리포트가 그 이유를 알려 줍니다. Xcode 프로젝트를 읽을 수 없을 때도 마찬가지이며, 이때 판정은 "Opt-out not known"이고 준비 완료로 표시되지 않습니다.
 - **Expo 설정은 텍스트로 읽습니다.** `app.config.js`와 `app.config.ts`는 실행하지 않으므로, 변수나 config plugin을 통해 설정한 옵트아웃은 찾지 못합니다.
 - **파일만 봅니다.** glassready는 앱을 빌드하거나 앱 화면을 보지 않습니다. 이 저장소의 시뮬레이터 녹화는 Mac에서 실행한 `scripts/`의 스크립트로 만든 것입니다.

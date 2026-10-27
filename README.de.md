@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -268,8 +268,12 @@ Lauf dauerte 0,17 Sekunden.
 - **Muster, kein Compiler.** Die Regeln sind reguläre Ausdrücke über den Quelltext, in dem Kommentare
   und Strings geleert sind. Code, der generiert, hinter Makros versteckt, zur Laufzeit aufgebaut oder in
   ungewöhnlicher Form geschrieben ist, kann übersehen oder fälschlich erkannt werden.
-- **Nur der eigene Quelltext der App.** Pods, Swift-Pakete außerhalb des App-Ordners, `node_modules` und
-  Flutter-Plugins werden nicht gelesen.
+- **Nur der eigene Quelltext der App.** Die Regeln laufen über den Code der App selbst: Der
+  Quelltext von Pods, Swift-Paketen außerhalb des App-Ordners, `node_modules` und Flutter-Plugins
+  wird nicht gelesen. Aus `node_modules` liest glassready nur `<name>/package.json` der React-
+  Native- und Expo-Pakete, die es betrachtet (`react-native`, `expo`, `react-native-screens` und
+  acht weitere), wegen der installierten Version; eine solche Datei, die aus einem Ordner
+  `node_modules/<name>` hinaus verlinkt, wird nicht gelesen.
 - **Build-Einstellungen nur aus project.pbxproj.** `.xcconfig`-Dateien werden nicht gelesen. Wenn
   die Info.plist eines Targets nicht gelesen werden kann, lautet sein Opt-out-Zustand „unbekannt“,
   und der Bericht nennt den Grund. Dasselbe gilt, wenn ein Xcode-Projekt nicht gelesen werden kann;

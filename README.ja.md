@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -207,7 +207,7 @@ iOS 27.0 の iPhone 17 シミュレーター上の 4 つの fixture で、いず
 ## 制限事項
 
 - **コンパイラーではなくパターンです。** ルールは、コメントと文字列を空白に置き換えたソースコードに対する正規表現です。生成されたコード、マクロの陰に隠れたコード、実行時に組み立てられるコード、特殊な書き方のコードは、見落とされたり誤って一致したりすることがあります。
-- **アプリ自身のソースのみです。** Pods、アプリのフォルダー外にある Swift パッケージ、`node_modules`、Flutter プラグインは読み取りません。
+- **アプリ自身のソースのみです。** ルールはアプリ自身のコードに対して動きます。Pods、アプリのフォルダー外にある Swift パッケージ、`node_modules`、Flutter プラグインのソースは読み取りません。`node_modules` からは、glassready が見る React Native と Expo のパッケージ（`react-native`、`expo`、`react-native-screens` ほか 8 個）の `<name>/package.json` だけを、インストール済みのバージョンを知るために読み取ります。`node_modules/<name>` フォルダーの外を指すリンクになっているものは読み取りません。
 - **ビルド設定は project.pbxproj のみです。** `.xcconfig` ファイルは読み取りません。ターゲットの Info.plist を読み取れない場合、そのオプトアウトの状態は「不明」となり、レポートに理由が表示されます。Xcode プロジェクトを読み取れない場合も同じで、判定は「Opt-out not known」となり、準備完了とはなりません。
 - **Expo の設定はテキストとして扱います。** `app.config.js` と `app.config.ts` は実行しないため、変数や config plugin 経由で設定されたオプトアウトは検出されません。
 - **ファイルのみです。** glassready はアプリをビルドせず、画面も見ません。このリポジトリにあるシミュレーターの録画は、Mac で実行した `scripts/` のスクリプトによるものです。

@@ -261,8 +261,11 @@ medians of the three sets were 0.12, 0.12 and 0.11 seconds; the slowest run took
 - **Patterns, not a compiler.** The rules are regular expressions over source text whose comments
   and strings are blanked. Code that is generated, hidden behind macros, built at run time or
   written in an unusual shape can be missed or matched by mistake.
-- **Only the app's own sources.** Pods, Swift packages outside the app folder, `node_modules` and
-  Flutter plugins are not read.
+- **Only the app's own sources.** The rules run on the app's own code: the sources of Pods, Swift
+  packages outside the app folder, `node_modules` and Flutter plugins are not read. From
+  `node_modules`, glassready reads only `<name>/package.json` of the React Native and Expo
+  packages it looks at (`react-native`, `expo`, `react-native-screens` and eight more), for the
+  installed version; one that links outside a `node_modules/<name>` folder is not read.
 - **Build settings from project.pbxproj only.** `.xcconfig` files are not read. When a target's
   Info.plist cannot be read, its opt-out state is "not known" and the report says why. The same
   holds when an Xcode project cannot be read; the verdict is then "Opt-out not known", never ready.

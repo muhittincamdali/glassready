@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -266,8 +266,12 @@ segundo.
 - **Padrões, não um compilador.** As regras são expressões regulares sobre o texto do código-fonte, com
   os comentários e as strings esvaziados. Código gerado, escondido atrás de macros, montado em tempo de
   execução ou escrito de forma incomum pode passar despercebido ou ser reconhecido por engano.
-- **Só o código-fonte do próprio app.** Pods, pacotes Swift fora da pasta do app, `node_modules` e
-  plugins do Flutter não são lidos.
+- **Só o código-fonte do próprio app.** As regras rodam sobre o código do próprio app: o
+  código-fonte de Pods, de pacotes Swift fora da pasta do app, de `node_modules` e de plugins do
+  Flutter não é lido. De `node_modules`, o glassready lê apenas o `<name>/package.json` dos
+  pacotes React Native e Expo que examina (`react-native`, `expo`, `react-native-screens` e mais
+  oito), para saber a versão instalada; um desses arquivos que aponte para fora de uma pasta
+  `node_modules/<name>` não é lido.
 - **Configurações de build apenas do project.pbxproj.** Os arquivos `.xcconfig` não são lidos.
   Quando o Info.plist de um target não pode ser lido, o estado do opt-out dele é "desconhecido" e o
   relatório diz por quê. O mesmo vale quando um projeto do Xcode não pode ser lido; o veredito passa

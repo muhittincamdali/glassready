@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
+<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -269,8 +269,12 @@ tardó 0,17 segundos.
 - **Patrones, no un compilador.** Las reglas son expresiones regulares sobre el texto del código fuente,
   con los comentarios y las cadenas en blanco. El código generado, oculto tras macros, construido en
   tiempo de ejecución o escrito de forma inusual puede pasarse por alto o coincidir por error.
-- **Solo el código fuente propio de la app.** No se leen los Pods, los paquetes de Swift fuera de la
-  carpeta de la app, `node_modules` ni los plugins de Flutter.
+- **Solo el código fuente propio de la app.** Las reglas se aplican al código de la propia app: no
+  se lee el código fuente de los Pods, de los paquetes de Swift fuera de la carpeta de la app, de
+  `node_modules` ni de los plugins de Flutter. De `node_modules`, glassready solo lee
+  `<name>/package.json` de los paquetes de React Native y Expo que examina (`react-native`,
+  `expo`, `react-native-screens` y ocho más), para conocer la versión instalada; si ese archivo
+  enlaza fuera de una carpeta `node_modules/<name>`, no se lee.
 - **Ajustes de compilación solo desde project.pbxproj.** No se leen los archivos `.xcconfig`. Cuando
   no se puede leer el Info.plist de un target, su estado de opt-out es "desconocido" y el informe
   explica por qué. Lo mismo ocurre cuando no se puede leer un proyecto de Xcode; el veredicto es
