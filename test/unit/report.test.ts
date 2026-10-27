@@ -175,4 +175,16 @@ describe('text helpers', () => {
     expect(wrap('one two three four', 9)).toEqual(['one two', 'three', 'four']);
     expect(clean('a\u0007b\tc\nd\u009b')).toBe('a�b\tc\nd�');
   });
+
+  it('replaces bidirectional embedding, override and isolate controls', () => {
+    const controls = ['‪', '‫', '‬', '‭', '‮'];
+    const isolates = ['⁦', '⁧', '⁨', '⁩'];
+    for (const control of [...controls, ...isolates]) {
+      expect(clean(`App${control}.swift`)).toBe('App�.swift');
+    }
+    // A right-to-left override would show "Info‮tsilp.exe" as "Infoexe.plist".
+    expect(clean('Info‮tsilp.exe')).toBe('Info�tsilp.exe');
+    // Right-to-left text itself and the zero-width joiner are not controls.
+    expect(clean('שלום ‍ مرحبا')).toBe('שלום ‍ مرحبا');
+  });
 });
