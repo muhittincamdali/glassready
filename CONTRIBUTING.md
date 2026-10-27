@@ -75,6 +75,12 @@ features marked as planned. The hygiene check in CI rejects unverifiable superla
 `test:`, `refactor:`, `build:`, `ci:`, `chore:`), one topic per pull request, and an entry under
 "Unreleased" in [CHANGELOG.md](CHANGELOG.md) for anything a user would notice.
 
+Every change reaches `main` through a pull request whose CI checks pass. The first ten branches,
+merged on 27 October 2026 between 22:17 and 22:28 (+03:00), from `build/package-setup` to
+`chore/release-0.1.0`, went into `main` as local merges without a pull request or a CI run; that
+history is kept as it is rather than rewritten. Every change since, from pull request #2 (the first
+one merged), went through a pull request and CI.
+
 ## Releases
 
 Maintainers bump `version` in `package.json`, move the "Unreleased" entries under the new version
