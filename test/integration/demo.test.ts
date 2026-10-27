@@ -30,7 +30,7 @@ describe('parseAnsi', () => {
 });
 
 describe('terminalSvg', () => {
-  const session = { title: 'demo', command: 'npx @mcamdali/glassready', output: 'a <b> & c\n' };
+  const session = { title: 'demo', command: 'glassready', output: 'a <b> & c\n' };
 
   it('escapes text and carries no scripts or external references', () => {
     const svg = terminalSvg(session, 'dark');
@@ -55,6 +55,8 @@ describe.each(DEMOS)('docs/media/demo-$name', (demo) => {
   it('matches what the CLI prints today (npm run demo records it again)', () => {
     const session = record(demo);
     expect(session.output).toContain('glassready');
+    // The installed command; `npx @mcamdali/glassready` fails while the package is not on npm.
+    expect(session.command).toBe(`glassready fixtures/${demo.fixture}`);
     for (const theme of ['light', 'dark'] as const) {
       const committed = readFileSync(mediaPath(demo.name, theme), 'utf8');
       expect(withoutVersion(committed)).toBe(withoutVersion(terminalSvg(session, theme)));
