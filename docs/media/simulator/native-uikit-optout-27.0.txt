@@ -1,0 +1,15 @@
+fixture:    fixtures/native-uikit-optout
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 27.0
+opt-out:    UIDesignRequiresCompatibility = true in the built Info.plist
+screenshot: .simulator-work/screenshots/native-uikit-optout-27.0-opt-out.png
+
+fixture:    fixtures/native-uikit-optout
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 27.0
+opt-out:    UIDesignRequiresCompatibility = not set in the built Info.plist
+screenshot: .simulator-work/screenshots/native-uikit-optout-27.0-no-key.png
+
+compared:   1206 x 2562 pixels above the home indicator, 2% tolerance
+different:  0 pixels
+result:     same screen: the opt-out has no effect on iOS 27.0

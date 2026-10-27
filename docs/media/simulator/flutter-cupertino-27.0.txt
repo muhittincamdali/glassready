@@ -1,0 +1,5 @@
+fixture:    fixtures/flutter-cupertino
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 27.0
+opt-out:    UIDesignRequiresCompatibility = true in the built Info.plist
+screenshot: .simulator-work/screenshots/flutter-cupertino-27.0.png

@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="839" height="1860" viewBox="0 0 839 1860" role="img" aria-label="npx @mcamdali/glassready fixtures/native-swiftui: terminal output">
+<title>glassready · SwiftUI app</title>
+<style>
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;white-space:pre}
+.t{opacity:0;animation:show 0.01s linear forwards}
+.caret{opacity:0;animation:blink 1.1s step-end infinite}
+@keyframes show{to{opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.t{animation:none;opacity:1}.caret{animation:none;opacity:1}}
+</style>
+<rect width="839" height="1860" fill="#0D1117"/>
+<rect x="0.5" y="0.5" width="838" height="1859" rx="10" fill="#04111F" stroke="#1C3557"/>
+<path d="M0.5 34V10.5a10 10 0 0 1 10-10h818a10 10 0 0 1 10 10V34z" fill="#0B1626"/>
+<line x1="0.5" y1="34" x2="838.5" y2="34" stroke="#1C3557"/>
+<circle cx="20" cy="17" r="6" fill="#0A84FF"/><circle cx="40" cy="17" r="6" fill="#64D2FF"/><circle cx="60" cy="17" r="6" fill="#1C3557"/>
+<text x="419.5" y="22" text-anchor="middle" fill="#8FA3BC" style="font-size:12px">glassready · SwiftUI app</text>
+<text x="20" y="67" fill="#8FA3BC"># fixtures/native-swiftui: toolbarBackground, custom bottom bar, sheet background</text>
+<text x="20" y="86"><tspan fill="#0A84FF" font-weight="700">$ </tspan><tspan fill="#D0E2F7"><tspan class="t" style="animation-delay:0.40s">n</tspan><tspan class="t" style="animation-delay:0.45s">p</tspan><tspan class="t" style="animation-delay:0.49s">x</tspan><tspan class="t" style="animation-delay:0.54s"> </tspan><tspan class="t" style="animation-delay:0.58s">@</tspan><tspan class="t" style="animation-delay:0.63s">m</tspan><tspan class="t" style="animation-delay:0.67s">c</tspan><tspan class="t" style="animation-delay:0.72s">a</tspan><tspan class="t" style="animation-delay:0.76s">m</tspan><tspan class="t" style="animation-delay:0.80s">d</tspan><tspan class="t" style="animation-delay:0.85s">a</tspan><tspan class="t" style="animation-delay:0.90s">l</tspan><tspan class="t" style="animation-delay:0.94s">i</tspan><tspan class="t" style="animation-delay:0.98s">/</tspan><tspan class="t" style="animation-delay:1.03s">g</tspan><tspan class="t" style="animation-delay:1.07s">l</tspan><tspan class="t" style="animation-delay:1.12s">a</tspan><tspan class="t" style="animation-delay:1.17s">s</tspan><tspan class="t" style="animation-delay:1.21s">s</tspan><tspan class="t" style="animation-delay:1.25s">r</tspan><tspan class="t" style="animation-delay:1.30s">e</tspan><tspan class="t" style="animation-delay:1.34s">a</tspan><tspan class="t" style="animation-delay:1.39s">d</tspan><tspan class="t" style="animation-delay:1.44s">y</tspan><tspan class="t" style="animation-delay:1.48s"> </tspan><tspan class="t" style="animation-delay:1.52s">f</tspan><tspan class="t" style="animation-delay:1.57s">i</tspan><tspan class="t" style="animation-delay:1.61s">x</tspan><tspan class="t" style="animation-delay:1.66s">t</tspan><tspan class="t" style="animation-delay:1.71s">u</tspan><tspan class="t" style="animation-delay:1.75s">r</tspan><tspan class="t" style="animation-delay:1.79s">e</tspan><tspan class="t" style="animation-delay:1.84s">s</tspan><tspan class="t" style="animation-delay:1.88s">/</tspan><tspan class="t" style="animation-delay:1.93s">n</tspan><tspan class="t" style="animation-delay:1.98s">a</tspan><tspan class="t" style="animation-delay:2.02s">t</tspan><tspan class="t" style="animation-delay:2.06s">i</tspan><tspan class="t" style="animation-delay:2.11s">v</tspan><tspan class="t" style="animation-delay:2.15s">e</tspan><tspan class="t" style="animation-delay:2.20s">-</tspan><tspan class="t" style="animation-delay:2.25s">s</tspan><tspan class="t" style="animation-delay:2.29s">w</tspan><tspan class="t" style="animation-delay:2.33s">i</tspan><tspan class="t" style="animation-delay:2.38s">f</tspan><tspan class="t" style="animation-delay:2.42s">t</tspan><tspan class="t" style="animation-delay:2.47s">u</tspan><tspan class="t" style="animation-delay:2.51s">i</tspan></tspan></text>
+<text class="t" x="20" y="105" style="animation-delay:3.06s"><tspan fill="#8FA3BC">glassready 0.1.0 · rules liquid-glass@2026.10.27</tspan></text>
+<text class="t" x="20" y="124" style="animation-delay:3.10s"></text>
+<text class="t" x="20" y="143" style="animation-delay:3.13s"><tspan fill="#FFFFFF" font-weight="700">Trailhead</tspan><tspan fill="#D0E2F7"> · native iOS · fixtures/native-swiftui</tspan></text>
+<text class="t" x="20" y="162" style="animation-delay:3.17s"><tspan fill="#8FA3BC">project settings last updated by Xcode 14.3 · deployment target iOS 18.0</tspan></text>
+<text class="t" x="20" y="181" style="animation-delay:3.20s"><tspan fill="#8FA3BC">target Trailhead: opts out of Liquid Glass</tspan></text>
+<text class="t" x="20" y="200" style="animation-delay:3.23s"></text>
+<text class="t" x="20" y="219" style="animation-delay:3.27s"><tspan fill="#FFFFFF" font-weight="700">The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 4 custom styles to review first</tspan></text>
+<text class="t" x="20" y="238" style="animation-delay:3.31s"><tspan fill="#8FA3BC">Impact: high (80 of 100)</tspan></text>
+<text class="t" x="20" y="257" style="animation-delay:3.34s"></text>
+<text class="t" x="20" y="276" style="animation-delay:3.38s"><tspan fill="#FFFFFF" font-weight="700">ERROR    </tspan><tspan fill="#FFFFFF" font-weight="700">GLS001 Liquid Glass opt-out that the iOS 27 SDK ignores</tspan></text>
+<text class="t" x="20" y="295" style="animation-delay:3.41s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead.xcodeproj/project.pbxproj:121</tspan></text>
+<text class="t" x="20" y="314" style="animation-delay:3.45s"><tspan fill="#D0E2F7">         Trailhead: the build setting INFOPLIST_KEY_UIDesignRequiresCompatibility is YES.</tspan></text>
+<text class="t" x="20" y="333" style="animation-delay:3.48s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [A] Remove the build setting and review the screens with Liquid Glass</tspan></text>
+<text class="t" x="20" y="352" style="animation-delay:3.52s"></text>
+<text class="t" x="20" y="371" style="animation-delay:3.55s"><tspan fill="#8CC4FF" font-weight="700">WARNING  </tspan><tspan fill="#FFFFFF" font-weight="700">GLS004 SwiftUI bar background set by the app</tspan></text>
+<text class="t" x="20" y="390" style="animation-delay:3.58s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead/TrailsView.swift:39</tspan></text>
+<text class="t" x="20" y="409" style="animation-delay:3.62s"><tspan fill="#D0E2F7">         toolbarBackground(Color.green) sets the navigation bar background.</tspan></text>
+<text class="t" x="20" y="428" style="animation-delay:3.66s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [B] Remove the bar background modifiers</tspan></text>
+<text class="t" x="20" y="447" style="animation-delay:3.69s"></text>
+<text class="t" x="20" y="466" style="animation-delay:3.73s"><tspan fill="#8CC4FF" font-weight="700">WARNING  </tspan><tspan fill="#FFFFFF" font-weight="700">GLS004 SwiftUI bar background set by the app</tspan></text>
+<text class="t" x="20" y="485" style="animation-delay:3.76s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead/TrailsView.swift:40</tspan></text>
+<text class="t" x="20" y="504" style="animation-delay:3.79s"><tspan fill="#D0E2F7">         toolbarBackgroundVisibility(.visible) keeps the navigation bar background visible.</tspan></text>
+<text class="t" x="20" y="523" style="animation-delay:3.83s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [B] Remove the bar background modifiers</tspan></text>
+<text class="t" x="20" y="542" style="animation-delay:3.87s"></text>
+<text class="t" x="20" y="561" style="animation-delay:3.90s"><tspan fill="#8CC4FF" font-weight="700">WARNING  </tspan><tspan fill="#FFFFFF" font-weight="700">GLS005 Custom tab bar or bottom bar</tspan></text>
+<text class="t" x="20" y="580" style="animation-delay:3.94s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead/TrailMapView.swift:17</tspan></text>
+<text class="t" x="20" y="599" style="animation-delay:3.97s"><tspan fill="#D0E2F7">         The system tab bar is hidden with toolbar(.hidden, for: .tabBar).</tspan></text>
+<text class="t" x="20" y="618" style="animation-delay:4.00s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [C] Use the system tab bar, or attach the custom bar with safeAreaBar</tspan></text>
+<text class="t" x="20" y="637" style="animation-delay:4.04s"></text>
+<text class="t" x="20" y="656" style="animation-delay:4.08s"><tspan fill="#8CC4FF" font-weight="700">WARNING  </tspan><tspan fill="#FFFFFF" font-weight="700">GLS007 Custom sheet or popover background</tspan></text>
+<text class="t" x="20" y="675" style="animation-delay:4.11s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead/TrailsView.swift:45</tspan></text>
+<text class="t" x="20" y="694" style="animation-delay:4.15s"><tspan fill="#D0E2F7">         presentationBackground replaces the sheet background.</tspan></text>
+<text class="t" x="20" y="713" style="animation-delay:4.18s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [D] Remove presentationBackground for iOS 26 and later</tspan></text>
+<text class="t" x="20" y="732" style="animation-delay:4.21s"></text>
+<text class="t" x="20" y="751" style="animation-delay:4.25s"><tspan fill="#64D2FF" font-weight="700">INFO     </tspan><tspan fill="#FFFFFF" font-weight="700">GLS008 Fixed bar height or safe-area arithmetic</tspan></text>
+<text class="t" x="20" y="770" style="animation-delay:4.29s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead/TrailMapView.swift:14</tspan></text>
+<text class="t" x="20" y="789" style="animation-delay:4.32s"><tspan fill="#D0E2F7">         A tab bar height written as a number.</tspan></text>
+<text class="t" x="20" y="808" style="animation-delay:4.36s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [E] Let the safe area carry the bar's height</tspan></text>
+<text class="t" x="20" y="827" style="animation-delay:4.39s"></text>
+<text class="t" x="20" y="846" style="animation-delay:4.43s"><tspan fill="#64D2FF" font-weight="700">INFO     </tspan><tspan fill="#FFFFFF" font-weight="700">GLS009 Section header written in capitals</tspan></text>
+<text class="t" x="20" y="865" style="animation-delay:4.46s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead/TrailsView.swift:27</tspan></text>
+<text class="t" x="20" y="884" style="animation-delay:4.50s"><tspan fill="#D0E2F7">         Section header "NEARBY" is written in capitals.</tspan></text>
+<text class="t" x="20" y="903" style="animation-delay:4.53s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [F] Write the header in title case</tspan></text>
+<text class="t" x="20" y="922" style="animation-delay:4.57s"></text>
+<text class="t" x="20" y="941" style="animation-delay:4.60s"><tspan fill="#64D2FF" font-weight="700">INFO     </tspan><tspan fill="#FFFFFF" font-weight="700">GLS009 Section header written in capitals</tspan></text>
+<text class="t" x="20" y="960" style="animation-delay:4.63s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#4DA3FF">Trailhead/TrailsView.swift:32</tspan></text>
+<text class="t" x="20" y="979" style="animation-delay:4.67s"><tspan fill="#D0E2F7">         Section header "SAVED" is written in capitals.</tspan></text>
+<text class="t" x="20" y="998" style="animation-delay:4.71s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#FFFFFF" font-weight="700">Fix: [F] Write the header in title case</tspan></text>
+<text class="t" x="20" y="1017" style="animation-delay:4.74s"></text>
+<text class="t" x="20" y="1036" style="animation-delay:4.78s"><tspan fill="#FFFFFF" font-weight="700">How to fix</tspan></text>
+<text class="t" x="20" y="1055" style="animation-delay:4.81s"></text>
+<text class="t" x="20" y="1074" style="animation-delay:4.85s"><tspan fill="#FFFFFF" font-weight="700">[A]      </tspan><tspan fill="#FFFFFF" font-weight="700">Remove the build setting and review the screens with Liquid Glass</tspan></text>
+<text class="t" x="20" y="1093" style="animation-delay:4.88s"><tspan fill="#D0E2F7">         1. Delete INFOPLIST_KEY_UIDesignRequiresCompatibility from the target's build settings.</tspan></text>
+<text class="t" x="20" y="1112" style="animation-delay:4.92s"><tspan fill="#D0E2F7">            Xcode 27.1 does not copy it into the Info.plist it generates, so it has no effect there</tspan></text>
+<text class="t" x="20" y="1131" style="animation-delay:4.95s"><tspan fill="#D0E2F7">            in any case.</tspan></text>
+<text class="t" x="20" y="1150" style="animation-delay:4.99s"><tspan fill="#D0E2F7">         2. Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this</tspan></text>
+<text class="t" x="20" y="1169" style="animation-delay:5.02s"><tspan fill="#D0E2F7">            report are the places to look at first.</tspan></text>
+<text class="t" x="20" y="1188" style="animation-delay:5.05s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md</tspan></text>
+<text class="t" x="20" y="1207" style="animation-delay:5.09s"></text>
+<text class="t" x="20" y="1226" style="animation-delay:5.13s"><tspan fill="#FFFFFF" font-weight="700">[B]      </tspan><tspan fill="#FFFFFF" font-weight="700">Remove the bar background modifiers</tspan></text>
+<text class="t" x="20" y="1245" style="animation-delay:5.16s"><tspan fill="#D0E2F7">         1. Remove toolbarBackground(_:for:) and toolbarBackgroundVisibility(_:for:), or apply them</tspan></text>
+<text class="t" x="20" y="1264" style="animation-delay:5.20s"><tspan fill="#D0E2F7">            only before iOS 26.</tspan></text>
+<text class="t" x="20" y="1283" style="animation-delay:5.23s"><tspan fill="#D0E2F7">         2. Keep the brand colour on tint(_:) and on the content, not on the bar.</tspan></text>
+<text class="t" x="20" y="1302" style="animation-delay:5.27s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1321" style="animation-delay:5.30s"></text>
+<text class="t" x="20" y="1340" style="animation-delay:5.34s"><tspan fill="#FFFFFF" font-weight="700">[C]      </tspan><tspan fill="#FFFFFF" font-weight="700">Use the system tab bar, or attach the custom bar with safeAreaBar</tspan></text>
+<text class="t" x="20" y="1359" style="animation-delay:5.37s"><tspan fill="#D0E2F7">         1. Where the custom bar only restyles tabs, use TabView with Tab and</tspan></text>
+<text class="t" x="20" y="1378" style="animation-delay:5.41s"><tspan fill="#D0E2F7">            tabBarMinimizeBehavior(_:) instead.</tspan></text>
+<text class="t" x="20" y="1397" style="animation-delay:5.44s"><tspan fill="#D0E2F7">         2. If the bar stays custom, attach it with safeAreaBar(edge:alignment:spacing:content:) so</tspan></text>
+<text class="t" x="20" y="1416" style="animation-delay:5.47s"><tspan fill="#D0E2F7">            content under it gets the scroll edge effect, and consider glassEffect(_:in:) for its</tspan></text>
+<text class="t" x="20" y="1435" style="animation-delay:5.51s"><tspan fill="#D0E2F7">            background.</tspan></text>
+<text class="t" x="20" y="1454" style="animation-delay:5.54s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1473" style="animation-delay:5.58s"></text>
+<text class="t" x="20" y="1492" style="animation-delay:5.62s"><tspan fill="#FFFFFF" font-weight="700">[D]      </tspan><tspan fill="#FFFFFF" font-weight="700">Remove presentationBackground for iOS 26 and later</tspan></text>
+<text class="t" x="20" y="1511" style="animation-delay:5.65s"><tspan fill="#D0E2F7">         1. Remove presentationBackground(_:), or apply it only before iOS 26.</tspan></text>
+<text class="t" x="20" y="1530" style="animation-delay:5.69s"><tspan fill="#D0E2F7">         2. Look at the half-height detent: the sheet is inset and the content behind it shows</tspan></text>
+<text class="t" x="20" y="1549" style="animation-delay:5.72s"><tspan fill="#D0E2F7">            around the edges.</tspan></text>
+<text class="t" x="20" y="1568" style="animation-delay:5.76s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1587" style="animation-delay:5.79s"></text>
+<text class="t" x="20" y="1606" style="animation-delay:5.83s"><tspan fill="#FFFFFF" font-weight="700">[E]      </tspan><tspan fill="#FFFFFF" font-weight="700">Let the safe area carry the bar's height</tspan></text>
+<text class="t" x="20" y="1625" style="animation-delay:5.86s"><tspan fill="#D0E2F7">         1. Remove the fixed height; place bottom content with safeAreaInset(edge:) or</tspan></text>
+<text class="t" x="20" y="1644" style="animation-delay:5.90s"><tspan fill="#D0E2F7">            safeAreaBar(edge:alignment:spacing:content:).</tspan></text>
+<text class="t" x="20" y="1663" style="animation-delay:5.93s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1682" style="animation-delay:5.96s"></text>
+<text class="t" x="20" y="1701" style="animation-delay:6.00s"><tspan fill="#FFFFFF" font-weight="700">[F]      </tspan><tspan fill="#FFFFFF" font-weight="700">Write the header in title case</tspan></text>
+<text class="t" x="20" y="1720" style="animation-delay:6.04s"><tspan fill="#D0E2F7">         1. Write the header as "Account" instead of "ACCOUNT"; the system styles it.</tspan></text>
+<text class="t" x="20" y="1739" style="animation-delay:6.07s"><tspan fill="#D0E2F7">         </tspan><tspan fill="#8FA3BC">https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1758" style="animation-delay:6.11s"></text>
+<text class="t" x="20" y="1777" style="animation-delay:6.14s"><tspan fill="#FFFFFF" font-weight="700">1 error, 4 warnings, 3 info</tspan></text>
+<text class="t" x="20" y="1796" style="animation-delay:6.18s"><tspan fill="#D0E2F7">Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md</tspan></text>
+<text class="t" x="20" y="1815" style="animation-delay:6.21s"><tspan fill="#8FA3BC">Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)</tspan></text>
+<text class="t" x="20" y="1834" style="animation-delay:6.45s"><tspan fill="#0A84FF" font-weight="700">$ </tspan></text>
+<rect class="caret" x="35.66" y="1822" width="7.83" height="16" fill="#0A84FF" style="animation-delay:6.45s"/>
+</svg>
