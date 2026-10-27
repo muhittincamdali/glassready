@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { MAX_BINARY_PLIST_VALUES } from '../../src/collect/plist-binary.js';
-import { MAX_PLIST_DEPTH } from '../../src/collect/plist-value.js';
+import { excerpt, MAX_EXCERPT_LENGTH, MAX_PLIST_DEPTH } from '../../src/collect/plist-value.js';
 import { isDict, type PlistDict, PlistError, parsePlist } from '../../src/collect/plist.js';
 import { type BinaryObject, binaryPlist, sharedReferencePlist } from '../helpers/bplist.js';
 
@@ -75,6 +75,32 @@ describe('parsePlist (XML)', () => {
     ['an unclosed tag', wrap('<dict><key')],
   ])('rejects %s', (_, text) => {
     expect(() => parsePlist(text)).toThrow(PlistError);
+  });
+
+  it('repeats at most a short piece of the file in an error', () => {
+    const long = 'x'.repeat(1_000_000);
+    const messageOf = (text: string) => {
+      try {
+        parsePlist(text);
+      } catch (error) {
+        return (error as Error).message;
+      }
+      throw new Error('parsed');
+    };
+    expect(messageOf(wrap('<integer>12a</integer>'))).toBe('Not an integer: 12a');
+    expect(messageOf(wrap(`<integer>${long}</integer>`))).toBe(
+      `Not an integer: ${'x'.repeat(MAX_EXCERPT_LENGTH)}…`,
+    );
+    expect(messageOf(wrap(`<${long}/>`))).toBe(
+      `Unknown element <${'x'.repeat(MAX_EXCERPT_LENGTH)}…/>.`,
+    );
+    expect(messageOf(wrap(`<string><${long}></string>`)).length).toBeLessThan(100);
+  });
+
+  it('cuts an excerpt between characters, not inside one', () => {
+    const emoji = '😀'.repeat(MAX_EXCERPT_LENGTH + 1);
+    expect(excerpt(emoji)).toBe(`${'😀'.repeat(MAX_EXCERPT_LENGTH)}…`);
+    expect(excerpt('😀'.repeat(MAX_EXCERPT_LENGTH))).toBe('😀'.repeat(MAX_EXCERPT_LENGTH));
   });
 
   it('reads nesting up to the limit and rejects deeper nesting', () => {

@@ -12,6 +12,8 @@ All notable changes to glassready are listed here. The format follows
 - Report notes about an Info.plist or project.pbxproj that could not be read name the file relative
   to the project folder. They used the absolute path, so a committed report carried the home folder
   and user name of whoever ran glassready.
+- An XML Info.plist with a bad `<integer>` or an unknown element no longer copies the element's
+  whole text into the report note; the note repeats at most 40 characters of it.
 
 ## [0.1.0] - 2026-10-28
 
