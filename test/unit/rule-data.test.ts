@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { ruleSchemaJson } from '../../scripts/rule-schema.ts';
@@ -18,6 +18,14 @@ describe('rules/liquid-glass.json', () => {
     for (const rule of RULE_DATA.rules) {
       expect(rule.sources.length, rule.id).toBeGreaterThan(0);
       for (const source of rule.sources) expect(source.url, rule.id).toMatch(primary);
+    }
+  });
+
+  it('links every fix to a guide that exists', () => {
+    for (const rule of RULE_DATA.rules) {
+      for (const fix of Object.values(rule.fixes)) {
+        expect(existsSync(`${ROOT}${fix.guide}`), `${rule.id} ${fix.guide}`).toBe(true);
+      }
     }
   });
 
