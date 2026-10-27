@@ -1,5 +1,8 @@
 // GLS002 to GLS009: UIKit and SwiftUI code that paints, hides, replaces or measures the bars and
 // sheets Liquid Glass draws. The patterns run on code whose comments and strings are blanked.
+// The code can come from a pull request, so a pattern that looks ahead for a closing character
+// looks at most a few hundred characters ({0,200}): unbounded, a file of calls that never close
+// makes every match scan to the end of the file.
 import type { SourceFile } from '../collect/sources.js';
 import { appleVariant, type Hit, hitAt, matches, stringAt } from './hit.js';
 
@@ -24,21 +27,37 @@ function appearanceVariables(file: SourceFile): Map<string, string> {
 const memberName = (member: string) =>
   member === 'configureWithOpaqueBackground' ? 'configureWithOpaqueBackground()' : member;
 
+/**
+ * Background settings on any variable (`x.backgroundColor = …`, `[x configureWithOpaqueBackground]`).
+ * One pass over the file finds them all; the caller keeps those on appearance variables. A pattern
+ * per variable would scan the file once per variable: 2 s for a 650 KB file of declarations.
+ */
+const VARIABLE_BACKGROUND = new RegExp(
+  `\\b(\\w+)\\.(${BACKGROUND_MEMBERS})\\b\\s*(?:=(?!=)|\\()|\\[\\s*(\\w+)\\s+(configureWithOpaqueBackground)\\s*\\]`,
+  'g',
+);
+
 /** GLS002: one hit per appearance object that gets its own background, plus loose calls. */
 function barAppearance(file: SourceFile): Hit[] {
   const hits: Hit[] = [];
   const claimed = new Set<number>();
-  for (const [variable, type] of appearanceVariables(file)) {
-    const use = new RegExp(
-      `\\b${variable}\\.(${BACKGROUND_MEMBERS})\\b\\s*(?:=(?!=)|\\()|\\[\\s*${variable}\\s+(configureWithOpaqueBackground)\\s*\\]`,
-      'g',
-    );
-    const found = [...matches(file, use)];
-    if (found.length === 0) continue;
-    const members = [...new Set(found.map((match) => memberName(match[1] ?? match[2] ?? '')))];
-    for (const match of found) {
-      claimed.add(match.index + match[0].indexOf(match[1] ?? match[2] ?? ''));
+  const variables = appearanceVariables(file);
+  const uses = new Map<string, RegExpExecArray[]>();
+  if (variables.size > 0) {
+    for (const match of matches(file, VARIABLE_BACKGROUND)) {
+      const variable = match[1] ?? match[3] ?? '';
+      if (!variables.has(variable)) continue;
+      const list = uses.get(variable);
+      if (list) list.push(match);
+      else uses.set(variable, [match]);
     }
+  }
+  for (const [variable, type] of variables) {
+    const found = uses.get(variable) ?? [];
+    if (found.length === 0) continue;
+    const member = (match: RegExpExecArray) => match[2] ?? match[4] ?? '';
+    const members = [...new Set(found.map((match) => memberName(member(match))))];
+    for (const match of found) claimed.add(match.index + match[0].indexOf(member(match)));
     hits.push(
       hitAt(
         file,
@@ -70,7 +89,7 @@ const LEGACY_BAR: [RegExp, string][] = [
     'isTranslucent = false makes the bar opaque.',
   ],
   [
-    /\bsetBackgroundImage\s*\((?:[^()]|\([^()]*\))*\bbarMetrics\b|\bsetBackgroundImage\s*:[^\]]*\bbarMetrics\s*:/g,
+    /\bsetBackgroundImage\s*\((?:[^()]|\([^()]*\))*\bbarMetrics\b|\bsetBackgroundImage\s*:[^\]]{0,300}\bbarMetrics\s*:/g,
     'A background image for the bar (setBackgroundImage with bar metrics).',
   ],
   [
@@ -108,7 +127,7 @@ function swiftUIBarBackground(file: SourceFile): Hit[] {
   if (file.language !== 'swift') return [];
   const hits: Hit[] = [];
   const pattern =
-    /\.(toolbarBackground|toolbarBackgroundVisibility)\s*\(\s*([^,)]*)(?:,\s*for:\s*([^)]*))?\)/g;
+    /\.(toolbarBackground|toolbarBackgroundVisibility)\s*\(\s*([^,)]{0,200})(?:,\s*for:\s*([^)]{0,200}))?\)/g;
   for (const match of matches(file, pattern)) {
     const [, modifier = '', value = '', bars = ''] = match;
     const argument = value.trim();
@@ -129,10 +148,7 @@ const CUSTOM_BAR: [RegExp, string][] = [
     'subclass',
   ],
   [/\btabBar\??\.isHidden\s*=\s*true\b|\btabBar\.hidden\s*=\s*YES\b/g, 'hidden'],
-  [
-    /\.(?:toolbar|toolbarVisibility)\s*\(\s*\.hidden\s*,\s*for:\s*[^)]*\.tabBar\b[^)]*\)/g,
-    'swiftui-hidden',
-  ],
+  [/\.(?:toolbar|toolbarVisibility)\s*\(\s*\.hidden\s*,\s*for:([^)]{0,200})\)/g, 'swiftui-hidden'],
 ];
 
 /** GLS005: a UITabBar or UIToolbar subclass, or the system tab bar hidden for a custom one. */
@@ -140,6 +156,7 @@ function customBar(file: SourceFile): Hit[] {
   const hits: Hit[] = [];
   for (const [pattern, kind] of CUSTOM_BAR) {
     for (const match of matches(file, pattern)) {
+      if (kind === 'swiftui-hidden' && !/\.tabBar\b/.test(match[1] ?? '')) continue;
       let message = 'The system tab bar is hidden (tabBar.isHidden = true).';
       if (kind === 'subclass') {
         message = `${match[1] ?? match[3]} subclasses ${match[2] ?? match[4]}.`;
