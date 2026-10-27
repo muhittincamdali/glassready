@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { EXTENSIONS } from '../../src/collect/sources.js';
 import { scratchDir } from '../helpers/scratch.js';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -73,6 +74,27 @@ describe('examples/github-actions/glassready.yml', () => {
     });
     return { status: result.status, summary: readFileSync(summary, 'utf8') };
   };
+
+  it('runs when any file glassready reads changes', () => {
+    const section = workflow.split('    paths:\n')[1]?.split('  workflow_dispatch:')[0] ?? '';
+    const paths = [...section.matchAll(/^ {6}- '([^']+)'$/gm)].map((match) => match[1]);
+    const sources = Object.keys(EXTENSIONS).map((extension) => `**/*${extension}`);
+    expect(paths).toEqual(
+      expect.arrayContaining([
+        ...sources,
+        '**/*.xcodeproj/**',
+        '**/Info.plist',
+        'package.json',
+        'package-lock.json',
+        'app.json',
+        'app.config.*',
+        'pubspec.yaml',
+        '.fvmrc',
+        '.fvm/fvm_config.json',
+        '.xcode-version',
+      ]),
+    );
+  });
 
   it('limits how long the job may run', () => {
     expect(workflow).toMatch(/^ {4}timeout-minutes: 10$/m);
