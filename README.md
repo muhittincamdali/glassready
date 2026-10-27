@@ -8,7 +8,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
-<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="Latest version: v0.1.1"></picture></a>
+<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="Latest version: v0.1.2"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg" alt="Language version: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg" alt="License: MIT"></picture></a>
 </p>
@@ -63,11 +63,11 @@ brew install muhittincamdali/tap/glassready
 ```
 
 Or with npm from the
-[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.1), which needs
+[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.2), which needs
 [Node.js](https://nodejs.org/) 22.12 or later (`node --version` prints it):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
 ```
 
 The package is not on the npm registry yet; publishing it there as `@mcamdali/glassready` is
@@ -152,7 +152,7 @@ The commands under Quick start install the `glassready` command from the GitHub 
 `glassready-<version>.tgz` with a `SHA256SUMS` file. To pin a release in a project:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
 ```
 
 `npx glassready` then runs that copy. The package installs under the name `@mcamdali/glassready`,

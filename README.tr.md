@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@1e1b8af4785303e515b90d8dd6f44c11b8fe6551 status=reviewed -->
+<!-- i18n-source: README.md@cf7bf294948a5018c6ae8f76b3f75ded4e2e675d status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml/badge.svg" alt="CI durumu"></a>
-<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="Son sürüm: v0.1.1"></picture></a>
+<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="Son sürüm: v0.1.2"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg" alt="Dil sürümü: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg" alt="Lisans: MIT"></picture></a>
 </p>
@@ -66,12 +66,12 @@ birlikte. Yalnızca projenizin dosyalarını okur; derlemez, çalıştırmaz, hi
 brew install muhittincamdali/tap/glassready
 ```
 
-Ya da npm ile [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.1)
+Ya da npm ile [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.2)
 üzerinden; bunun için [Node.js](https://nodejs.org/) 22.12 veya üstü gerekir (`node --version`
 sürümü yazdırır):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
 ```
 
 Paket henüz npm kayıt defterinde değil; orada `@mcamdali/glassready` olarak yayımlanması
@@ -160,7 +160,7 @@ Hızlı başlangıç bölümündeki komutlar `glassready` komutunu GitHub releas
 sabitlemek için:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
 ```
 
 Ardından `npx glassready` o kopyayı çalıştırır. Paket `@mcamdali/glassready` adıyla kurulur;
