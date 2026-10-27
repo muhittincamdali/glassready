@@ -1,5 +1,7 @@
 // GLS101 to GLS104: React Native and Expo navigation code. The header of a native stack and a
 // native tab bar are UIKit bars, so Liquid Glass applies to them; a JavaScript tab bar is not.
+// As in native.ts, patterns that look ahead for a closing "}" or ">" stop after a bounded number
+// of characters, so a file of objects or tags that never close stays linear.
 import { join } from 'node:path';
 import type { SourceFile } from '../collect/sources.js';
 import { compareVersions } from '../core/versions.js';
@@ -15,10 +17,21 @@ export interface Import {
   offset: number;
 }
 
+// Several rules ask for the imports of the same file; they are read once per file.
+const importCache = new WeakMap<SourceFile, Import[]>();
+
 /** The ES module imports of a file (import … from '…'), read from its blanked code. */
 export function importsOf(file: SourceFile): Import[] {
+  const cached = importCache.get(file);
+  if (cached) return cached;
+  const found = readImports(file);
+  importCache.set(file, found);
+  return found;
+}
+
+function readImports(file: SourceFile): Import[] {
   const pattern =
-    /\bimport\s+(?:type\s+)?(?:(\w+)\s*,?\s*)?(?:\{([^}]*)\})?\s*(?:\*\s*as\s+\w+\s*)?from\s*(["'])/g;
+    /\bimport\s+(?:type\s+)?(?:(\w+)\s*,?\s*)?(?:\{([^}]{0,2000})\})?\s*(?:\*\s*as\s+\w+\s*)?from\s*(["'])/g;
   return [...matches(file, pattern)].map((match) => {
     const named = (match[2] ?? '')
       .split(',')
@@ -53,7 +66,7 @@ function nativeStackHeader(file: SourceFile, variant: FixVariant): Hit[] {
   if (!native) return [];
   const patterns: [RegExp, string][] = [
     [
-      /\bheaderStyle\s*:\s*\{[^}]*\bbackgroundColor\s*:/g,
+      /\bheaderStyle\s*:\s*\{[^}]{0,500}\bbackgroundColor\s*:/g,
       'headerStyle.backgroundColor paints the header.',
     ],
     [/\bheaderBackground\s*:/g, 'headerBackground draws a custom header background.'],
@@ -122,7 +135,7 @@ const IGNORED_NATIVE_TAB_PROPS =
 function ignoredNativeTabStyle(file: SourceFile, variant: FixVariant): Hit[] {
   const hits: Hit[] = [];
   if (imports(file, NATIVE_TABS, 'NativeTabs')) {
-    for (const tag of matches(file, /<NativeTabs\b((?:=>|[^>])*)>/g)) {
+    for (const tag of matches(file, /<NativeTabs\b((?:=>|[^>]){0,2000})>/g)) {
       for (const prop of (tag[1] ?? '').matchAll(IGNORED_NATIVE_TAB_PROPS)) {
         const offset = tag.index + '<NativeTabs'.length + (prop.index ?? 0);
         hits.push(
@@ -140,7 +153,7 @@ function ignoredNativeTabStyle(file: SourceFile, variant: FixVariant): Hit[] {
   if (/\bcreateNativeBottomTabNavigator\b/.test(file.code)) {
     const patterns: [RegExp, string][] = [
       [
-        /\btabBarStyle\s*:\s*\{[^}]*\bbackgroundColor\s*:/g,
+        /\btabBarStyle\s*:\s*\{[^}]{0,500}\bbackgroundColor\s*:/g,
         'tabBarStyle.backgroundColor only applies on iOS 18 and earlier.',
       ],
       [/\btabBarBlurEffect\s*:/g, 'tabBarBlurEffect only applies on iOS 18 and earlier.'],

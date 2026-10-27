@@ -25,7 +25,8 @@ function literalAt(
   const char = text[index];
   if (language === 'swift') {
     if (char !== '"' && !(char === '#' && /^#+"/.test(text.slice(index, index + 8)))) return null;
-    const hashes = /^#*/.exec(text.slice(index))?.[0].length ?? 0;
+    let hashes = 0;
+    while (text[index + hashes] === '#') hashes++;
     const open = index + hashes;
     const quote = text.startsWith('"""', open) ? '"""' : '"';
     return { quote: `${quote}${'#'.repeat(hashes)}`, start: open + quote.length, escapes: !hashes };

@@ -179,13 +179,32 @@ async function expoConfig(root: string): Promise<ExpoConfig | null> {
   return { file: 'app.json', text, json: 'expo' in config ? record(config.expo) : config };
 }
 
+/**
+ * Whether the top-level `flutter:` section of a pubspec has a `plugin:` key: a Flutter plugin,
+ * whose app is example/. Read line by line; a multi-line pattern that let whitespace span lines
+ * retried at every blank line, which made a pubspec of blank lines quadratic.
+ */
+export function isFlutterPlugin(pubspec: string): boolean {
+  let inFlutter = false;
+  for (const line of pubspec.split('\n')) {
+    if (/^flutter:\s*$/.test(line)) {
+      inFlutter = true;
+      continue;
+    }
+    if (!inFlutter || line.trim() === '') continue;
+    if (!/^\s/.test(line)) inFlutter = false;
+    else if (/^\s+plugin:/.test(line)) return true;
+  }
+  return false;
+}
+
 async function flutterInfo(root: string, pubspec: string): Promise<FlutterInfo> {
   const fvmrc = record(await readJson(join(root, '.fvmrc'), root));
   const fvmConfig = record(await readJson(join(root, '.fvm', 'fvm_config.json'), root));
   const pinned = fvmrc.flutter ?? fvmConfig.flutterSdkVersion;
   return {
     version: typeof pinned === 'string' ? pinned : null,
-    plugin: /^flutter:\s*\n(?:\s.*\n)*?\s+plugin:/m.test(pubspec),
+    plugin: isFlutterPlugin(pubspec),
   };
 }
 
@@ -203,7 +222,7 @@ export async function detectProject(path: string): Promise<Project> {
   if (!info.isDirectory()) throw new ProjectError(`${path} is not a folder.`);
 
   const pubspec = await readProjectText(join(target, 'pubspec.yaml'), target);
-  if (pubspec !== null && /^\s+sdk:\s*flutter\b|^flutter:/m.test(pubspec)) {
+  if (pubspec !== null && /^[ \t]+sdk:[ \t]*flutter\b|^flutter:/m.test(pubspec)) {
     const flutter = await flutterInfo(target, pubspec);
     const iosDir = join(target, flutter.plugin ? join('example', 'ios') : 'ios');
     const xcodeProjects = await xcodeProjectsIn(iosDir);
