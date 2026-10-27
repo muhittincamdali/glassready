@@ -1,6 +1,8 @@
 // Records the README and guide demos as terminal SVGs (light and dark) in docs/media/:
 //
 // - CLI demos run the built glassready on a fixture from the repository root, as a reader would.
+//   The typed command is `glassready`, the command Homebrew and the release tarball install; it
+//   runs the same dist/cli/main.js this script runs.
 // - Simulator sessions replay docs/media/simulator/<name>.txt, the output that
 //   scripts/simulator-compare.sh printed on a Mac; they cannot be recorded in CI.
 //
@@ -75,7 +77,7 @@ export function record(demo: Demo): Session {
   return {
     title: demo.title,
     comment: demo.comment,
-    command: `npx @mcamdali/glassready fixtures/${demo.fixture}`,
+    command: `glassready fixtures/${demo.fixture}`,
     output,
   };
 }
