@@ -149,7 +149,7 @@ export async function detectProject(path: string): Promise<Project> {
   }
 
   const { manifest, problem } = await readManifest(target);
-  const packages = await packageVersions(target, manifest);
+  const { versions: packages, notes: packageNotes } = await packageVersions(target, manifest);
   if (packages.has('expo') || packages.has('react-native')) {
     const ecosystem = packages.has('expo') ? 'expo' : 'react-native';
     const iosDir = join(target, 'ios');
@@ -167,7 +167,7 @@ export async function detectProject(path: string): Promise<Project> {
       flutter: null,
       expoConfig: ecosystem === 'expo' ? await expoConfig(target) : null,
       xcodeVersionFile: await xcodeVersionFile(target),
-      notes: [],
+      notes: packageNotes,
     };
   }
 

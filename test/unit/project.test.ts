@@ -1,3 +1,4 @@
+import { mkdirSync, symlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { collectApp } from '../../src/collect/app.js';
@@ -115,6 +116,56 @@ describe('detectProject', () => {
     const root = tree({ 'package.json': '{', 'ios/App.xcodeproj/project.pbxproj': PBXPROJ });
     const app = await collectApp(await detectProject(root));
     expect(app.notes[0]).toBe(`package.json is not valid JSON. ${MANIFEST_NOT_CHECKED}`);
+  });
+
+  it('reads an installed version linked from a node_modules folder, as pnpm and workspaces do', async () => {
+    const store = tree({
+      'node_modules/.pnpm/react-native@0.88.2/node_modules/react-native/package.json':
+        '{"version":"0.88.2"}',
+    });
+    const root = tree({
+      'package.json': JSON.stringify({ dependencies: { 'react-native': '^0.88.0' } }),
+      'ios/App.xcodeproj/project.pbxproj': PBXPROJ,
+    });
+    mkdirSync(join(root, 'node_modules'));
+    symlinkSync(
+      join(store, 'node_modules/.pnpm/react-native@0.88.2/node_modules/react-native'),
+      join(root, 'node_modules', 'react-native'),
+    );
+    const project = await detectProject(root);
+    expect(project.packages.get('react-native')).toMatchObject({
+      version: '0.88.2',
+      source: 'installed',
+    });
+    expect(project.notes).toEqual([]);
+  });
+
+  it('does not report a field of a file a node_modules package.json links to elsewhere', async () => {
+    const outside = tree({ 'secret.json': '{"version":"4.0.0-SECRETTOKEN123"}' });
+    const root = tree({
+      'package.json': JSON.stringify({
+        dependencies: { 'react-native': '0.88.0', 'react-native-screens': '^4.0.0' },
+      }),
+      'package-lock.json': JSON.stringify({
+        packages: { 'node_modules/react-native': { version: 'file:SECRET' } },
+      }),
+      'ios/App.xcodeproj/project.pbxproj': PBXPROJ,
+    });
+    mkdirSync(join(root, 'node_modules', 'react-native-screens'), { recursive: true });
+    symlinkSync(
+      join(outside, 'secret.json'),
+      join(root, 'node_modules', 'react-native-screens', 'package.json'),
+    );
+    const project = await detectProject(root);
+    expect(JSON.stringify([...project.packages.values()])).not.toContain('SECRET');
+    expect(project.packages.get('react-native-screens')).toMatchObject({
+      version: '4.0.0',
+      source: 'declared',
+    });
+    expect(project.packages.get('react-native')).toMatchObject({ source: 'declared' });
+    expect(project.notes).toEqual([
+      'node_modules/react-native-screens/package.json links to a file outside a node_modules/react-native-screens folder; it was not read.',
+    ]);
   });
 
   it('explains what is missing', async () => {
