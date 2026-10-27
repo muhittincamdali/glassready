@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
+<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -180,8 +180,10 @@ glassready [path] [options]
 | `--fail-on <severity>`  | `warning` (por defecto), `error`, `info` o `none`: cuándo el código de salida es 1 |
 | `--no-color`            | Texto sin formato incluso en una terminal (se respetan `NO_COLOR` y `FORCE_COLOR`) |
 
-Códigos de salida: `0` nada en `--fail-on` o por encima, `1` hallazgos en ese nivel o por encima, `2`
-argumentos incorrectos, no se encontró ningún proyecto de iOS o un error inesperado.
+Códigos de salida: `0` nada en `--fail-on` o por encima, `1` hallazgos en ese nivel o por encima,
+`2` argumentos incorrectos, no se encontró ningún proyecto de iOS o un error inesperado. Un opt-out
+que glassready no pudo comprobar, porque no se leyó un Info.plist o un proyecto de Xcode, también da
+`1`, salvo con `--fail-on none`.
 
 glassready encuentra por sí solo la app de iOS: un `.xcodeproj` en la raíz o una carpeta más abajo en las
 apps nativas, `ios/` en las apps de Flutter, React Native y Expo (`example/ios/` en un plugin de Flutter).
@@ -269,9 +271,10 @@ tardó 0,17 segundos.
   tiempo de ejecución o escrito de forma inusual puede pasarse por alto o coincidir por error.
 - **Solo el código fuente propio de la app.** No se leen los Pods, los paquetes de Swift fuera de la
   carpeta de la app, `node_modules` ni los plugins de Flutter.
-- **Ajustes de compilación solo desde project.pbxproj.** No se leen los archivos `.xcconfig`. Cuando no
-  se puede leer el Info.plist de un target, su estado de opt-out es "desconocido" y el informe explica
-  por qué.
+- **Ajustes de compilación solo desde project.pbxproj.** No se leen los archivos `.xcconfig`. Cuando
+  no se puede leer el Info.plist de un target, su estado de opt-out es "desconocido" y el informe
+  explica por qué. Lo mismo ocurre cuando no se puede leer un proyecto de Xcode; el veredicto es
+  entonces "Opt-out not known", nunca listo.
 - **Configuración de Expo como texto.** `app.config.js` y `app.config.ts` no se ejecutan, así que no se
   ve un opt-out definido mediante una variable o un config plugin.
 - **Solo archivos.** glassready no compila la app ni mira sus pantallas. Las grabaciones del simulador de

@@ -71,7 +71,11 @@ export function impactOf(findings: Finding[]): Impact {
   return { score, level };
 }
 
-export function verdictOf(findings: Finding[], ecosystem: Ecosystem): Verdict {
+/**
+ * The one-line verdict. `optOutKnown` is false when an Info.plist or Xcode project that could carry
+ * the opt-out was not read: then the app is never called ready, whatever else was found.
+ */
+export function verdictOf(findings: Finding[], ecosystem: Ecosystem, optOutKnown = true): Verdict {
   const warnings = findings.filter((item) => item.severity === 'warning').length;
   const info = findings.filter((item) => item.severity === 'info').length;
   if (findings.some((item) => item.rule === 'GLS001')) {
@@ -79,6 +83,17 @@ export function verdictOf(findings: Finding[], ecosystem: Ecosystem): Verdict {
     return {
       code: 'opt-out-ignored',
       text: `The Liquid Glass opt-out is ignored when built with the iOS 27 SDK${rest}`,
+    };
+  }
+  if (!optOutKnown) {
+    const places = [
+      warnings > 0 ? plural(warnings, 'custom style') : '',
+      info > 0 ? plural(info, 'place') : '',
+    ];
+    const listed = places.filter(Boolean).join(' and ');
+    return {
+      code: 'not-known',
+      text: `Opt-out not known: an Info.plist or Xcode project that could set it was not read (see the notes)${listed ? `; ${listed} to review` : ''}`,
     };
   }
   if (warnings > 0) {
@@ -125,9 +140,11 @@ export async function scan(path: string): Promise<Report> {
       `${project.expoConfig.file} is read as text, not run: an opt-out set through a variable or a config plugin is not seen.`,
     );
   }
-  if (targets.some((target) => target.optOut === 'unknown')) {
+  const unreadPlist = targets.some((target) => target.optOut === 'unknown');
+  if (unreadPlist) {
     notes.push('An Info.plist could not be read, so a Liquid Glass opt-out in it is not known.');
   }
+  const optOutKnown = !unreadPlist && !app.appNotChecked;
   return {
     schemaVersion: SCHEMA_VERSION,
     tool: { name: 'glassready', version: VERSION },
@@ -140,7 +157,7 @@ export async function scan(path: string): Promise<Report> {
       targets,
       xcode: { versionFile: project.xcodeVersionFile, lastUpgradeCheck: app.lastUpgradeCheck },
     },
-    verdict: verdictOf(findings, project.ecosystem),
+    verdict: verdictOf(findings, project.ecosystem, optOutKnown),
     impact: impactOf(findings),
     findings,
     adopted: adoptedApis(app.sources).map((item) => ({ ...item, file: relativePath(item.file) })),

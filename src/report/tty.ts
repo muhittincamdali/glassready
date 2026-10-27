@@ -35,6 +35,7 @@ const INDENT = ' '.repeat(LABEL_WIDTH);
 const SEVERITY_STYLE = { error: 'red', warning: 'yellow', info: 'cyan' } as const;
 const VERDICT_STYLE = {
   'opt-out-ignored': 'red',
+  'not-known': 'yellow',
   covered: 'yellow',
   review: 'cyan',
   ready: 'green',

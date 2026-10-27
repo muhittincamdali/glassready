@@ -42,7 +42,11 @@ export interface TargetSummary {
   deploymentTarget: string | null;
 }
 
-export type VerdictCode = 'opt-out-ignored' | 'covered' | 'review' | 'ready';
+/**
+ * The verdict, most serious first. `not-known`: an Info.plist or Xcode project that could carry the
+ * opt-out could not be read, so the app cannot be called ready.
+ */
+export type VerdictCode = 'opt-out-ignored' | 'not-known' | 'covered' | 'review' | 'ready';
 
 export interface Verdict {
   code: VerdictCode;

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
+<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -178,8 +178,10 @@ glassready [path] [options]
 | `--fail-on <severity>`  | `warning` (по умолчанию), `error`, `info` или `none`: когда код завершения равен 1 |
 | `--no-color`            | Простой текст даже в терминале (учитываются `NO_COLOR` и `FORCE_COLOR`)    |
 
-Коды завершения: `0` — ничего на уровне `--fail-on` и выше, `1` — есть находки на этом уровне и выше,
-`2` — неверные аргументы, проект iOS не найден или непредвиденная ошибка.
+Коды завершения: `0` — ничего на уровне `--fail-on` и выше, `1` — есть находки на этом уровне и
+выше, `2` — неверные аргументы, проект iOS не найден или непредвиденная ошибка. Opt-out, который
+glassready не смог проверить, потому что Info.plist или проект Xcode не прочитан, тоже даёт `1`,
+кроме `--fail-on none`.
 
 glassready сам находит приложение iOS: `.xcodeproj` в корне или на одну папку глубже для нативных
 приложений, `ios/` для приложений Flutter, React Native и Expo (`example/ios/` для плагина Flutter). Он
@@ -266,8 +268,9 @@ SwiftUI-приложение с зелёным фоном toolbar и Flutter-п�
   выполнения или написанный необычным образом, может быть пропущен или распознан по ошибке.
 - **Только собственный исходный код приложения.** Pods, пакеты Swift вне папки приложения,
   `node_modules` и плагины Flutter не читаются.
-- **Настройки сборки только из project.pbxproj.** Файлы `.xcconfig` не читаются. Если Info.plist таргета
-  прочитать нельзя, состояние его opt-out — «неизвестно», и отчёт объясняет почему.
+- **Настройки сборки только из project.pbxproj.** Файлы `.xcconfig` не читаются. Если Info.plist
+  таргета прочитать нельзя, состояние его opt-out — «неизвестно», и отчёт объясняет почему. То же
+  верно, если нельзя прочитать проект Xcode; тогда вердикт — «Opt-out not known», а не «готово».
 - **Конфигурация Expo как текст.** `app.config.js` и `app.config.ts` не выполняются, поэтому opt-out,
   заданный через переменную или config plugin, не виден.
 - **Только файлы.** glassready не собирает приложение и не смотрит на его экраны. Записи симулятора в
