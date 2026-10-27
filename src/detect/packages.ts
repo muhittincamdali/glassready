@@ -1,6 +1,7 @@
 // The npm side of a React Native or Expo project: package.json, the versions of the packages the
 // rules look at, and the Expo config.
-import { join } from 'node:path';
+import { realpath } from 'node:fs/promises';
+import { join, sep } from 'node:path';
 import { NOT_READ, readProjectFile, readProjectText } from '../core/files.js';
 import { JsonDepthError, parseJson } from '../core/json.js';
 import { lowestAllowed } from '../core/versions.js';
@@ -87,40 +88,59 @@ export async function readManifest(
   return { manifest, problem: manifest === value ? null : 'does not hold a JSON object.' };
 }
 
+/** A version number as npm writes it, of a sane length; anything else is not reported. */
+function versionNumber(value: unknown): string | null {
+  if (typeof value !== 'string' || value.length > MAX_VERSION_LENGTH) return null;
+  return /^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.+-]+)?$/.test(value) ? value : null;
+}
+
+const MAX_VERSION_LENGTH = 64;
+
+/**
+ * The version in node_modules/<name>/package.json. pnpm, Yarn and workspaces link installed
+ * packages from outside the app folder, so the file may be anywhere; it is read only when its real
+ * path is a package.json in a node_modules/<name> folder. A link to any other file would put a
+ * field of that file, which the user did not ask to check, into the report.
+ */
+async function installedVersion(
+  root: string,
+  name: string,
+  notes: string[],
+): Promise<string | null> {
+  const shown = `node_modules/${name}/package.json`;
+  const real = await realpath(join(root, 'node_modules', name, 'package.json')).catch(() => null);
+  if (real === null) return null;
+  const tail = ['node_modules', ...name.split('/'), 'package.json'];
+  if (real.split(sep).slice(-tail.length).join('/') !== tail.join('/')) {
+    notes.push(`${shown} links to a file outside a node_modules/${name} folder; it was not read.`);
+    return null;
+  }
+  return versionNumber(record(await readJson(real, null)).version);
+}
+
+/** The watched packages package.json declares, with their versions, and notes about them. */
 export async function packageVersions(
   root: string,
   manifest: Record<string, unknown>,
-): Promise<Map<string, PackageVersion>> {
+): Promise<{ versions: Map<string, PackageVersion>; notes: string[] }> {
   const declared = {
     ...record(manifest.devDependencies),
     ...record(manifest.dependencies),
   };
   const lock = record(record(await readJson(join(root, 'package-lock.json'), root)).packages);
-  const result = new Map<string, PackageVersion>();
+  const versions = new Map<string, PackageVersion>();
+  const notes: string[] = [];
   for (const name of WATCHED_PACKAGES) {
     const range = declared[name];
     if (typeof range !== 'string') continue;
-    // pnpm and workspaces link installed packages from outside the app folder.
-    const installed = record(
-      await readJson(join(root, 'node_modules', name, 'package.json'), null),
-    );
-    const locked = record(lock[`node_modules/${name}`]);
-    if (typeof installed.version === 'string') {
-      result.set(name, {
-        name,
-        version: installed.version,
-        source: 'installed',
-        declared: range,
-      });
-    } else if (typeof locked.version === 'string') {
-      result.set(name, {
-        name,
-        version: locked.version,
-        source: 'lockfile',
-        declared: range,
-      });
+    const installed = await installedVersion(root, name, notes);
+    const locked = versionNumber(record(lock[`node_modules/${name}`]).version);
+    if (installed !== null) {
+      versions.set(name, { name, version: installed, source: 'installed', declared: range });
+    } else if (locked !== null) {
+      versions.set(name, { name, version: locked, source: 'lockfile', declared: range });
     } else {
-      result.set(name, {
+      versions.set(name, {
         name,
         version: lowestAllowed(range),
         source: 'declared',
@@ -128,7 +148,7 @@ export async function packageVersions(
       });
     }
   }
-  return result;
+  return { versions, notes };
 }
 
 export async function expoConfig(root: string): Promise<ExpoConfig | null> {

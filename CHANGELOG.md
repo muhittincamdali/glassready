@@ -15,6 +15,11 @@ All notable changes to glassready are listed here. The format follows
   and 8.9 s and 5.0 GB for another. On a Mac (Apple silicon) with Node 26 both now take 0.2 s and
   at most 190 MB. A package.json that nests too deep gets the same report note as one that is not
   JSON, and an app.json that does is read as text.
+- A `node_modules/<name>/package.json` that links to a file outside a `node_modules/<name>`
+  folder is not read, and the report says so. pnpm, Yarn and workspaces link from such folders, so
+  their versions are still read; a link to any other file put that file's `version` field into the
+  report (`4.0.0-SECRETTOKEN123` from a file outside the project). Installed and locked versions
+  are used only when they are version numbers; otherwise the declared range is.
 
 ## [0.1.1] - 2026-10-28
 
