@@ -1,6 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { MAX_BINARY_PLIST_VALUES } from '../../src/collect/plist-binary.js';
+import { MAX_PLIST_DEPTH } from '../../src/collect/plist-value.js';
 import { isDict, type PlistDict, PlistError, parsePlist } from '../../src/collect/plist.js';
+import { type BinaryObject, binaryPlist, sharedReferencePlist } from '../helpers/bplist.js';
 
 const data = (name: string) => readFileSync(new URL(`../data/${name}`, import.meta.url));
 
@@ -67,8 +70,47 @@ describe('parsePlist (XML)', () => {
     ['an unknown element', wrap('<set/>')],
     ['a bad integer', wrap('<integer>12a</integer>')],
     ['a missing closing tag', '<plist version="1.0"><string>a</string>'],
+    ['an unclosed comment', wrap('<dict><!-- note</dict>')],
+    ['an unclosed DOCTYPE', '<!DOCTYPE plist <plist><dict/></plist'],
+    ['an unclosed tag', wrap('<dict><key')],
   ])('rejects %s', (_, text) => {
     expect(() => parsePlist(text)).toThrow(PlistError);
+  });
+
+  it('reads nesting up to the limit and rejects deeper nesting', () => {
+    const nest = (depth: number) => wrap(`${'<array>'.repeat(depth)}${'</array>'.repeat(depth)}`);
+    expect(() => parsePlist(nest(MAX_PLIST_DEPTH))).not.toThrow();
+    expect(() => parsePlist(nest(MAX_PLIST_DEPTH + 1))).toThrow(/nests more than/);
+    // Without the limit this is a stack overflow rather than a PlistError.
+    expect(() => parsePlist(nest(200_000))).toThrow(PlistError);
+  });
+
+  it('keeps a __proto__ key as a key', () => {
+    const { value } = parsePlist(
+      wrap('<dict><key>__proto__</key><dict><key>polluted</key><true/></dict></dict>'),
+    );
+    if (!isDict(value)) throw new Error('not a dict');
+    expect(Object.keys(value)).toEqual(['__proto__']);
+    expect(Object.getPrototypeOf(value)).toBeNull();
+    expect((value as Record<string, unknown>).polluted).toBeUndefined();
+  });
+
+  it('keeps a "<" that starts no markup in the text', () => {
+    expect(parsePlist(wrap('<string>a < b</string>')).value).toBe('a < b');
+  });
+
+  // The audit's 1 MB files took 40 s each with the regex tokenizer.
+  it.each([
+    ['<a', '<a'],
+    ['<!--', '<!--'],
+    ['<!DOCTYPE', '<!DOCTYPE'],
+    ['<?', '<?'],
+    ['<![CDATA[', '<![CDATA['],
+  ])('reads a megabyte of unclosed %s in linear time', (_, unit) => {
+    const text = `<plist><dict>${unit.repeat(Math.ceil(1_100_000 / unit.length))}</dict></plist>`;
+    const started = performance.now();
+    expect(() => parsePlist(text)).toThrow(PlistError);
+    expect(performance.now() - started).toBeLessThan(1000);
   });
 });
 
@@ -96,6 +138,67 @@ describe('parsePlist (binary)', () => {
     const view = new DataView(bytes.buffer);
     view.setBigUint64(bytes.length - 8, BigInt(bytes.length));
     expect(() => parsePlist(bytes)).toThrow(PlistError);
+  });
+
+  it('rejects an object count larger than the file', () => {
+    const bytes = Uint8Array.from(data('Info.binary.plist'));
+    const view = new DataView(bytes.buffer);
+    view.setBigUint64(bytes.length - 24, 2n ** 40n);
+    expect(() => parsePlist(bytes)).toThrow(PlistError);
+  });
+
+  it('reads shared references within the value budget', () => {
+    const { value } = parsePlist(sharedReferencePlist(2, 100));
+    if (!isDict(value)) throw new Error('not a dict');
+    const outer = value.k as boolean[][];
+    expect(outer).toHaveLength(100);
+    expect(outer.every((inner) => inner.length === 100 && inner.every(Boolean))).toBe(true);
+  });
+
+  it('stops a shared-reference amplification at the value budget, quickly', () => {
+    // The audit's 1.7 KB file: 200^4 values without a budget; it ran out of memory after 25 s.
+    const bytes = sharedReferencePlist(4, 200);
+    expect(bytes.length).toBeLessThan(2000);
+    const started = performance.now();
+    expect(() => parsePlist(bytes)).toThrow(
+      new PlistError(`Binary plist has more than ${MAX_BINARY_PLIST_VALUES} values.`),
+    );
+    expect(performance.now() - started).toBeLessThan(1000);
+  });
+
+  it('shares a string that many references name', () => {
+    const text = 'x'.repeat(5000);
+    const bytes = binaryPlist([
+      { dict: [[1, 2]] },
+      { ascii: 'k' },
+      { array: Array.from({ length: 1000 }, () => 3) },
+      { ascii: text },
+    ]);
+    const { value } = parsePlist(bytes);
+    if (!isDict(value)) throw new Error('not a dict');
+    expect(value.k).toEqual(Array.from({ length: 1000 }, () => text));
+  });
+
+  it('keeps a __proto__ key as a key', () => {
+    const bytes = binaryPlist([
+      { dict: [[1, 2]] },
+      { ascii: '__proto__' },
+      { dict: [[3, 4]] },
+      { ascii: 'polluted' },
+      { true: true },
+    ]);
+    const { value } = parsePlist(bytes);
+    if (!isDict(value)) throw new Error('not a dict');
+    expect(Object.keys(value)).toEqual(['__proto__']);
+    expect((value as Record<string, unknown>).polluted).toBeUndefined();
+  });
+
+  it('rejects nesting deeper than the limit', () => {
+    const depth = MAX_PLIST_DEPTH + 1;
+    const objects: BinaryObject[] = [{ dict: [[1, 2]] }, { ascii: 'k' }];
+    for (let level = 0; level < depth; level++) objects.push({ array: [3 + level] });
+    objects.push({ true: true });
+    expect(() => parsePlist(binaryPlist(objects))).toThrow(/nests more than/);
   });
 });
 

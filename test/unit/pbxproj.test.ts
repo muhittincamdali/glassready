@@ -56,6 +56,14 @@ describe('parseOpenStep', () => {
   });
 });
 
+describe('parseOpenStep and __proto__', () => {
+  it('keeps a __proto__ key as a key', () => {
+    const value = parseOpenStep('{ __proto__ = { polluted = YES; }; }') as Record<string, unknown>;
+    expect(Object.keys(value)).toEqual(['__proto__']);
+    expect(value.polluted).toBeUndefined();
+  });
+});
+
 describe('readTargets', () => {
   it('reads the Flutter Runner and its test target, merging project-level settings', async () => {
     const runner = await project('flutter-runner.pbxproj', 'Runner');

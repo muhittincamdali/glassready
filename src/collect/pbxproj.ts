@@ -74,7 +74,8 @@ export function parseOpenStep(text: string): OpenStepValue {
     const char = text[index];
     if (char === '{') {
       index++;
-      const dict: OpenStepDict = {};
+      // No prototype: a key named __proto__ stays a key (see emptyDict in plist-value.ts).
+      const dict = Object.create(null) as OpenStepDict;
       for (;;) {
         skip();
         if (text[index] === '}') {
