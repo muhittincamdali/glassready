@@ -1,18 +1,18 @@
 import { mkdirSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { parseOpenStep, XcodeProjectError } from '../../src/collect/openstep.js';
+import { MAX_PLIST_DEPTH } from '../../src/collect/plist-value.js';
 import {
   buildsForIOS,
   generatesInfoPlist,
   infoPlistFiles,
   iosAppTargets,
   lastUpgradeCheck,
-  parseOpenStep,
   readTargets,
   readXcodeProject,
   setting,
   type XcodeProject,
-  XcodeProjectError,
 } from '../../src/collect/pbxproj.js';
 import { scratchDir } from '../helpers/scratch.js';
 
@@ -53,6 +53,18 @@ describe('parseOpenStep', () => {
   ])('rejects %s with the line number', (_, text) => {
     expect(() => parseOpenStep(text)).toThrow(XcodeProjectError);
     expect(() => parseOpenStep(text)).toThrow(/line \d+/);
+  });
+
+  it('reads nesting up to the limit and rejects deeper nesting', () => {
+    const nest = (depth: number) => `${'('.repeat(depth)}${')'.repeat(depth)}`;
+    expect(() => parseOpenStep(nest(MAX_PLIST_DEPTH))).not.toThrow();
+    expect(() => parseOpenStep(`{ a = ${nest(MAX_PLIST_DEPTH - 1)}; }`)).not.toThrow();
+    expect(() => parseOpenStep(nest(MAX_PLIST_DEPTH + 1))).toThrow(
+      `Arrays and dictionaries nest more than ${MAX_PLIST_DEPTH} levels (line 1).`,
+    );
+    // Without the limit this is "Maximum call stack size exceeded" rather than an XcodeProjectError.
+    expect(() => parseOpenStep('('.repeat(200_000))).toThrow(XcodeProjectError);
+    expect(() => parseOpenStep('{ a = '.repeat(200_000))).toThrow(XcodeProjectError);
   });
 });
 

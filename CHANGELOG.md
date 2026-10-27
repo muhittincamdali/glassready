@@ -17,6 +17,10 @@ All notable changes to glassready are listed here. The format follows
   and user name of whoever ran glassready.
 - An XML Info.plist with a bad `<integer>` or an unknown element no longer copies the element's
   whole text into the report note; the note repeats at most 40 characters of it.
+- A project.pbxproj whose arrays or dictionaries nest more than 64 levels is reported as such. A
+  deeply nested file overflowed the stack, and the report showed only "Maximum call stack size
+  exceeded" while the opt-out set in that project's build settings went unchecked. The note for any
+  .xcodeproj that cannot be read now says its targets and their opt-out were not checked.
 
 ## [0.1.0] - 2026-10-28
 

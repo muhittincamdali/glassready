@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { collectApp } from '../../src/collect/app.js';
+import { collectApp, PROJECT_NOT_CHECKED } from '../../src/collect/app.js';
 import { detectProject } from '../../src/detect/project.js';
 import { checkOptOut, expoConfigHit, isYes, targetOptOut } from '../../src/rules/optout.js';
 import { infoPlist, minimalPbxproj, tree } from '../helpers/tree.js';
@@ -55,7 +55,9 @@ describe('Info.plist and build settings', () => {
 
     const root = tree({ 'App.xcodeproj/README': '' });
     const missing = await collectApp(await detectProject(root));
-    expect(missing.notes[0]).toBe('App.xcodeproj: project.pbxproj does not exist.');
+    expect(missing.notes[0]).toBe(
+      `App.xcodeproj: project.pbxproj does not exist. ${PROJECT_NOT_CHECKED}`,
+    );
     expect([...broken.notes, ...missing.notes].join('\n')).not.toContain(root);
   });
 
