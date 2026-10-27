@@ -144,8 +144,14 @@ glassready
 
 In a project, `npm install --save-dev @mcamdali/glassready` pins a version, and `npx glassready`
 then runs that copy. Each [GitHub release](https://github.com/muhittincamdali/glassready/releases)
-carries the same package as `glassready-<version>.tgz` with a `SHA256SUMS` file. With Homebrew:
-`brew install muhittincamdali/tap/glassready`.
+carries the same package as `glassready-<version>.tgz` with a `SHA256SUMS` file, and npm installs
+it from there too:
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+With Homebrew: `brew install muhittincamdali/tap/glassready`.
 
 ## Usage
 
@@ -256,6 +262,10 @@ medians of the three sets were 0.12, 0.12 and 0.11 seconds; the slowest run took
   through a variable or a config plugin is not seen.
 - **Files only.** glassready does not build the app or look at its screens. The simulator
   recordings in this repository come from the scripts in `scripts/`, run on a Mac.
+- **Bounded input.** A project can come from a pull request, so glassready reads at most 32 MB
+  per project file and, of the sources, 4 MB per file, 20,000 files and 128 MB in total; what it
+  leaves out is listed in the report's notes. A binary plist may produce at most 100,000 values,
+  and a plist may nest 64 levels.
 
 ## Documentation
 

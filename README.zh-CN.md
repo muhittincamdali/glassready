@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa2325a0ed6c60d15fd52b0af4b056d302f9673a status=reviewed -->
+<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -112,7 +112,13 @@ npm i -g @mcamdali/glassready
 glassready
 ```
 
-在项目中，`npm install --save-dev @mcamdali/glassready` 会固定版本，之后 `npx glassready` 就会运行这份副本。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带同一个包，并附有 `SHA256SUMS` 文件。使用 Homebrew 时：`brew install muhittincamdali/tap/glassready`。
+在项目中，`npm install --save-dev @mcamdali/glassready` 会固定版本，之后 `npx glassready` 就会运行这份副本。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带同一个包，并附有 `SHA256SUMS` 文件，npm 也可以直接从那里安装：
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+使用 Homebrew 时：`brew install muhittincamdali/tap/glassready`。
 
 ## 使用方法
 
@@ -202,6 +208,7 @@ iOS 27.0 的 iPhone 17 模拟器上的四个 fixture，均由 Xcode 27.1 构建�
 - **构建设置只来自 project.pbxproj。** 不会读取 `.xcconfig` 文件。如果无法读取某个 target 的 Info.plist，其退出状态为"未知"，报告会说明原因。
 - **Expo 配置按文本处理。** `app.config.js` 和 `app.config.ts` 不会被执行，因此通过变量或 config plugin 设置的退出键不会被发现。
 - **只看文件。** glassready 不会构建应用，也不会查看应用的界面。本仓库中的模拟器录屏来自 `scripts/` 中的脚本，在 Mac 上运行。
+- **输入有上限。** 项目可能来自 pull request，因此 glassready 每个项目文件最多读取 32 MB；源码每个文件最多 4 MB、最多 20,000 个文件、总计最多 128 MB，未读取的内容会列在报告的说明中。一个二进制 plist 最多产生 100,000 个值，plist 最多嵌套 64 层。
 
 ## 文档
 
