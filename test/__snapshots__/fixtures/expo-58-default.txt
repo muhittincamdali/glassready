@@ -1,0 +1,30 @@
+glassready 0.1.0 · rules liquid-glass@2026.10.27
+
+hello-world · Expo · fixtures/expo-58-default
+react-native 0.88.0 (declared)
+expo 58.0.20 (declared)
+expo-router 58.0.27 (declared)
+react-native-screens 4.30.0 (declared)
+expo-glass-effect 58.0.5 (declared)
+
+Shows Liquid Glass; 1 place to review
+Impact: low (2 of 100)
+Already uses: Expo Router NativeTabs
+
+INFO     GLS103 Native tab bar style iOS 26 and later ignore
+         src/components/app-tabs.tsx:12
+         NativeTabs backgroundColor only applies on iOS 18 and earlier.
+         Fix: [A] Expect the system background on iOS 26 and later
+
+How to fix
+
+[A]      Expect the system background on iOS 26 and later
+         1. Keep the prop for Android and older iOS if you need it, but do not rely on it for
+            contrast on iOS 26 and later.
+         2. Use dynamic colours (PlatformColor or DynamicColorIOS) for icons and labels, which sit
+            on light or dark content.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md
+
+0 errors, 0 warnings, 1 info
+Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md
+Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)

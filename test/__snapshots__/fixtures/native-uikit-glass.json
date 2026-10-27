@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "glassready",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "liquid-glass",
+    "dataVersion": "2026.10.27",
+    "sdk": "iOS 27 SDK (checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators)"
+  },
+  "project": {
+    "path": "fixtures/native-uikit-glass",
+    "name": "Harbor",
+    "ecosystem": "native",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Harbor",
+        "infoPlists": [
+          "Harbor/Info.plist"
+        ],
+        "optOut": "no",
+        "deploymentTarget": "17.0"
+      }
+    ],
+    "xcode": {
+      "versionFile": null,
+      "lastUpgradeCheck": "1430"
+    }
+  },
+  "verdict": {
+    "code": "ready",
+    "text": "Ready for Liquid Glass: no opt-out and no custom bar styles found"
+  },
+  "impact": {
+    "score": 0,
+    "level": "none"
+  },
+  "findings": [],
+  "adopted": [
+    {
+      "label": "UIGlassEffect",
+      "file": "Harbor/PortMapViewController.swift"
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0
+  }
+}

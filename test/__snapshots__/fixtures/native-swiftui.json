@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "glassready",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "liquid-glass",
+    "dataVersion": "2026.10.27",
+    "sdk": "iOS 27 SDK (checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators)"
+  },
+  "project": {
+    "path": "fixtures/native-swiftui",
+    "name": "Trailhead",
+    "ecosystem": "native",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Trailhead",
+        "infoPlists": [],
+        "optOut": "yes",
+        "deploymentTarget": "18.0"
+      }
+    ],
+    "xcode": {
+      "versionFile": null,
+      "lastUpgradeCheck": "1430"
+    }
+  },
+  "verdict": {
+    "code": "opt-out-ignored",
+    "text": "The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 4 custom styles to review first"
+  },
+  "impact": {
+    "score": 80,
+    "level": "high"
+  },
+  "findings": [
+    {
+      "rule": "GLS001",
+      "severity": "error",
+      "title": "Liquid Glass opt-out that the iOS 27 SDK ignores",
+      "message": "Trailhead: the build setting INFOPLIST_KEY_UIDesignRequiresCompatibility is YES.",
+      "file": "Trailhead.xcodeproj/project.pbxproj",
+      "line": 121,
+      "target": "Trailhead",
+      "fix": {
+        "id": "GLS001/build-setting",
+        "title": "Remove the build setting and review the screens with Liquid Glass",
+        "steps": [
+          "Delete INFOPLIST_KEY_UIDesignRequiresCompatibility from the target's build settings. Xcode 27.1 does not copy it into the Info.plist it generates, so it has no effect there in any case.",
+          "Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this report are the places to look at first."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: UIDesignRequiresCompatibility",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uidesignrequirescompatibility"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ]
+    },
+    {
+      "rule": "GLS004",
+      "severity": "warning",
+      "title": "SwiftUI bar background set by the app",
+      "message": "toolbarBackground(Color.green) sets the navigation bar background.",
+      "file": "Trailhead/TrailsView.swift",
+      "line": 39,
+      "target": null,
+      "fix": {
+        "id": "GLS004/swiftui",
+        "title": "Remove the bar background modifiers",
+        "steps": [
+          "Remove toolbarBackground(_:for:) and toolbarBackgroundVisibility(_:for:), or apply them only before iOS 26.",
+          "Keep the brand colour on tint(_:) and on the content, not on the bar."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: toolbarBackground(_:for:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/toolbarbackground(_:for:)"
+        },
+        {
+          "title": "Apple: toolbarBackgroundVisibility(_:for:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/toolbarbackgroundvisibility(_:for:)"
+        }
+      ]
+    },
+    {
+      "rule": "GLS004",
+      "severity": "warning",
+      "title": "SwiftUI bar background set by the app",
+      "message": "toolbarBackgroundVisibility(.visible) keeps the navigation bar background visible.",
+      "file": "Trailhead/TrailsView.swift",
+      "line": 40,
+      "target": null,
+      "fix": {
+        "id": "GLS004/swiftui",
+        "title": "Remove the bar background modifiers",
+        "steps": [
+          "Remove toolbarBackground(_:for:) and toolbarBackgroundVisibility(_:for:), or apply them only before iOS 26.",
+          "Keep the brand colour on tint(_:) and on the content, not on the bar."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: toolbarBackground(_:for:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/toolbarbackground(_:for:)"
+        },
+        {
+          "title": "Apple: toolbarBackgroundVisibility(_:for:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/toolbarbackgroundvisibility(_:for:)"
+        }
+      ]
+    },
+    {
+      "rule": "GLS005",
+      "severity": "warning",
+      "title": "Custom tab bar or bottom bar",
+      "message": "The system tab bar is hidden with toolbar(.hidden, for: .tabBar).",
+      "file": "Trailhead/TrailMapView.swift",
+      "line": 17,
+      "target": null,
+      "fix": {
+        "id": "GLS005/swiftui",
+        "title": "Use the system tab bar, or attach the custom bar with safeAreaBar",
+        "steps": [
+          "Where the custom bar only restyles tabs, use TabView with Tab and tabBarMinimizeBehavior(_:) instead.",
+          "If the bar stays custom, attach it with safeAreaBar(edge:alignment:spacing:content:) so content under it gets the scroll edge effect, and consider glassEffect(_:in:) for its background."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Controls, Navigation)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UIScrollEdgeElementContainerInteraction",
+          "url": "https://developer.apple.com/documentation/uikit/uiscrolledgeelementcontainerinteraction"
+        },
+        {
+          "title": "Apple: safeAreaBar(edge:alignment:spacing:content:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/safeareabar(edge:alignment:spacing:content:)"
+        }
+      ]
+    },
+    {
+      "rule": "GLS007",
+      "severity": "warning",
+      "title": "Custom sheet or popover background",
+      "message": "presentationBackground replaces the sheet background.",
+      "file": "Trailhead/TrailsView.swift",
+      "line": 45,
+      "target": null,
+      "fix": {
+        "id": "GLS007/swiftui",
+        "title": "Remove presentationBackground for iOS 26 and later",
+        "steps": [
+          "Remove presentationBackground(_:), or apply it only before iOS 26.",
+          "Look at the half-height detent: the sheet is inset and the content behind it shows around the edges."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Windows and modals)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: presentationBackground(_:)",
+          "url": "https://developer.apple.com/documentation/swiftui/view/presentationbackground(_:)"
+        },
+        {
+          "title": "Apple: UIPopoverPresentationController.backgroundColor",
+          "url": "https://developer.apple.com/documentation/uikit/uipopoverpresentationcontroller/backgroundcolor"
+        }
+      ]
+    },
+    {
+      "rule": "GLS008",
+      "severity": "info",
+      "title": "Fixed bar height or safe-area arithmetic",
+      "message": "A tab bar height written as a number.",
+      "file": "Trailhead/TrailMapView.swift",
+      "line": 14,
+      "target": null,
+      "fix": {
+        "id": "GLS008/swiftui",
+        "title": "Let the safe area carry the bar's height",
+        "steps": [
+          "Remove the fixed height; place bottom content with safeAreaInset(edge:) or safeAreaBar(edge:alignment:spacing:content:)."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Controls, Windows and modals)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UIView.safeAreaLayoutGuide",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/safearealayoutguide"
+        }
+      ]
+    },
+    {
+      "rule": "GLS009",
+      "severity": "info",
+      "title": "Section header written in capitals",
+      "message": "Section header \"NEARBY\" is written in capitals.",
+      "file": "Trailhead/TrailsView.swift",
+      "line": 27,
+      "target": null,
+      "fix": {
+        "id": "GLS009/swiftui",
+        "title": "Write the header in title case",
+        "steps": [
+          "Write the header as \"Account\" instead of \"ACCOUNT\"; the system styles it."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Organization and layout)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: Section init(content:header:)",
+          "url": "https://developer.apple.com/documentation/swiftui/section/init(content:header:)"
+        }
+      ]
+    },
+    {
+      "rule": "GLS009",
+      "severity": "info",
+      "title": "Section header written in capitals",
+      "message": "Section header \"SAVED\" is written in capitals.",
+      "file": "Trailhead/TrailsView.swift",
+      "line": 32,
+      "target": null,
+      "fix": {
+        "id": "GLS009/swiftui",
+        "title": "Write the header in title case",
+        "steps": [
+          "Write the header as \"Account\" instead of \"ACCOUNT\"; the system styles it."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Organization and layout)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: Section init(content:header:)",
+          "url": "https://developer.apple.com/documentation/swiftui/section/init(content:header:)"
+        }
+      ]
+    }
+  ],
+  "adopted": [],
+  "notes": [],
+  "summary": {
+    "errors": 1,
+    "warnings": 4,
+    "info": 3
+  }
+}

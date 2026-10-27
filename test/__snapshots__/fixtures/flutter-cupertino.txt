@@ -1,0 +1,64 @@
+glassready 0.1.0 · rules liquid-glass@2026.10.27
+
+ferry · Flutter · fixtures/flutter-cupertino
+project settings last updated by Xcode 15.1 · deployment target iOS 15.0
+target Runner: opts out of Liquid Glass (ios/Runner/Info.plist)
+
+The Liquid Glass opt-out is ignored when built with the iOS 27 SDK
+Impact: high (60 of 100)
+
+ERROR    GLS001 Liquid Glass opt-out that the iOS 27 SDK ignores
+         ios/Runner/Info.plist:52
+         Runner: UIDesignRequiresCompatibility is YES in the Info.plist.
+         Fix: [A] Remove the opt-out and review the screens with Liquid Glass
+
+INFO     GLS201 Cupertino bar drawn by Flutter
+         lib/main.dart:34
+         CupertinoTabScaffold is drawn by Flutter, not by UIKit.
+         Fix: [B] Decide whether the Cupertino bars should follow the system
+
+INFO     GLS201 Cupertino bar drawn by Flutter
+         lib/main.dart:35
+         CupertinoTabBar is drawn by Flutter, not by UIKit.
+         Fix: [B] Decide whether the Cupertino bars should follow the system
+
+INFO     GLS201 Cupertino bar drawn by Flutter
+         lib/main.dart:56
+         CupertinoSliverNavigationBar is drawn by Flutter, not by UIKit.
+         Fix: [B] Decide whether the Cupertino bars should follow the system
+
+INFO     GLS201 Cupertino bar drawn by Flutter
+         lib/main.dart:80
+         CupertinoNavigationBar is drawn by Flutter, not by UIKit.
+         Fix: [B] Decide whether the Cupertino bars should follow the system
+
+INFO     GLS202 UIKit view inside Flutter
+         lib/main.dart:85
+         A UiKitView embeds a native iOS view.
+         Fix: [C] Check the native view next to the Flutter UI
+
+How to fix
+
+[A]      Remove the opt-out and review the screens with Liquid Glass
+         1. Delete the UIDesignRequiresCompatibility key from the Info.plist.
+         2. Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this
+            report are the places to look at first.
+         3. Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so
+            the system can draw the bars.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md
+
+[B]      Decide whether the Cupertino bars should follow the system
+         1. Run the app on an iOS 27 simulator next to a system app and decide whether the
+            Flutter-drawn bars may look different.
+         2. To follow the system, restyle the bars yourself (translucent background, floating tab
+            bar) or follow flutter/flutter#170310 for framework support.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md
+
+[C]      Check the native view next to the Flutter UI
+         1. Open the screen with the platform view on an iOS 27 simulator and compare its controls
+            with the Flutter widgets around it.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md
+
+1 error, 0 warnings, 5 info
+Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md
+Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)

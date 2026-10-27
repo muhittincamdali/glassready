@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "glassready",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "liquid-glass",
+    "dataVersion": "2026.10.27",
+    "sdk": "iOS 27 SDK (checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators)"
+  },
+  "project": {
+    "path": "fixtures/expo-58-optout",
+    "name": "atlas",
+    "ecosystem": "expo",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.88.0",
+        "source": "declared"
+      },
+      {
+        "name": "expo",
+        "version": "58.0.20",
+        "source": "declared"
+      },
+      {
+        "name": "expo-router",
+        "version": "58.0.27",
+        "source": "declared"
+      },
+      {
+        "name": "react-native-screens",
+        "version": "4.30.0",
+        "source": "declared"
+      },
+      {
+        "name": "expo-glass-effect",
+        "version": "58.0.5",
+        "source": "declared"
+      }
+    ],
+    "targets": [],
+    "xcode": {
+      "versionFile": null,
+      "lastUpgradeCheck": null
+    }
+  },
+  "verdict": {
+    "code": "opt-out-ignored",
+    "text": "The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 2 custom styles to review first"
+  },
+  "impact": {
+    "score": 64,
+    "level": "high"
+  },
+  "findings": [
+    {
+      "rule": "GLS001",
+      "severity": "error",
+      "title": "Liquid Glass opt-out that the iOS 27 SDK ignores",
+      "message": "ios.infoPlist sets UIDesignRequiresCompatibility to true in app.json.",
+      "file": "app.json",
+      "line": 13,
+      "target": null,
+      "fix": {
+        "id": "GLS001/expo-config",
+        "title": "Remove the opt-out from the Expo config and rebuild the native project",
+        "steps": [
+          "Delete UIDesignRequiresCompatibility from ios.infoPlist in the Expo config.",
+          "Run npx expo prebuild --clean -p ios (or let EAS Build do it) so the generated Info.plist no longer has it.",
+          "Run the app on an iOS 27 simulator; the other findings in this report are the places to look at first."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: UIDesignRequiresCompatibility",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uidesignrequirescompatibility"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ]
+    },
+    {
+      "rule": "GLS101",
+      "severity": "warning",
+      "title": "Native stack header with its own background",
+      "message": "headerStyle.backgroundColor paints the header.",
+      "file": "src/app/_layout.tsx",
+      "line": 16,
+      "target": null,
+      "fix": {
+        "id": "GLS101/react-native",
+        "title": "Leave the header background to the system on iOS",
+        "steps": [
+          "Set headerStyle.backgroundColor, headerBackground and headerBlurEffect only for Android (Platform.select) or for iOS before 26.",
+          "Keep the brand colour on headerTintColor."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md"
+      },
+      "sources": [
+        {
+          "title": "React Navigation: Native Stack Navigator (headerStyle, headerBlurEffect, scrollEdgeEffects)",
+          "url": "https://reactnavigation.org/docs/native-stack-navigator/"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ]
+    },
+    {
+      "rule": "GLS101",
+      "severity": "warning",
+      "title": "Native stack header with its own background",
+      "message": "headerBlurEffect adds a blur to the header.",
+      "file": "src/app/_layout.tsx",
+      "line": 18,
+      "target": null,
+      "fix": {
+        "id": "GLS101/react-native",
+        "title": "Leave the header background to the system on iOS",
+        "steps": [
+          "Set headerStyle.backgroundColor, headerBackground and headerBlurEffect only for Android (Platform.select) or for iOS before 26.",
+          "Keep the brand colour on headerTintColor."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md"
+      },
+      "sources": [
+        {
+          "title": "React Navigation: Native Stack Navigator (headerStyle, headerBlurEffect, scrollEdgeEffects)",
+          "url": "https://reactnavigation.org/docs/native-stack-navigator/"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ]
+    },
+    {
+      "rule": "GLS102",
+      "severity": "info",
+      "title": "Tab bar drawn in JavaScript",
+      "message": "Expo Router's Tabs draws the tab bar in JavaScript.",
+      "file": "src/app/(tabs)/_layout.tsx",
+      "line": 5,
+      "target": null,
+      "fix": {
+        "id": "GLS102/expo",
+        "title": "Move to Expo Router's native tabs, or keep the JavaScript bar on purpose",
+        "steps": [
+          "For the system tab bar, use NativeTabs from expo-router/native-tabs (SDK 58 and later; expo-router/unstable-native-tabs in SDK 54 to 57).",
+          "If the custom bar is part of the brand, keep it and check it next to the Liquid Glass headers on an iOS 27 simulator."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md"
+      },
+      "sources": [
+        {
+          "title": "React Navigation: Bottom Tabs Navigator",
+          "url": "https://reactnavigation.org/docs/bottom-tab-navigator/"
+        },
+        {
+          "title": "React Navigation: Native Bottom Tabs Navigator",
+          "url": "https://reactnavigation.org/docs/native-bottom-tab-navigator/"
+        },
+        {
+          "title": "Expo: JavaScript tabs",
+          "url": "https://docs.expo.dev/router/advanced/tabs/"
+        },
+        {
+          "title": "Expo: Native tabs",
+          "url": "https://docs.expo.dev/router/advanced/native-tabs/"
+        }
+      ]
+    }
+  ],
+  "adopted": [],
+  "notes": [],
+  "summary": {
+    "errors": 1,
+    "warnings": 2,
+    "info": 1
+  }
+}

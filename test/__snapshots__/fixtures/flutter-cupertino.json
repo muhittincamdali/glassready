@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "glassready",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "liquid-glass",
+    "dataVersion": "2026.10.27",
+    "sdk": "iOS 27 SDK (checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators)"
+  },
+  "project": {
+    "path": "fixtures/flutter-cupertino",
+    "name": "ferry",
+    "ecosystem": "flutter",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Runner",
+        "infoPlists": [
+          "ios/Runner/Info.plist"
+        ],
+        "optOut": "yes",
+        "deploymentTarget": "15.0"
+      }
+    ],
+    "xcode": {
+      "versionFile": null,
+      "lastUpgradeCheck": "1510"
+    }
+  },
+  "verdict": {
+    "code": "opt-out-ignored",
+    "text": "The Liquid Glass opt-out is ignored when built with the iOS 27 SDK"
+  },
+  "impact": {
+    "score": 60,
+    "level": "high"
+  },
+  "findings": [
+    {
+      "rule": "GLS001",
+      "severity": "error",
+      "title": "Liquid Glass opt-out that the iOS 27 SDK ignores",
+      "message": "Runner: UIDesignRequiresCompatibility is YES in the Info.plist.",
+      "file": "ios/Runner/Info.plist",
+      "line": 52,
+      "target": "Runner",
+      "fix": {
+        "id": "GLS001/info-plist",
+        "title": "Remove the opt-out and review the screens with Liquid Glass",
+        "steps": [
+          "Delete the UIDesignRequiresCompatibility key from the Info.plist.",
+          "Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this report are the places to look at first.",
+          "Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so the system can draw the bars."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: UIDesignRequiresCompatibility",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uidesignrequirescompatibility"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ]
+    },
+    {
+      "rule": "GLS201",
+      "severity": "info",
+      "title": "Cupertino bar drawn by Flutter",
+      "message": "CupertinoTabScaffold is drawn by Flutter, not by UIKit.",
+      "file": "lib/main.dart",
+      "line": 34,
+      "target": null,
+      "fix": {
+        "id": "GLS201/flutter",
+        "title": "Decide whether the Cupertino bars should follow the system",
+        "steps": [
+          "Run the app on an iOS 27 simulator next to a system app and decide whether the Flutter-drawn bars may look different.",
+          "To follow the system, restyle the bars yourself (translucent background, floating tab bar) or follow flutter/flutter#170310 for framework support."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md"
+      },
+      "sources": [
+        {
+          "title": "Flutter issue 170310: Support for iOS 26 Liquid Glass design in Cupertino widgets",
+          "url": "https://github.com/flutter/flutter/issues/170310"
+        },
+        {
+          "title": "pub.dev: cupertino_ui changelog",
+          "url": "https://pub.dev/packages/cupertino_ui/changelog"
+        }
+      ]
+    },
+    {
+      "rule": "GLS201",
+      "severity": "info",
+      "title": "Cupertino bar drawn by Flutter",
+      "message": "CupertinoTabBar is drawn by Flutter, not by UIKit.",
+      "file": "lib/main.dart",
+      "line": 35,
+      "target": null,
+      "fix": {
+        "id": "GLS201/flutter",
+        "title": "Decide whether the Cupertino bars should follow the system",
+        "steps": [
+          "Run the app on an iOS 27 simulator next to a system app and decide whether the Flutter-drawn bars may look different.",
+          "To follow the system, restyle the bars yourself (translucent background, floating tab bar) or follow flutter/flutter#170310 for framework support."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md"
+      },
+      "sources": [
+        {
+          "title": "Flutter issue 170310: Support for iOS 26 Liquid Glass design in Cupertino widgets",
+          "url": "https://github.com/flutter/flutter/issues/170310"
+        },
+        {
+          "title": "pub.dev: cupertino_ui changelog",
+          "url": "https://pub.dev/packages/cupertino_ui/changelog"
+        }
+      ]
+    },
+    {
+      "rule": "GLS201",
+      "severity": "info",
+      "title": "Cupertino bar drawn by Flutter",
+      "message": "CupertinoSliverNavigationBar is drawn by Flutter, not by UIKit.",
+      "file": "lib/main.dart",
+      "line": 56,
+      "target": null,
+      "fix": {
+        "id": "GLS201/flutter",
+        "title": "Decide whether the Cupertino bars should follow the system",
+        "steps": [
+          "Run the app on an iOS 27 simulator next to a system app and decide whether the Flutter-drawn bars may look different.",
+          "To follow the system, restyle the bars yourself (translucent background, floating tab bar) or follow flutter/flutter#170310 for framework support."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md"
+      },
+      "sources": [
+        {
+          "title": "Flutter issue 170310: Support for iOS 26 Liquid Glass design in Cupertino widgets",
+          "url": "https://github.com/flutter/flutter/issues/170310"
+        },
+        {
+          "title": "pub.dev: cupertino_ui changelog",
+          "url": "https://pub.dev/packages/cupertino_ui/changelog"
+        }
+      ]
+    },
+    {
+      "rule": "GLS201",
+      "severity": "info",
+      "title": "Cupertino bar drawn by Flutter",
+      "message": "CupertinoNavigationBar is drawn by Flutter, not by UIKit.",
+      "file": "lib/main.dart",
+      "line": 80,
+      "target": null,
+      "fix": {
+        "id": "GLS201/flutter",
+        "title": "Decide whether the Cupertino bars should follow the system",
+        "steps": [
+          "Run the app on an iOS 27 simulator next to a system app and decide whether the Flutter-drawn bars may look different.",
+          "To follow the system, restyle the bars yourself (translucent background, floating tab bar) or follow flutter/flutter#170310 for framework support."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md"
+      },
+      "sources": [
+        {
+          "title": "Flutter issue 170310: Support for iOS 26 Liquid Glass design in Cupertino widgets",
+          "url": "https://github.com/flutter/flutter/issues/170310"
+        },
+        {
+          "title": "pub.dev: cupertino_ui changelog",
+          "url": "https://pub.dev/packages/cupertino_ui/changelog"
+        }
+      ]
+    },
+    {
+      "rule": "GLS202",
+      "severity": "info",
+      "title": "UIKit view inside Flutter",
+      "message": "A UiKitView embeds a native iOS view.",
+      "file": "lib/main.dart",
+      "line": 85,
+      "target": null,
+      "fix": {
+        "id": "GLS202/flutter",
+        "title": "Check the native view next to the Flutter UI",
+        "steps": [
+          "Open the screen with the platform view on an iOS 27 simulator and compare its controls with the Flutter widgets around it."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/flutter.md"
+      },
+      "sources": [
+        {
+          "title": "Flutter: Hosting native iOS views with platform views",
+          "url": "https://docs.flutter.dev/platform-integration/ios/platform-views"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ]
+    }
+  ],
+  "adopted": [],
+  "notes": [],
+  "summary": {
+    "errors": 1,
+    "warnings": 0,
+    "info": 5
+  }
+}

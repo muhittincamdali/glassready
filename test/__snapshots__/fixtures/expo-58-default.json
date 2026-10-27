@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "glassready",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "liquid-glass",
+    "dataVersion": "2026.10.27",
+    "sdk": "iOS 27 SDK (checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators)"
+  },
+  "project": {
+    "path": "fixtures/expo-58-default",
+    "name": "hello-world",
+    "ecosystem": "expo",
+    "versions": [
+      {
+        "name": "react-native",
+        "version": "0.88.0",
+        "source": "declared"
+      },
+      {
+        "name": "expo",
+        "version": "58.0.20",
+        "source": "declared"
+      },
+      {
+        "name": "expo-router",
+        "version": "58.0.27",
+        "source": "declared"
+      },
+      {
+        "name": "react-native-screens",
+        "version": "4.30.0",
+        "source": "declared"
+      },
+      {
+        "name": "expo-glass-effect",
+        "version": "58.0.5",
+        "source": "declared"
+      }
+    ],
+    "targets": [],
+    "xcode": {
+      "versionFile": null,
+      "lastUpgradeCheck": null
+    }
+  },
+  "verdict": {
+    "code": "review",
+    "text": "Shows Liquid Glass; 1 place to review"
+  },
+  "impact": {
+    "score": 2,
+    "level": "low"
+  },
+  "findings": [
+    {
+      "rule": "GLS103",
+      "severity": "info",
+      "title": "Native tab bar style iOS 26 and later ignore",
+      "message": "NativeTabs backgroundColor only applies on iOS 18 and earlier.",
+      "file": "src/components/app-tabs.tsx",
+      "line": 12,
+      "target": null,
+      "fix": {
+        "id": "GLS103/react-native",
+        "title": "Expect the system background on iOS 26 and later",
+        "steps": [
+          "Keep the prop for Android and older iOS if you need it, but do not rely on it for contrast on iOS 26 and later.",
+          "Use dynamic colours (PlatformColor or DynamicColorIOS) for icons and labels, which sit on light or dark content."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md"
+      },
+      "sources": [
+        {
+          "title": "Expo: Native tabs",
+          "url": "https://docs.expo.dev/router/advanced/native-tabs/"
+        },
+        {
+          "title": "React Navigation: Native Bottom Tabs Navigator (tabBarStyle, tabBarBlurEffect)",
+          "url": "https://reactnavigation.org/docs/native-bottom-tab-navigator/"
+        }
+      ]
+    }
+  ],
+  "adopted": [
+    {
+      "label": "Expo Router NativeTabs",
+      "file": "src/components/app-tabs.tsx"
+    }
+  ],
+  "notes": [],
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 1
+  }
+}
