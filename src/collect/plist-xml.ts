@@ -1,6 +1,7 @@
 // XML property lists, the format Xcode writes into projects. Only what Info.plist files use.
 import { lineIndex } from '../core/lines.js';
 import {
+  emptyDict,
   MAX_PLIST_DEPTH,
   type ParsedPlist,
   type PlistDict,
@@ -190,7 +191,7 @@ class XmlReader {
       case 'false':
         return false;
       case 'dict':
-        return {};
+        return emptyDict();
       case 'array':
         return [];
       case 'string':
@@ -203,7 +204,7 @@ class XmlReader {
   }
 
   private dict(topLevel: boolean): PlistDict {
-    const result: PlistDict = {};
+    const result = emptyDict();
     for (;;) {
       const token = this.peek();
       if (!token) throw new PlistError('<dict> is not closed.');

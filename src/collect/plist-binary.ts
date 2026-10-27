@@ -2,9 +2,9 @@
 // https://opensource.apple.com/source/CF/CF-1153.18/CFBinaryPList.c
 import {
   BINARY_MAGIC,
+  emptyDict,
   isDict,
   MAX_PLIST_DEPTH,
-  type PlistDict,
   PlistError,
   type PlistValue,
 } from './plist-value.js';
@@ -132,7 +132,7 @@ export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
       }
       case 0xd: {
         const [length, start] = lengthAt(at, info);
-        const dict: PlistDict = {};
+        const dict = emptyDict();
         for (let index = 0; index < length; index++) {
           const key = read(readUint(start + index * refSize, refSize));
           if (typeof key !== 'string')

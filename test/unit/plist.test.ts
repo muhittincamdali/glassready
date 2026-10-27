@@ -85,6 +85,16 @@ describe('parsePlist (XML)', () => {
     expect(() => parsePlist(nest(200_000))).toThrow(PlistError);
   });
 
+  it('keeps a __proto__ key as a key', () => {
+    const { value } = parsePlist(
+      wrap('<dict><key>__proto__</key><dict><key>polluted</key><true/></dict></dict>'),
+    );
+    if (!isDict(value)) throw new Error('not a dict');
+    expect(Object.keys(value)).toEqual(['__proto__']);
+    expect(Object.getPrototypeOf(value)).toBeNull();
+    expect((value as Record<string, unknown>).polluted).toBeUndefined();
+  });
+
   it('keeps a "<" that starts no markup in the text', () => {
     expect(parsePlist(wrap('<string>a < b</string>')).value).toBe('a < b');
   });
@@ -167,6 +177,20 @@ describe('parsePlist (binary)', () => {
     const { value } = parsePlist(bytes);
     if (!isDict(value)) throw new Error('not a dict');
     expect(value.k).toEqual(Array.from({ length: 1000 }, () => text));
+  });
+
+  it('keeps a __proto__ key as a key', () => {
+    const bytes = binaryPlist([
+      { dict: [[1, 2]] },
+      { ascii: '__proto__' },
+      { dict: [[3, 4]] },
+      { ascii: 'polluted' },
+      { true: true },
+    ]);
+    const { value } = parsePlist(bytes);
+    if (!isDict(value)) throw new Error('not a dict');
+    expect(Object.keys(value)).toEqual(['__proto__']);
+    expect((value as Record<string, unknown>).polluted).toBeUndefined();
   });
 
   it('rejects nesting deeper than the limit', () => {
