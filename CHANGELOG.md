@@ -7,6 +7,12 @@ All notable changes to glassready are listed here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- Report notes about an Info.plist or project.pbxproj that could not be read name the file relative
+  to the project folder. They used the absolute path, so a committed report carried the home folder
+  and user name of whoever ran glassready.
+
 ## [0.1.0] - 2026-10-28
 
 First release.
