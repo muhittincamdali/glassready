@@ -1,4 +1,4 @@
-glassready 0.1.0 · rules liquid-glass@2026.10.27
+glassready 0.1.1 · rules liquid-glass@2026.10.27
 
 Harbor · native iOS · fixtures/native-uikit-glass
 project settings last updated by Xcode 14.3 · deployment target iOS 17.0
