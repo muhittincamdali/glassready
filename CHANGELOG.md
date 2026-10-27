@@ -9,6 +9,13 @@ All notable changes to glassready are listed here. The format follows
 
 ### Fixed
 
+- A project.pbxproj whose arrays or dictionaries nest more than 64 levels is reported as such. A
+  deeply nested file overflowed the stack, and the report showed only "Maximum call stack size
+  exceeded" while the opt-out set in that project's build settings went unchecked. The note for any
+  .xcodeproj that cannot be read now says its targets and their opt-out were not checked.
+
+### Fixed
+
 - Report notes about an Info.plist or project.pbxproj that could not be read name the file relative
   to the project folder. They used the absolute path, so a committed report carried the home folder
   and user name of whoever ran glassready.

@@ -1,5 +1,6 @@
 // Old-style "OpenStep" property lists, the format of project.pbxproj: dictionaries in { }, arrays
 // in ( ), quoted or bare strings and <hex data>, with C comments.
+import { MAX_PLIST_DEPTH } from './plist-value.js';
 
 export type OpenStepValue = string | OpenStepValue[] | OpenStepDict;
 export interface OpenStepDict {
@@ -10,13 +11,18 @@ export class XcodeProjectError extends Error {
   override name = 'XcodeProjectError';
 }
 
-/** Parses an old-style property list such as project.pbxproj. */
+/**
+ * Parses an old-style property list such as project.pbxproj. Arrays and dictionaries may nest
+ * MAX_PLIST_DEPTH levels (a real project nests five); deeper nesting is an XcodeProjectError
+ * instead of a stack overflow.
+ */
 export function parseOpenStep(text: string): OpenStepValue {
   let index = 0;
+  let depth = 0;
 
   const fail = (message: string): never => {
     const line = text.slice(0, index).split('\n').length;
-    throw new XcodeProjectError(`${message} (line ${line})`);
+    throw new XcodeProjectError(`${message} (line ${line}).`);
   };
 
   const skip = () => {
@@ -66,44 +72,59 @@ export function parseOpenStep(text: string): OpenStepValue {
     return match[0];
   };
 
-  const value = (): OpenStepValue => {
+  // Arrays and dictionaries call value() for their items, so nesting is recursion: the depth
+  // limit keeps a file of 200,000 "(" from overflowing the stack.
+  const nested = <T>(read: () => T): T => {
+    if (++depth > MAX_PLIST_DEPTH) {
+      fail(`Arrays and dictionaries nest more than ${MAX_PLIST_DEPTH} levels`);
+    }
+    const result = read();
+    depth--;
+    return result;
+  };
+
+  const dict = (): OpenStepDict => {
+    index++;
+    // No prototype: a key named __proto__ stays a key (see emptyDict in plist-value.ts).
+    const result = Object.create(null) as OpenStepDict;
+    for (;;) {
+      skip();
+      if (text[index] === '}') {
+        index++;
+        return result;
+      }
+      const key = text[index] === '"' ? quoted() : bare();
+      skip();
+      if (text[index] !== '=') fail('Expected "="');
+      index++;
+      result[key] = value();
+      skip();
+      if (text[index] !== ';') fail('Expected ";"');
+      index++;
+    }
+  };
+
+  const array = (): OpenStepValue[] => {
+    index++;
+    const result: OpenStepValue[] = [];
+    for (;;) {
+      skip();
+      if (text[index] === ')') {
+        index++;
+        return result;
+      }
+      result.push(value());
+      skip();
+      if (text[index] === ',') index++;
+      else if (text[index] !== ')') fail('Expected "," or ")"');
+    }
+  };
+
+  function value(): OpenStepValue {
     skip();
     const char = text[index];
-    if (char === '{') {
-      index++;
-      // No prototype: a key named __proto__ stays a key (see emptyDict in plist-value.ts).
-      const dict = Object.create(null) as OpenStepDict;
-      for (;;) {
-        skip();
-        if (text[index] === '}') {
-          index++;
-          return dict;
-        }
-        const key = text[index] === '"' ? quoted() : bare();
-        skip();
-        if (text[index] !== '=') fail('Expected "="');
-        index++;
-        dict[key] = value();
-        skip();
-        if (text[index] !== ';') fail('Expected ";"');
-        index++;
-      }
-    }
-    if (char === '(') {
-      index++;
-      const array: OpenStepValue[] = [];
-      for (;;) {
-        skip();
-        if (text[index] === ')') {
-          index++;
-          return array;
-        }
-        array.push(value());
-        skip();
-        if (text[index] === ',') index++;
-        else if (text[index] !== ')') fail('Expected "," or ")"');
-      }
-    }
+    if (char === '{') return nested(dict);
+    if (char === '(') return nested(array);
     if (char === '"') return quoted();
     if (char === '<') {
       const end = text.indexOf('>', index);
@@ -113,7 +134,7 @@ export function parseOpenStep(text: string): OpenStepValue {
       return data;
     }
     return bare();
-  };
+  }
 
   const result = value();
   skip();

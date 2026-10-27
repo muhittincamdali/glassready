@@ -162,6 +162,10 @@ function sourceRoots(project: Project): SourceRoot[] {
   return roots;
 }
 
+/** What a note adds when an .xcodeproj cannot be read: the opt-out in it is not known. */
+export const PROJECT_NOT_CHECKED =
+  'Its targets were not checked, so an opt-out in their Info.plist or build settings is not known.';
+
 /** Reads the app targets and sources of a detected project. */
 export async function collectApp(project: Project): Promise<AppModel> {
   const notes: string[] = [];
@@ -172,7 +176,9 @@ export async function collectApp(project: Project): Promise<AppModel> {
     try {
       xcode = await readXcodeProject(path, project.root);
     } catch (error) {
-      notes.push(`${shownPath(path, project.root)}: ${(error as Error).message}`);
+      notes.push(
+        `${shownPath(path, project.root)}: ${(error as Error).message} ${PROJECT_NOT_CHECKED}`,
+      );
       continue;
     }
     if (xcode.lastUpgradeCheck) upgrades.push(xcode.lastUpgradeCheck);
