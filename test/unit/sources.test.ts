@@ -1,6 +1,12 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { listSourceFiles, readSources, sourceFile } from '../../src/collect/sources.js';
+import {
+  listSourceFiles,
+  readSources,
+  SOURCE_LIMITS,
+  type SourceLimits,
+  sourceFile,
+} from '../../src/collect/sources.js';
 import { tree } from '../helpers/tree.js';
 
 describe('listSourceFiles', () => {
@@ -46,13 +52,58 @@ describe('readSources', () => {
   it('reads each file once, sorted, with its language', async () => {
     const root = tree({ 'lib/main.dart': 'void main() {}', 'lib/a/b.dart': '' });
     const dart = new Set(['dart'] as const);
-    const files = await readSources([
+    const { files, notes } = await readSources([
       { folder: join(root, 'lib'), languages: dart },
       { folder: join(root, 'lib', 'a'), languages: dart },
     ]);
+    expect(notes).toEqual([]);
     expect(files.map((file) => [file.path.slice(root.length + 1), file.language])).toEqual([
       ['lib/a/b.dart', 'dart'],
       ['lib/main.dart', 'dart'],
+    ]);
+  });
+
+  const limited = (limits: Partial<SourceLimits>) => ({ ...SOURCE_LIMITS, ...limits });
+  const swift = new Set(['swift'] as const);
+
+  it('skips a file over the per-file limit with a note', async () => {
+    const root = tree({ 'ios/App/A.swift': 'x'.repeat(50), 'ios/App/Big.swift': 'x'.repeat(200) });
+    const { files, notes } = await readSources(
+      [{ folder: join(root, 'ios'), languages: swift }],
+      root,
+      limited({ fileBytes: 100 }),
+    );
+    expect(files.map((file) => file.path.slice(root.length + 1))).toEqual(['ios/App/A.swift']);
+    expect(notes).toEqual(['Source files not read (larger than 0 MB each): ios/App/Big.swift.']);
+  });
+
+  it('reads the first files by path up to the file count', async () => {
+    const root = tree(
+      Object.fromEntries(Array.from({ length: 6 }, (_, index) => [`ios/F${index}.swift`, ''])),
+    );
+    const { files, notes } = await readSources(
+      [{ folder: join(root, 'ios'), languages: swift }],
+      root,
+      limited({ files: 4 }),
+    );
+    expect(files).toHaveLength(4);
+    expect(notes).toEqual(['The project has 6 source files; glassready read the first 4 by path.']);
+  });
+
+  it('stops at the total and names the files it left out', async () => {
+    const root = tree(
+      Object.fromEntries(
+        Array.from({ length: 8 }, (_, index) => [`ios/F${index}.swift`, 'x'.repeat(10)]),
+      ),
+    );
+    const { files, notes } = await readSources(
+      [{ folder: join(root, 'ios'), languages: swift }],
+      root,
+      limited({ totalBytes: 35 }),
+    );
+    expect(files).toHaveLength(3);
+    expect(notes).toEqual([
+      'Source files not read (after the first 0 MB of source): ios/F3.swift, ios/F4.swift, ios/F5.swift and 2 more.',
     ]);
   });
 
