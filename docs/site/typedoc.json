@@ -1,0 +1,47 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "glassready",
+  "entryPoints": [
+    "../../src/index.ts"
+  ],
+  "tsconfig": "./tsconfig.json",
+  "out": "../../site",
+  "readme": "./index.md",
+  "projectDocuments": [
+    "../guides/opt-out.md",
+    "../guides/native-ios.md",
+    "../guides/react-native-expo.md",
+    "../guides/flutter.md"
+  ],
+  "customCss": "./theme.css",
+  "navigationLinks": {
+    "GitHub": "https://github.com/muhittincamdali/glassready"
+  },
+  "sourceLinkTemplate": "https://github.com/muhittincamdali/glassready/blob/{gitRevision}/{path}#L{line}",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": false
+  },
+  "treatWarningsAsErrors": true,
+  "alwaysCreateEntryPointModule": false,
+  "highlightLanguages": [
+    "bash",
+    "dart",
+    "javascript",
+    "js",
+    "json",
+    "jsx",
+    "objc",
+    "sh",
+    "swift",
+    "text",
+    "ts",
+    "tsx",
+    "typescript",
+    "xml",
+    "yaml"
+  ]
+}
