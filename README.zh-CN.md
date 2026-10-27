@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
+<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -138,7 +138,7 @@ glassready [path] [options]
 | `--fail-on <severity>`  | `warning`（默认）、`error`、`info` 或 `none`：决定何时返回退出码 1         |
 | `--no-color`            | 即使在终端中也输出纯文本（遵循 `NO_COLOR` 和 `FORCE_COLOR`）               |
 
-退出码：`0` 表示没有达到或高于 `--fail-on` 的发现，`1` 表示有达到或高于它的发现，`2` 表示参数错误、未找到 iOS 项目或发生意外错误。
+退出码：`0` 表示没有达到或高于 `--fail-on` 的发现，`1` 表示有达到或高于它的发现，`2` 表示参数错误、未找到 iOS 项目或发生意外错误。如果因为 Info.plist 或 Xcode 项目无法读取而未能检查退出键，除非使用 `--fail-on none`，退出码同样为 `1`。
 
 glassready 会自动找到 iOS 应用：原生应用是根目录或下一级文件夹中的 `.xcodeproj`，Flutter、React Native 和 Expo 应用是 `ios/`（Flutter 插件是 `example/ios/`）。它会读取每个 iOS 应用 target 的 Info.plist（XML 或二进制）和构建设置、应用的 Swift 和 Objective-C 文件、React Native 或 Expo 应用的 JavaScript 和 TypeScript 文件，以及 `lib/` 中的 Dart 文件，并跳过依赖、构建产物和测试。没有 `ios/` 的 Expo 应用则根据其配置检查。
 
@@ -208,7 +208,7 @@ iOS 27.0 的 iPhone 17 模拟器上的四个 fixture，均由 Xcode 27.1 构建�
 
 - **是模式匹配，不是编译器。** 规则是作用于源码文本的正则表达式，其中的注释和字符串已被置空。生成的代码、藏在宏后面的代码、运行时才构造的代码，或写法不常见的代码，可能被漏掉，也可能被误匹配。
 - **只检查应用自己的源码。** 不会读取 Pods、应用文件夹之外的 Swift package、`node_modules` 和 Flutter 插件。
-- **构建设置只来自 project.pbxproj。** 不会读取 `.xcconfig` 文件。如果无法读取某个 target 的 Info.plist，其退出状态为"未知"，报告会说明原因。
+- **构建设置只来自 project.pbxproj。** 不会读取 `.xcconfig` 文件。如果无法读取某个 target 的 Info.plist，其退出状态为"未知"，报告会说明原因。无法读取 Xcode 项目时也是如此；此时结论为 "Opt-out not known"，绝不会显示为已就绪。
 - **Expo 配置按文本处理。** `app.config.js` 和 `app.config.ts` 不会被执行，因此通过变量或 config plugin 设置的退出键不会被发现。
 - **只看文件。** glassready 不会构建应用，也不会查看应用的界面。本仓库中的模拟器录屏来自 `scripts/` 中的脚本，在 Mac 上运行。
 - **输入有上限。** 项目可能来自 pull request，因此 glassready 每个项目文件最多读取 32 MB；源码每个文件最多 4 MB、最多 20,000 个文件、总计最多 128 MB，未读取的内容会列在报告的说明中。一个二进制 plist 最多产生 100,000 个值，plist 和 JSON 文件（package.json、package-lock.json、app.json）最多嵌套 64 层，更深的 JSON 文件不会被解析。在 Mac (Apple silicon) 和 Node 26 上，一个 package.json、package-lock.json 和 `node_modules` 中 4 个 package.json 各为 31 MB 嵌套数组的项目，检查用时 0.2 秒，内存最多 190 MB。

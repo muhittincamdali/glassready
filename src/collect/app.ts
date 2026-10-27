@@ -49,6 +49,11 @@ export interface AppModel {
   sources: SourceFile[];
   /** The newest LastUpgradeCheck of the project's .xcodeproj files. */
   lastUpgradeCheck: string | null;
+  /**
+   * Whether an .xcodeproj could not be read or had no iOS app target, so no Info.plist or build
+   * setting of the app was checked for the opt-out.
+   */
+  appNotChecked: boolean;
   /** Problems reading the project that the report should mention. */
   notes: string[];
 }
@@ -171,6 +176,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
   const notes = [...project.notes];
   const targets: AppTarget[] = [];
   const upgrades: string[] = [];
+  let appNotChecked = false;
   for (const path of project.xcodeProjects) {
     let xcode: XcodeProject;
     try {
@@ -179,6 +185,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
       notes.push(
         `${shownPath(path, project.root)}: ${(error as Error).message} ${PROJECT_NOT_CHECKED}`,
       );
+      appNotChecked = true;
       continue;
     }
     if (xcode.lastUpgradeCheck) upgrades.push(xcode.lastUpgradeCheck);
@@ -189,6 +196,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
   }
   if (project.iosDir && project.xcodeProjects.length > 0 && targets.length === 0) {
     notes.push('No iOS app target was found in the Xcode project.');
+    appNotChecked = true;
   }
   const sources = await readSources(sourceRoots(project), project.root);
   notes.push(...sources.notes);
@@ -197,6 +205,7 @@ export async function collectApp(project: Project): Promise<AppModel> {
     targets,
     sources: sources.files,
     lastUpgradeCheck: upgrades.sort((left, right) => Number(left) - Number(right)).at(-1) ?? null,
+    appNotChecked,
     notes,
   };
 }

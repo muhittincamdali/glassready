@@ -9,6 +9,13 @@ All notable changes to glassready are listed here. The format follows
 
 ### Fixed
 
+- A project whose opt-out could not be checked is no longer called ready. When an Info.plist was
+  not read (a merge conflict marker, a link to a file outside the project) or an Xcode project was
+  not read or had no iOS app target (an `ios/` folder linked outside the project), the report said
+  both "opt-out not known" and "Ready for Liquid Glass: no opt-out and no custom bar styles found",
+  and the exit code was 0. The verdict is now `not-known` ("Opt-out not known: an Info.plist or
+  Xcode project that could set it was not read"), and the exit code is 1 for every `--fail-on` but
+  `none`, as the opt-out it may hide is an error.
 - package.json, package-lock.json, app.json, the `node_modules` package.json files and the Flutter
   pins may nest 64 levels, as plists may; a deeper file is not parsed. They had no limit, and
   JSON.parse of 31 MB of nested arrays per file took 4.1 s and 3.9 GB of memory for one project

@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
+<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -138,7 +138,7 @@ glassready [path] [options]
 | `--fail-on <severity>`  | `warning`（既定）、`error`、`info`、`none`。終了コードが 1 になる条件      |
 | `--no-color`            | ターミナルでもプレーンテキストにする（`NO_COLOR` と `FORCE_COLOR` に対応） |
 
-終了コード: `0` は `--fail-on` 以上の検出なし、`1` は `--fail-on` 以上の検出あり、`2` は引数の誤り、iOS プロジェクトが見つからない、または予期しないエラーです。
+終了コード: `0` は `--fail-on` 以上の検出なし、`1` は `--fail-on` 以上の検出あり、`2` は引数の誤り、iOS プロジェクトが見つからない、または予期しないエラーです。Info.plist または Xcode プロジェクトを読み取れずにオプトアウトを確認できなかった場合も、`--fail-on none` でない限り `1` になります。
 
 glassready は iOS アプリを自動で見つけます。ネイティブアプリではルートまたは 1 つ下のフォルダーにある `.xcodeproj`、Flutter、React Native、Expo のアプリでは `ios/`（Flutter プラグインでは `example/ios/`）です。iOS アプリのすべてのターゲットの Info.plist（XML またはバイナリ）とビルド設定、アプリの Swift と Objective-C のファイル、React Native または Expo アプリの JavaScript と TypeScript、`lib/` の Dart ファイルを読み取り、依存関係、ビルド出力、テストは読み飛ばします。`ios/` のない Expo アプリは、設定から調べます。
 
@@ -208,7 +208,7 @@ iOS 27.0 の iPhone 17 シミュレーター上の 4 つの fixture で、いず
 
 - **コンパイラーではなくパターンです。** ルールは、コメントと文字列を空白に置き換えたソースコードに対する正規表現です。生成されたコード、マクロの陰に隠れたコード、実行時に組み立てられるコード、特殊な書き方のコードは、見落とされたり誤って一致したりすることがあります。
 - **アプリ自身のソースのみです。** Pods、アプリのフォルダー外にある Swift パッケージ、`node_modules`、Flutter プラグインは読み取りません。
-- **ビルド設定は project.pbxproj のみです。** `.xcconfig` ファイルは読み取りません。ターゲットの Info.plist を読み取れない場合、そのオプトアウトの状態は「不明」となり、レポートに理由が表示されます。
+- **ビルド設定は project.pbxproj のみです。** `.xcconfig` ファイルは読み取りません。ターゲットの Info.plist を読み取れない場合、そのオプトアウトの状態は「不明」となり、レポートに理由が表示されます。Xcode プロジェクトを読み取れない場合も同じで、判定は「Opt-out not known」となり、準備完了とはなりません。
 - **Expo の設定はテキストとして扱います。** `app.config.js` と `app.config.ts` は実行しないため、変数や config plugin 経由で設定されたオプトアウトは検出されません。
 - **ファイルのみです。** glassready はアプリをビルドせず、画面も見ません。このリポジトリにあるシミュレーターの録画は、Mac で実行した `scripts/` のスクリプトによるものです。
 - **入力には上限があります。** プロジェクトは pull request から来ることもあるため、glassready が読み取るのはプロジェクトファイル 1 つあたり最大 32 MB、ソースはファイルあたり最大 4 MB・最大 20,000 ファイル・合計 128 MB までです。読み取らなかったものはレポートの注記に一覧表示されます。バイナリ plist が生成できる値は最大 100,000 個、plist と JSON ファイル（package.json、package-lock.json、app.json）の入れ子は最大 64 階層で、それより深い JSON ファイルは解析しません。Mac (Apple silicon) と Node 26 で、package.json、package-lock.json、`node_modules` の package.json 4 つがそれぞれ 31 MB の入れ子配列であるプロジェクトのチェックは 0.2 秒、メモリは最大 190 MB でした。

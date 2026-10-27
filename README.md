@@ -174,8 +174,9 @@ glassready [path] [options]
 | `--fail-on <severity>`  | `warning` (default), `error`, `info` or `none`: when the exit code is 1    |
 | `--no-color`            | Plain text even in a terminal (`NO_COLOR` and `FORCE_COLOR` are respected) |
 
-Exit codes: `0` nothing at or above `--fail-on`, `1` findings at or above it, `2` bad arguments,
-no iOS project found, or an unexpected error.
+Exit codes: `0` nothing at or above `--fail-on`, `1` findings at or above it, `2` bad arguments, no
+iOS project found, or an unexpected error. An opt-out glassready could not check, because an
+Info.plist or Xcode project was not read, also gives `1` unless `--fail-on none`.
 
 glassready finds the iOS app on its own: an `.xcodeproj` at the root or one folder down for native
 apps, `ios/` for Flutter, React Native and Expo apps (`example/ios/` for a Flutter plugin). It reads
@@ -263,7 +264,8 @@ medians of the three sets were 0.12, 0.12 and 0.11 seconds; the slowest run took
 - **Only the app's own sources.** Pods, Swift packages outside the app folder, `node_modules` and
   Flutter plugins are not read.
 - **Build settings from project.pbxproj only.** `.xcconfig` files are not read. When a target's
-  Info.plist cannot be read, its opt-out state is "not known" and the report says why.
+  Info.plist cannot be read, its opt-out state is "not known" and the report says why. The same
+  holds when an Xcode project cannot be read; the verdict is then "Opt-out not known", never ready.
 - **Expo config as text.** `app.config.js` and `app.config.ts` are not run, so an opt-out set
   through a variable or a config plugin is not seen.
 - **Files only.** glassready does not build the app or look at its screens. The simulator

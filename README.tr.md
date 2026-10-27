@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
+<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -182,8 +182,9 @@ glassready [path] [options]
 | `--fail-on <severity>`  | `warning` (varsayılan), `error`, `info` veya `none`: çıkış kodunun ne zaman 1 olacağı |
 | `--no-color`            | Terminalde bile düz metin (`NO_COLOR` ve `FORCE_COLOR` dikkate alınır)     |
 
-Çıkış kodları: `0` `--fail-on` düzeyinde veya üstünde bir şey yok, `1` bu düzeyde veya üstünde
-bulgu var, `2` hatalı argümanlar, iOS projesi bulunamadı ya da beklenmeyen bir hata.
+Çıkış kodları: `0` `--fail-on` düzeyinde veya üstünde bir şey yok, `1` bu düzeyde veya üstünde bulgu
+var, `2` hatalı argümanlar, iOS projesi bulunamadı ya da beklenmeyen bir hata. Bir Info.plist ya da
+Xcode projesi okunamadığı için denetlenemeyen bir opt-out da `--fail-on none` dışında `1` verir.
 
 glassready iOS uygulamasını kendisi bulur: native uygulamalarda kökteki veya bir klasör aşağıdaki
 `.xcodeproj`, Flutter, React Native ve Expo uygulamalarında `ios/` (Flutter eklentisinde
@@ -271,7 +272,9 @@ toolbar arka planlı SwiftUI uygulaması ve Flutter'ın çizdiği düz tab bar'l
 - **Yalnızca uygulamanın kendi kaynakları.** Pods, uygulama klasörünün dışındaki Swift paketleri,
   `node_modules` ve Flutter eklentileri okunmaz.
 - **Build ayarları yalnızca project.pbxproj'dan.** `.xcconfig` dosyaları okunmaz. Bir hedefin
-  Info.plist dosyası okunamazsa opt-out durumu "bilinmiyor" olur ve rapor nedenini söyler.
+  Info.plist dosyası okunamazsa opt-out durumu "bilinmiyor" olur ve rapor nedenini söyler. Bir Xcode
+  projesi okunamadığında da aynısı geçerlidir; karar o zaman "Opt-out not known" olur, asla hazır
+  denmez.
 - **Expo yapılandırması metin olarak.** `app.config.js` ve `app.config.ts` çalıştırılmaz; bu yüzden
   bir değişken veya config plugin ile ayarlanan opt-out görülmez.
 - **Yalnızca dosyalar.** glassready uygulamayı derlemez ve ekranlarına bakmaz. Bu depodaki simülatör

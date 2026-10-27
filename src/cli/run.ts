@@ -43,7 +43,8 @@ export const RELEASE_TARBALL_URL = `${REPOSITORY_URL}/releases/download/v${VERSI
 const HELP_AFTER = `
 Exit codes:
   0  no findings at or above --fail-on
-  1  findings at or above --fail-on
+  1  findings at or above --fail-on, or an opt-out that could not be checked
+     (an Info.plist or Xcode project was not read); not with --fail-on none
   2  bad arguments, no iOS project found, or an unexpected error
 
 Examples:
@@ -95,9 +96,13 @@ function useColor(options: Options, io: CliEnvironment): boolean {
 
 const RANK = { error: 3, warning: 2, info: 1 } as const;
 
-/** Whether the report has a finding at or above `failOn`. */
+/**
+ * Whether the report has a finding at or above `failOn`, or an opt-out it could not check: that
+ * opt-out may be the error-level GLS001, so only --fail-on none lets it pass.
+ */
 export function failsOn(report: Report, failOn: FailOn): boolean {
   if (failOn === 'none') return false;
+  if (report.verdict.code === 'not-known') return true;
   return report.findings.some((item) => RANK[item.severity] >= RANK[failOn]);
 }
 

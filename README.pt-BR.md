@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@183cb7d8f9f984d0138d6d1add26ae4b814edfbe status=reviewed -->
+<!-- i18n-source: README.md@7caef85d05b8c5423263b837882926be3f264175 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -179,7 +179,9 @@ glassready [path] [options]
 | `--no-color`            | Texto simples até em um terminal (`NO_COLOR` e `FORCE_COLOR` são respeitados) |
 
 Códigos de saída: `0` nada no nível de `--fail-on` ou acima, `1` achados nesse nível ou acima, `2`
-argumentos incorretos, nenhum projeto iOS encontrado ou um erro inesperado.
+argumentos incorretos, nenhum projeto iOS encontrado ou um erro inesperado. Um opt-out que o
+glassready não pôde verificar, porque um Info.plist ou um projeto do Xcode não foi lido, também dá
+`1`, exceto com `--fail-on none`.
 
 O glassready encontra o app iOS sozinho: um `.xcodeproj` na raiz ou uma pasta abaixo nos apps nativos,
 `ios/` nos apps Flutter, React Native e Expo (`example/ios/` em um plugin do Flutter). Ele lê o Info.plist
@@ -266,9 +268,10 @@ segundo.
   execução ou escrito de forma incomum pode passar despercebido ou ser reconhecido por engano.
 - **Só o código-fonte do próprio app.** Pods, pacotes Swift fora da pasta do app, `node_modules` e
   plugins do Flutter não são lidos.
-- **Configurações de build apenas do project.pbxproj.** Os arquivos `.xcconfig` não são lidos. Quando o
-  Info.plist de um target não pode ser lido, o estado do opt-out dele é "desconhecido" e o relatório diz
-  por quê.
+- **Configurações de build apenas do project.pbxproj.** Os arquivos `.xcconfig` não são lidos.
+  Quando o Info.plist de um target não pode ser lido, o estado do opt-out dele é "desconhecido" e o
+  relatório diz por quê. O mesmo vale quando um projeto do Xcode não pode ser lido; o veredito passa
+  a ser "Opt-out not known", nunca pronto.
 - **Configuração do Expo como texto.** `app.config.js` e `app.config.ts` não são executados, então um
   opt-out definido por uma variável ou por um config plugin não é visto.
 - **Só arquivos.** O glassready não compila o app nem olha as telas dele. As gravações do simulador neste

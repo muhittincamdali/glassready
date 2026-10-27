@@ -92,6 +92,17 @@ describe('verdictOf', () => {
     );
     expect(verdictOf([], 'expo').code).toBe('ready');
   });
+
+  it('never calls the app ready when the opt-out is not known, and lists what else was found', () => {
+    expect(verdictOf([], 'native', false)).toEqual({
+      code: 'not-known',
+      text: 'Opt-out not known: an Info.plist or Xcode project that could set it was not read (see the notes)',
+    });
+    expect(verdictOf([finding('GLS002'), finding('GLS008')], 'native', false).text).toMatch(
+      /\(see the notes\); 1 custom style and 1 place to review$/,
+    );
+    expect(verdictOf([finding('GLS001')], 'native', false).code).toBe('opt-out-ignored');
+  });
 });
 
 describe('render', () => {

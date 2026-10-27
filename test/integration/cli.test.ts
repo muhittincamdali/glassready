@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, symlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { EXIT, failsOn, PACKAGE_NAME, RELEASE_TARBALL_URL } from '../../src/cli/run.js';
@@ -6,7 +6,7 @@ import type { Report } from '../../src/model.js';
 import { VERSION } from '../../src/version.js';
 import { glassready } from '../helpers/cli.js';
 import { scratchDir } from '../helpers/scratch.js';
-import { tree } from '../helpers/tree.js';
+import { infoPlist, minimalPbxproj, tree } from '../helpers/tree.js';
 
 const OPT_OUT = 'fixtures/native-uikit-optout';
 
@@ -34,6 +34,44 @@ describe('exit codes', () => {
     };
     expect(failsOn(withoutOptOut, 'error')).toBe(false);
     expect(failsOn(withoutOptOut, 'warning')).toBe(true);
+  });
+
+  describe('when a file that could set the opt-out is not read', () => {
+    const PBXPROJ = minimalPbxproj('Harbor');
+    const outside = tree({
+      'Info.plist': infoPlist('<key>UIDesignRequiresCompatibility</key><true/>'),
+      'ios/Evil.xcodeproj/project.pbxproj': PBXPROJ,
+    });
+    // An Info.plist left with a merge conflict marker.
+    const conflict = tree({
+      'Harbor.xcodeproj/project.pbxproj': PBXPROJ,
+      'Harbor/Info.plist': infoPlist('<<<<<<< HEAD\n<key>A</key><string>b</string>'),
+      'Harbor/Glass.swift': 'let effect = UIGlassEffect()\n',
+    });
+    // An Info.plist linked to a file outside the project.
+    const linkedPlist = tree({ 'App.xcodeproj/project.pbxproj': PBXPROJ });
+    mkdirSync(join(linkedPlist, 'Harbor'));
+    symlinkSync(join(outside, 'Info.plist'), join(linkedPlist, 'Harbor', 'Info.plist'));
+    // A React Native app whose ios/ folder is linked to a folder outside the project.
+    const linkedIos = tree({ 'package.json': '{"dependencies":{"react-native":"0.88.0"}}' });
+    symlinkSync(join(outside, 'ios'), join(linkedIos, 'ios'));
+
+    it.each([
+      ['an Info.plist with a conflict marker', conflict],
+      ['an Info.plist linked outside the project', linkedPlist],
+      ['an ios/ folder linked outside the project', linkedIos],
+    ])('says the opt-out is not known and fails for %s', async (_, root) => {
+      const result = await glassready([root, '--json']);
+      const report = JSON.parse(result.stdout) as Report;
+      expect(report.verdict.code).toBe('not-known');
+      expect(report.verdict.text).toMatch(/^Opt-out not known: /);
+      expect(report.findings).toEqual([]);
+      expect(result.code).toBe(EXIT.findings);
+      expect((await glassready([root, '--fail-on', 'error'])).code).toBe(EXIT.findings);
+      expect((await glassready([root, '--fail-on', 'none'])).code).toBe(EXIT.ok);
+      const text = (await glassready([root, '--format', 'text'])).stdout;
+      expect(text).not.toContain('Ready for Liquid Glass');
+    });
   });
 
   it('is 2 for a bad option, a missing folder or a folder without an iOS app', async () => {
