@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
+<!-- i18n-source: README.md@7b79d29107740ed3f7f4dd400d7e9f2ad0a740a5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -60,25 +60,37 @@ birlikte. Yalnızca projenizin dosyalarını okur; derlemez, çalıştırmaz, hi
 
 ## Hızlı başlangıç
 
-[Node.js](https://nodejs.org/) 22.12 veya üstü gerekir (`node --version` sürümü yazdırır; Mac'te
-`brew install node` ile kurulur). Başka bir şey gerekmez.
+**1. glassready'yi kurun.** Node.js'i de kuran [Homebrew](https://brew.sh/) ile:
 
-**1. Uygulamanızın klasöründe bir terminal açın**; `.xcodeproj`, `pubspec.yaml` veya
+```sh
+brew install muhittincamdali/tap/glassready
+```
+
+Ya da npm ile [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0)
+üzerinden; bunun için [Node.js](https://nodejs.org/) 22.12 veya üstü gerekir (`node --version`
+sürümü yazdırır):
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+Paket henüz npm kayıt defterinde değil; orada `@mcamdali/glassready` olarak yayımlanması
+planlanıyor. İki komut da aynı release tarball'ını kurar.
+
+**2. Uygulamanızın klasöründe bir terminal açın**; `.xcodeproj`, `pubspec.yaml` veya
 `package.json` dosyasının bulunduğu klasör:
 
 ```sh
 cd path/to/YourApp
 ```
 
-**2. glassready'yi çalıştırın:**
+**3. glassready'yi çalıştırın:**
 
 ```sh
-npx @mcamdali/glassready
+glassready
 ```
 
-npm paketinin adı `@mcamdali/glassready`, kurduğu komutun adı `glassready`'dir.
-
-**3. Projenizin adının altındaki satırı okuyun.** "The Liquid Glass opt-out is ignored" (Liquid Glass
+**4. Projenizin adının altındaki satırı okuyun.** "The Liquid Glass opt-out is ignored" (Liquid Glass
 opt-out anahtarı yok sayılıyor) satırı, uygulamanın opt-out etmesine rağmen iOS 27'de değişeceği
 anlamına gelir: önce **ERROR**, sonra kodunuzun yeni çubukların üzerini boyadığı yerler olan
 **WARNING** bulgularıyla başlayın. **INFO** bulgularına iOS 27 simülatöründe bakmaya değer. Her
@@ -142,23 +154,18 @@ notlandırmaz.
 
 ## Kurulum
 
-Kurmadan çalıştırın (yukarıda) ya da `glassready` komutunu npm'den kurun:
+Hızlı başlangıç bölümündeki komutlar `glassready` komutunu GitHub release'inden kurar. Her
+[GitHub release](https://github.com/muhittincamdali/glassready/releases) paketi
+`glassready-<version>.tgz` olarak bir `SHA256SUMS` dosyasıyla birlikte sunar. Bir projede bir sürümü
+sabitlemek için:
 
 ```sh
-npm i -g @mcamdali/glassready
-glassready
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
 ```
 
-Bir projede `npm install --save-dev @mcamdali/glassready` sürümü sabitler, `npx glassready` da
-ardından o kopyayı çalıştırır. Her [GitHub release](https://github.com/muhittincamdali/glassready/releases)
-aynı paketi `glassready-<version>.tgz` olarak bir `SHA256SUMS` dosyasıyla birlikte sunar; npm paketi
-oradan da kurar:
-
-```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
-```
-
-Homebrew ile: `brew install muhittincamdali/tap/glassready`.
+Ardından `npx glassready` o kopyayı çalıştırır. Paket `@mcamdali/glassready` adıyla kurulur;
+aşağıdaki JavaScript API'si de bu adı içe aktarır. npm kayıt defterinde yayımlama planlanıyor; o
+zamana kadar `npx @mcamdali/glassready` paketi bulamaz.
 
 ## Kullanım
 
@@ -188,13 +195,13 @@ JavaScript ve TypeScript dosyalarını ve `lib/` içindeki Dart dosyalarını ok
 ### Markdown raporunu kodla birlikte saklayın
 
 ```sh
-npx @mcamdali/glassready --format markdown --output glassready.md
+glassready --format markdown --output glassready.md
 ```
 
 ### JSON raporunu betiklerde kullanın
 
 ```sh
-npx @mcamdali/glassready --json > glassready.json
+glassready --json > glassready.json
 ```
 
 Her bulgunun `rule`, `severity`, `title`, `message`, `file`, `line`, `target`, adımları ve rehberiyle

@@ -7,6 +7,13 @@ All notable changes to glassready are listed here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The README (all ten languages), the guides and the documentation site install glassready with
+  Homebrew or from the GitHub release tarball and then run `glassready`. They used
+  `npx @mcamdali/glassready`, which fails while the package is not on the npm registry; publishing
+  there is planned. The GitHub Actions example runs the release tarball through npx.
+
 ### Fixed
 
 - The GitHub Actions example runs when any file glassready reads changes. Its `paths` filter

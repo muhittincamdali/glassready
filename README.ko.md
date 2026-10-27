@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
+<!-- i18n-source: README.md@7b79d29107740ed3f7f4dd400d7e9f2ad0a740a5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -47,23 +47,33 @@ fixture</a>를 실행해 녹화했습니다. 테스트용으로 작성한 UIKit 
 
 ## 빠른 시작
 
-[Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있고, Mac에서는 `brew install node`로 설치합니다). 그 밖에 필요한 것은 없습니다.
+**1. glassready를 설치합니다.** Node.js도 함께 설치하는 [Homebrew](https://brew.sh/)를 사용하는 경우:
 
-**1. 앱 폴더에서 터미널을 엽니다.** `.xcodeproj`, `pubspec.yaml` 또는 `package.json`이 있는 폴더입니다.
+```sh
+brew install muhittincamdali/tap/glassready
+```
+
+또는 npm으로 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0)에서 설치합니다. [Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있습니다):
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+이 패키지는 아직 npm 레지스트리에 없습니다. `@mcamdali/glassready`로 게시할 예정입니다. 두 명령 모두 같은 release tarball을 설치합니다.
+
+**2. 앱 폴더에서 터미널을 엽니다.** `.xcodeproj`, `pubspec.yaml` 또는 `package.json`이 있는 폴더입니다.
 
 ```sh
 cd path/to/YourApp
 ```
 
-**2. glassready를 실행합니다.**
+**3. glassready를 실행합니다.**
 
 ```sh
-npx @mcamdali/glassready
+glassready
 ```
 
-npm 패키지 이름은 `@mcamdali/glassready`이고, 설치되는 명령은 `glassready`입니다.
-
-**3. 프로젝트 이름 아래의 줄을 읽습니다.** "The Liquid Glass opt-out is ignored"(Liquid Glass 옵트아웃이 무시됨)라고 나오면, 옵트아웃했더라도 iOS 27에서 앱이 바뀐다는 뜻입니다. 먼저 **ERROR**를 확인하고, 그다음 코드가 새 바를 덧칠하는 위치인 **WARNING** 발견 사항을 확인하세요. **INFO** 발견 사항은 iOS 27 시뮬레이터에서 한 번 살펴볼 만합니다. 각 발견 사항에는 "How to fix" 목록에 있는 해결 방법의 이름이 표시됩니다.
+**4. 프로젝트 이름 아래의 줄을 읽습니다.** "The Liquid Glass opt-out is ignored"(Liquid Glass 옵트아웃이 무시됨)라고 나오면, 옵트아웃했더라도 iOS 27에서 앱이 바뀐다는 뜻입니다. 먼저 **ERROR**를 확인하고, 그다음 코드가 새 바를 덧칠하는 위치인 **WARNING** 발견 사항을 확인하세요. **INFO** 발견 사항은 iOS 27 시뮬레이터에서 한 번 살펴볼 만합니다. 각 발견 사항에는 "How to fix" 목록에 있는 해결 방법의 이름이 표시됩니다.
 
 ## iOS 27 SDK로 빌드하면 무엇이 바뀌는가
 
@@ -114,20 +124,13 @@ Apple의
 
 ## 설치
 
-설치 없이 실행하거나(위 참조), npm에서 `glassready` 명령을 설치합니다.
+빠른 시작의 명령은 GitHub release에서 `glassready` 명령을 설치합니다. 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases)에는 패키지가 `glassready-<version>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있습니다. 프로젝트에서 release 하나를 고정하려면:
 
 ```sh
-npm i -g @mcamdali/glassready
-glassready
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
 ```
 
-프로젝트 안에서는 `npm install --save-dev @mcamdali/glassready`로 버전을 고정할 수 있으며, 이후 `npx glassready`는 그 사본을 실행합니다. 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases)에는 같은 패키지가 `glassready-<version>.tgz`로 `SHA256SUMS` 파일과 함께 첨부되어 있으며, npm으로 거기서 바로 설치할 수도 있습니다:
-
-```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
-```
-
-Homebrew를 쓰는 경우: `brew install muhittincamdali/tap/glassready`.
+그다음에는 `npx glassready`가 그 사본을 실행합니다. 패키지는 `@mcamdali/glassready`라는 이름으로 설치되며, 아래 JavaScript API도 이 이름으로 import합니다. npm 레지스트리 게시는 예정되어 있으며, 그 전까지 `npx @mcamdali/glassready`는 패키지를 찾지 못합니다.
 
 ## 사용법
 
@@ -151,13 +154,13 @@ glassready는 iOS 앱을 스스로 찾습니다. 네이티브 앱은 루트 또�
 ### Markdown 리포트를 코드와 함께 보관하기
 
 ```sh
-npx @mcamdali/glassready --format markdown --output glassready.md
+glassready --format markdown --output glassready.md
 ```
 
 ### 스크립트에서 JSON 리포트 사용하기
 
 ```sh
-npx @mcamdali/glassready --json > glassready.json
+glassready --json > glassready.json
 ```
 
 각 발견 사항에는 `rule`, `severity`, `title`, `message`, `file`, `line`, `target`, 단계와 가이드를 담은 `fix`, 그리고 `sources`가 있습니다. 형식은 `schemaVersion` 0이며 1.0 이전에 바뀔 수 있습니다. [examples/shell/opt-out-targets.sh](examples/shell/opt-out-targets.sh)는 이를 `jq`로 걸러 냅니다.

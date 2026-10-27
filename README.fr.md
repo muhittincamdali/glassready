@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
+<!-- i18n-source: README.md@7b79d29107740ed3f7f4dd400d7e9f2ad0a740a5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -60,25 +60,37 @@ native-uikit-optout</a>, une app UIKit écrite pour les tests (<code>npm run dem
 
 ## Démarrage rapide
 
-Il vous faut [Node.js](https://nodejs.org/) 22.12 ou plus récent (`node --version` affiche la version ;
-sur un Mac, `brew install node` l’installe). Rien d’autre.
+**1. Installez glassready.** Avec [Homebrew](https://brew.sh/), qui installe aussi Node.js :
 
-**1. Ouvrez un terminal dans le dossier de votre app**, celui qui contient le `.xcodeproj`, `pubspec.yaml`
+```sh
+brew install muhittincamdali/tap/glassready
+```
+
+Ou avec npm depuis la
+[release GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0), ce qui demande
+[Node.js](https://nodejs.org/) 22.12 ou plus récent (`node --version` affiche la version) :
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+Le paquet n’est pas encore sur le registre npm ; sa publication sous le nom `@mcamdali/glassready`
+est prévue. Les deux commandes installent la même archive de la release.
+
+**2. Ouvrez un terminal dans le dossier de votre app**, celui qui contient le `.xcodeproj`, `pubspec.yaml`
 ou `package.json` :
 
 ```sh
 cd path/to/YourApp
 ```
 
-**2. Lancez glassready :**
+**3. Lancez glassready :**
 
 ```sh
-npx @mcamdali/glassready
+glassready
 ```
 
-Le paquet npm s’appelle `@mcamdali/glassready` ; la commande qu’il installe est `glassready`.
-
-**3. Lisez la ligne sous le nom de votre projet.** « The Liquid Glass opt-out is ignored » (l’opt-out de
+**4. Lisez la ligne sous le nom de votre projet.** « The Liquid Glass opt-out is ignored » (l’opt-out de
 Liquid Glass est ignoré) signifie que l’app change sous iOS 27 même si elle fait l’opt-out : commencez
 par l’**ERROR**, puis les résultats **WARNING**, qui sont les endroits où votre code recouvre les
 nouvelles barres. Les résultats **INFO** méritent un coup d’œil dans un simulateur iOS 27. Chaque
@@ -139,23 +151,18 @@ résultat info, 100 au maximum. Le score sert à classer les projets ; il ne no
 
 ## Installation
 
-Lancez-le sans l’installer (voir ci-dessus) ou installez la commande `glassready` depuis npm :
+Les commandes de la section Démarrage rapide installent la commande `glassready` depuis la release
+GitHub. Chaque [release GitHub](https://github.com/muhittincamdali/glassready/releases) contient le
+paquet sous la forme `glassready-<version>.tgz` avec un fichier `SHA256SUMS`. Pour figer une release
+dans un projet :
 
 ```sh
-npm i -g @mcamdali/glassready
-glassready
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
 ```
 
-Dans un projet, `npm install --save-dev @mcamdali/glassready` fixe une version, et `npx glassready`
-exécute ensuite cette copie. Chaque [GitHub release](https://github.com/muhittincamdali/glassready/releases)
-contient le même paquet sous le nom `glassready-<version>.tgz`, avec un fichier `SHA256SUMS`, et npm peut aussi
-l’installer depuis là :
-
-```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
-```
-
-Avec Homebrew : `brew install muhittincamdali/tap/glassready`.
+Ensuite, `npx glassready` exécute cette copie. Le paquet s’installe sous le nom
+`@mcamdali/glassready`, celui qu’importe aussi l’API JavaScript plus bas. La publication sur le
+registre npm est prévue ; d’ici là, `npx @mcamdali/glassready` ne trouve pas le paquet.
 
 ## Utilisation
 
@@ -185,13 +192,13 @@ vérifiée à partir de sa configuration.
 ### Conserver un rapport Markdown avec le code
 
 ```sh
-npx @mcamdali/glassready --format markdown --output glassready.md
+glassready --format markdown --output glassready.md
 ```
 
 ### Utiliser le rapport JSON dans des scripts
 
 ```sh
-npx @mcamdali/glassready --json > glassready.json
+glassready --json > glassready.json
 ```
 
 Chaque résultat a `rule`, `severity`, `title`, `message`, `file`, `line`, `target`, le `fix` avec ses

@@ -10,7 +10,7 @@ puts it this way:
 > Liquid Glass or other effects that the system provides, such as the scroll edge effect.
 
 ```sh
-npx @mcamdali/glassready path/to/YourApp
+glassready path/to/YourApp
 ```
 
 ## What glassready finds, and the fix for each

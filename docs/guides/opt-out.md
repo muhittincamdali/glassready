@@ -58,7 +58,7 @@ table above describes. glassready does not assume a date.
 1. Run glassready to see where the app works against Liquid Glass:
 
    ```sh
-   npx @mcamdali/glassready
+   glassready
    ```
 
 2. Delete the key (or the build setting, or `ios.infoPlist.UIDesignRequiresCompatibility` in an
