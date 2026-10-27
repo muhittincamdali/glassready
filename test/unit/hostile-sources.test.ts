@@ -3,7 +3,9 @@
 // the comments); the limit leaves room for a slow CI runner.
 import { describe, expect, it } from 'vitest';
 import { sourceFile } from '../../src/collect/sources.js';
+import { type Project } from '../../src/detect/project.js';
 import { checkNativeFile } from '../../src/rules/native.js';
+import { checkReactNative } from '../../src/rules/react-native.js';
 
 const SIZE = 1_000_000;
 const LIMIT_MS = 2_000;
@@ -15,6 +17,24 @@ function timed(run: () => unknown): number {
   run();
   return performance.now() - started;
 }
+
+const RN_PROJECT: Project = {
+  root: '/app',
+  name: 'app',
+  ecosystem: 'react-native',
+  iosDir: '/app/ios',
+  xcodeProjects: [],
+  packages: new Map(),
+  flutter: null,
+  expoConfig: null,
+  xcodeVersionFile: null,
+};
+
+// The imports that switch on every React Native rule.
+const RN_IMPORTS = `import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeTabs } from 'expo-router/native-tabs';
+createNativeBottomTabNavigator;
+`;
 
 describe('native rules on hostile Swift', () => {
   it.each([
@@ -57,5 +77,19 @@ describe('native rules on hostile Swift', () => {
       );
     expect(rules('x.toolbar(.hidden, for: .navigationBar, .tabBar)')).toEqual(['GLS005']);
     expect(rules('x.toolbar(.hidden, for: .navigationBar)')).toEqual([]);
+  });
+});
+
+describe('React Native rules on hostile JavaScript', () => {
+  it.each([
+    // About 27 s at 1 MB.
+    ['unclosed headerStyle objects', repeat('headerStyle: {')],
+    ['unclosed tabBarStyle objects', repeat('tabBarStyle: {')],
+    // About 200 s at 1 MB.
+    ['unclosed import lists', repeat('import a, { b ')],
+    ['NativeTabs tags without an end', repeat('<NativeTabs =>')],
+  ])('%s', (_, text) => {
+    const file = sourceFile('/app/App.tsx', RN_IMPORTS + text);
+    expect(timed(() => checkReactNative(RN_PROJECT, [file]))).toBeLessThan(LIMIT_MS);
   });
 });
