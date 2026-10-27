@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7b79d29107740ed3f7f4dd400d7e9f2ad0a740a5 status=reviewed -->
+<!-- i18n-source: README.md@0c7045cc9b1acc9943580c05a9dd3383c5d48cbc status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml/badge.svg" alt="Статус CI"></a>
-<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="Последняя версия: v0.1.0"></picture></a>
+<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="Последняя версия: v0.1.1"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg" alt="Версия языка: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg" alt="Лицензия: MIT"></picture></a>
 </p>
@@ -67,11 +67,11 @@ brew install muhittincamdali/tap/glassready
 ```
 
 Или через npm из
-[релиза на GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0); для этого
+[релиза на GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.1); для этого
 нужен [Node.js](https://nodejs.org/) 22.12 или новее (`node --version` покажет версию):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
 ```
 
 В реестре npm пакета пока нет; публикация под именем `@mcamdali/glassready` запланирована. Обе
@@ -156,7 +156,7 @@ API Liquid Glass, которые приложение уже используе�
 `glassready-<version>.tgz` вместе с файлом `SHA256SUMS`. Чтобы закрепить релиз в проекте:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
 ```
 
 После этого `npx glassready` запускает эту копию. Пакет устанавливается под именем

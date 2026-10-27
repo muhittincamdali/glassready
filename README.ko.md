@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@7b79d29107740ed3f7f4dd400d7e9f2ad0a740a5 status=reviewed -->
+<!-- i18n-source: README.md@0c7045cc9b1acc9943580c05a9dd3383c5d48cbc status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -9,7 +9,7 @@
 
 <p align="center">
 <a href="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml"><img src="https://github.com/muhittincamdali/glassready/actions/workflows/ci.yml/badge.svg" alt="CI 상태"></a>
-<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="최신 버전: v0.1.0"></picture></a>
+<a href="https://github.com/muhittincamdali/glassready/releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-version-light.svg" alt="최신 버전: v0.1.1"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/package.json"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-language-light.svg" alt="언어 버전: Node.js 22.12+"></picture></a>
 <a href="https://github.com/muhittincamdali/glassready/blob/main/LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/badge-license-light.svg" alt="라이선스: MIT"></picture></a>
 </p>
@@ -53,10 +53,10 @@ fixture</a>를 실행해 녹화했습니다. 테스트용으로 작성한 UIKit 
 brew install muhittincamdali/tap/glassready
 ```
 
-또는 npm으로 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0)에서 설치합니다. [Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있습니다):
+또는 npm으로 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.1)에서 설치합니다. [Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있습니다):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
 ```
 
 이 패키지는 아직 npm 레지스트리에 없습니다. `@mcamdali/glassready`로 게시할 예정입니다. 두 명령 모두 같은 release tarball을 설치합니다.
@@ -127,7 +127,7 @@ Apple의
 빠른 시작의 명령은 GitHub release에서 `glassready` 명령을 설치합니다. 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases)에는 패키지가 `glassready-<version>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있습니다. 프로젝트에서 release 하나를 고정하려면:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.1/glassready-0.1.1.tgz
 ```
 
 그다음에는 `npx glassready`가 그 사본을 실행합니다. 패키지는 `@mcamdali/glassready`라는 이름으로 설치되며, 아래 JavaScript API도 이 이름으로 import합니다. npm 레지스트리 게시는 예정되어 있으며, 그 전까지 `npx @mcamdali/glassready`는 패키지를 찾지 못합니다.
