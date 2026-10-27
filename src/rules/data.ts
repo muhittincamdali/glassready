@@ -39,28 +39,31 @@ export const FIX_VARIANTS = [
 ] as const;
 export type FixVariant = (typeof FIX_VARIANTS)[number];
 
-const source = z.object({
+/** One source a rule cites. */
+export const ruleSourceSchema = z.object({
   title: z.string().min(1),
   url: z.url({ protocol: /^https$/ }),
 });
-export type RuleSource = z.infer<typeof source>;
+export type RuleSource = z.infer<typeof ruleSourceSchema>;
 
-const fix = z.object({
+/** One fix of a rule: what to do, step by step, and the guide. */
+export const ruleFixSchema = z.object({
   title: z.string().min(1),
   steps: z.array(z.string().min(1)).min(1),
   guide: z.string().regex(/^docs\/guides\/[\w-]+\.md$/),
 });
-export type RuleFix = z.infer<typeof fix>;
+export type RuleFix = z.infer<typeof ruleFixSchema>;
 
-const rule = z.object({
+/** One rule of the rule data. */
+export const ruleSchema = z.object({
   id: z.enum(RULE_IDS),
   severity: z.enum(SEVERITIES),
   title: z.string().min(1),
   summary: z.string().min(1),
-  sources: z.array(source).min(1),
-  fixes: z.partialRecord(z.enum(FIX_VARIANTS), fix),
+  sources: z.array(ruleSourceSchema).min(1),
+  fixes: z.partialRecord(z.enum(FIX_VARIANTS), ruleFixSchema),
 });
-export type Rule = z.infer<typeof rule>;
+export type Rule = z.infer<typeof ruleSchema>;
 
 /** The shape of rules/liquid-glass.json; rules/schema.json is generated from it. */
 export const ruleDataSchema = z.object({
@@ -68,7 +71,7 @@ export const ruleDataSchema = z.object({
   ruleSet: z.literal('liquid-glass'),
   dataVersion: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/),
   sdk: z.string().min(1),
-  rules: z.array(rule),
+  rules: z.array(ruleSchema),
   adoption: z.array(z.object({ pattern: z.string().min(1), label: z.string().min(1) })),
 });
 export type RuleData = z.infer<typeof ruleDataSchema>;
