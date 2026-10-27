@@ -31,4 +31,4 @@ Sources: [Expo: Native tabs](https://docs.expo.dev/router/advanced/native-tabs/)
 
 0 errors, 0 warnings, 1 info. Guide: [Expo](https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md). Will it launch with the iOS 27 SDK? [sdkbump](https://github.com/muhittincamdali/sdkbump).
 
-<sub>[glassready](https://github.com/muhittincamdali/glassready) 0.1.1, rules liquid-glass@2026.10.27 (iOS 27 SDK \(checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators\)). Reads the project's files; it does not build or run the app.</sub>
+<sub>[glassready](https://github.com/muhittincamdali/glassready) 0.1.2, rules liquid-glass@2026.10.27 (iOS 27 SDK \(checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators\)). Reads the project's files; it does not build or run the app.</sub>
