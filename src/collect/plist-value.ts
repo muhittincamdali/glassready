@@ -17,6 +17,9 @@ export class PlistError extends Error {
   override name = 'PlistError';
 }
 
+/** How deep arrays and dictionaries may nest; Info.plist files nest a handful of levels. */
+export const MAX_PLIST_DEPTH = 64;
+
 /** The first bytes of a binary property list. */
 export const BINARY_MAGIC = 'bplist00';
 

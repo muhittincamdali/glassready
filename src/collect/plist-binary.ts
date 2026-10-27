@@ -3,6 +3,7 @@
 import {
   BINARY_MAGIC,
   isDict,
+  MAX_PLIST_DEPTH,
   type PlistDict,
   PlistError,
   type PlistValue,
@@ -17,9 +18,6 @@ const APPLE_EPOCH_MS = Date.UTC(2001, 0, 1);
  * produce a few hundred.
  */
 export const MAX_BINARY_PLIST_VALUES = 100_000;
-
-/** How deep arrays and dictionaries may nest; Info.plist files nest a handful of levels. */
-export const MAX_PLIST_DEPTH = 64;
 
 export function parseBinaryPlist(bytes: Uint8Array): PlistValue {
   if (bytes.length < BINARY_MAGIC.length + 32) throw new PlistError('Binary plist is too short.');

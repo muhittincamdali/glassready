@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { MAX_BINARY_PLIST_VALUES, MAX_PLIST_DEPTH } from '../../src/collect/plist-binary.js';
+import { MAX_BINARY_PLIST_VALUES } from '../../src/collect/plist-binary.js';
+import { MAX_PLIST_DEPTH } from '../../src/collect/plist-value.js';
 import { isDict, type PlistDict, PlistError, parsePlist } from '../../src/collect/plist.js';
 import { type BinaryObject, binaryPlist, sharedReferencePlist } from '../helpers/bplist.js';
 
@@ -74,6 +75,14 @@ describe('parsePlist (XML)', () => {
     ['an unclosed tag', wrap('<dict><key')],
   ])('rejects %s', (_, text) => {
     expect(() => parsePlist(text)).toThrow(PlistError);
+  });
+
+  it('reads nesting up to the limit and rejects deeper nesting', () => {
+    const nest = (depth: number) => wrap(`${'<array>'.repeat(depth)}${'</array>'.repeat(depth)}`);
+    expect(() => parsePlist(nest(MAX_PLIST_DEPTH))).not.toThrow();
+    expect(() => parsePlist(nest(MAX_PLIST_DEPTH + 1))).toThrow(/nests more than/);
+    // Without the limit this is a stack overflow rather than a PlistError.
+    expect(() => parsePlist(nest(200_000))).toThrow(PlistError);
   });
 
   it('keeps a "<" that starts no markup in the text', () => {

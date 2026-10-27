@@ -1,6 +1,12 @@
 // XML property lists, the format Xcode writes into projects. Only what Info.plist files use.
 import { lineIndex } from '../core/lines.js';
-import { type ParsedPlist, type PlistDict, PlistError, type PlistValue } from './plist-value.js';
+import {
+  MAX_PLIST_DEPTH,
+  type ParsedPlist,
+  type PlistDict,
+  PlistError,
+  type PlistValue,
+} from './plist-value.js';
 
 interface Token {
   kind: 'open' | 'close' | 'empty' | 'text';
@@ -84,6 +90,7 @@ function tokenize(xml: string): Token[] {
 
 class XmlReader {
   private index = 0;
+  private depth = 0;
   readonly keyLines = new Map<string, number>();
 
   constructor(
@@ -137,9 +144,8 @@ class XmlReader {
     if (token.kind === 'empty') return this.emptyValue(token.name);
     switch (token.name) {
       case 'dict':
-        return this.dict(topLevel);
       case 'array':
-        return this.array();
+        return this.nested(() => (token.name === 'dict' ? this.dict(topLevel) : this.array()));
       case 'string':
         return this.textUntil('string');
       case 'integer': {
@@ -163,6 +169,17 @@ class XmlReader {
         return Uint8Array.from(Buffer.from(this.textUntil('data').replace(/\s+/g, ''), 'base64'));
       default:
         throw new PlistError(`Unknown element <${token.name}>.`);
+    }
+  }
+
+  private nested(read: () => PlistValue): PlistValue {
+    if (++this.depth > MAX_PLIST_DEPTH) {
+      throw new PlistError(`The plist nests more than ${MAX_PLIST_DEPTH} levels.`);
+    }
+    try {
+      return read();
+    } finally {
+      this.depth--;
     }
   }
 
