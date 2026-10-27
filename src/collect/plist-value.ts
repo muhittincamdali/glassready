@@ -17,6 +17,20 @@ export class PlistError extends Error {
   override name = 'PlistError';
 }
 
+/** How many characters of the checked file an error message repeats. */
+export const MAX_EXCERPT_LENGTH = 40;
+
+/**
+ * Text from the checked file, shortened for an error message. The message becomes a report note,
+ * and an element holding megabytes of text would otherwise be copied into the report whole.
+ */
+export function excerpt(text: string): string {
+  const characters = Array.from(text.slice(0, MAX_EXCERPT_LENGTH * 2 + 1));
+  return characters.length <= MAX_EXCERPT_LENGTH
+    ? text
+    : `${characters.slice(0, MAX_EXCERPT_LENGTH).join('')}…`;
+}
+
 /** How deep arrays and dictionaries may nest; Info.plist files nest a handful of levels. */
 export const MAX_PLIST_DEPTH = 64;
 

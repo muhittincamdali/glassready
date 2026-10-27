@@ -2,6 +2,7 @@
 import { lineIndex } from '../core/lines.js';
 import {
   emptyDict,
+  excerpt,
   MAX_PLIST_DEPTH,
   type ParsedPlist,
   type PlistDict,
@@ -69,7 +70,7 @@ function tokenize(xml: string): Token[] {
       continue;
     }
     const end = xml.indexOf('>', TAG_NAME.lastIndex);
-    if (end === -1) throw new PlistError(`<${name[1]}> is not closed.`);
+    if (end === -1) throw new PlistError(`<${excerpt(name[1] ?? '')}> is not closed.`);
     text(textStart, position);
     const closing = xml[position + 1] === '/';
     const kind = closing ? 'close' : xml[end - 1] === '/' ? 'empty' : 'open';
@@ -119,7 +120,7 @@ class XmlReader {
     for (let token = this.tokens[this.index++]; token; token = this.tokens[this.index++]) {
       if (token.kind === 'text') text += token.text;
       else if (token.kind === 'close' && token.name === name) return text;
-      else throw new PlistError(`Unexpected <${token.name}> inside <${name}>.`);
+      else throw new PlistError(`Unexpected <${excerpt(token.name)}> inside <${name}>.`);
     }
     throw new PlistError(`<${name}> is not closed.`);
   }
@@ -151,7 +152,7 @@ class XmlReader {
         return this.textUntil('string');
       case 'integer': {
         const text = this.textUntil('integer').trim();
-        if (!/^[+-]?\d+$/.test(text)) throw new PlistError(`Not an integer: ${text}`);
+        if (!/^[+-]?\d+$/.test(text)) throw new PlistError(`Not an integer: ${excerpt(text)}`);
         const big = BigInt(text);
         return Number.isSafeInteger(Number(big)) ? Number(big) : big;
       }
@@ -169,7 +170,7 @@ class XmlReader {
       case 'data':
         return Uint8Array.from(Buffer.from(this.textUntil('data').replace(/\s+/g, ''), 'base64'));
       default:
-        throw new PlistError(`Unknown element <${token.name}>.`);
+        throw new PlistError(`Unknown element <${excerpt(token.name)}>.`);
     }
   }
 
@@ -199,7 +200,7 @@ class XmlReader {
       case 'data':
         return new Uint8Array();
       default:
-        throw new PlistError(`Unknown element <${name}/>.`);
+        throw new PlistError(`Unknown element <${excerpt(name)}/>.`);
     }
   }
 
