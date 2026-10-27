@@ -67,4 +67,4 @@ Sources: [React Navigation: Bottom Tabs Navigator](https://reactnavigation.org/d
 
 1 error, 1 warning, 2 info. Guide: [React Native](https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md). Will it launch with the iOS 27 SDK? [sdkbump](https://github.com/muhittincamdali/sdkbump).
 
-<sub>[glassready](https://github.com/muhittincamdali/glassready) 0.1.1, rules liquid-glass@2026.10.27 (iOS 27 SDK \(checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators\)). Reads the project's files; it does not build or run the app.</sub>
+<sub>[glassready](https://github.com/muhittincamdali/glassready) 0.1.2, rules liquid-glass@2026.10.27 (iOS 27 SDK \(checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators\)). Reads the project's files; it does not build or run the app.</sub>

@@ -7,6 +7,8 @@ All notable changes to glassready are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-28
+
 ### Fixed
 
 - A project whose opt-out could not be checked is no longer called ready. When an Info.plist was
@@ -104,6 +106,7 @@ inputs that hung the scan or ran it out of memory; they are fixed and each has a
 - Reports replace the bidirectional embedding, override and isolate controls (U+202A to U+202E,
   U+2066 to U+2069) as they already did C0 and C1 control characters.
 
-[Unreleased]: https://github.com/muhittincamdali/glassready/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/muhittincamdali/glassready/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/muhittincamdali/glassready/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/muhittincamdali/glassready/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0

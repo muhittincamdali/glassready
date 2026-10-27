@@ -1,4 +1,4 @@
-glassready 0.1.1 · rules liquid-glass@2026.10.27
+glassready 0.1.2 · rules liquid-glass@2026.10.27
 
 ferry · Flutter · fixtures/flutter-cupertino
 project settings last updated by Xcode 15.1 · deployment target iOS 15.0
