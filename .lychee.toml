@@ -33,6 +33,8 @@ exclude = [
   '^https?://api\.example\.com',
   # Pull request and comparison pages that only exist after a push.
   '^https://github\.com/[^/]+/[^/]+/compare/',
+  # A release page exists only once its tag is pushed, after the release pull request is merged.
+  '^https://github\.com/[^/]+/[^/]+/releases/tag/',
 ]
 
 # The READMEs link to this repository's own files on main (graphics in .github/brand, screenshots
