@@ -144,8 +144,14 @@ glassready
 
 In a project, `npm install --save-dev @mcamdali/glassready` pins a version, and `npx glassready`
 then runs that copy. Each [GitHub release](https://github.com/muhittincamdali/glassready/releases)
-carries the same package as `glassready-<version>.tgz` with a `SHA256SUMS` file. With Homebrew:
-`brew install muhittincamdali/tap/glassready`.
+carries the same package as `glassready-<version>.tgz` with a `SHA256SUMS` file, and npm installs
+it from there too:
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+With Homebrew: `brew install muhittincamdali/tap/glassready`.
 
 ## Usage
 

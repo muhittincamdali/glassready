@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa2325a0ed6c60d15fd52b0af4b056d302f9673a status=reviewed -->
+<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -112,7 +112,13 @@ npm i -g @mcamdali/glassready
 glassready
 ```
 
-在项目中，`npm install --save-dev @mcamdali/glassready` 会固定版本，之后 `npx glassready` 就会运行这份副本。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带同一个包，并附有 `SHA256SUMS` 文件。使用 Homebrew 时：`brew install muhittincamdali/tap/glassready`。
+在项目中，`npm install --save-dev @mcamdali/glassready` 会固定版本，之后 `npx glassready` 就会运行这份副本。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带同一个包，并附有 `SHA256SUMS` 文件，npm 也可以直接从那里安装：
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+使用 Homebrew 时：`brew install muhittincamdali/tap/glassready`。
 
 ## 使用方法
 

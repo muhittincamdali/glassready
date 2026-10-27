@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa2325a0ed6c60d15fd52b0af4b056d302f9673a status=reviewed -->
+<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -121,7 +121,13 @@ npm i -g @mcamdali/glassready
 glassready
 ```
 
-프로젝트 안에서는 `npm install --save-dev @mcamdali/glassready`로 버전을 고정할 수 있으며, 이후 `npx glassready`는 그 사본을 실행합니다. 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases)에는 같은 패키지가 `glassready-<version>.tgz`로 `SHA256SUMS` 파일과 함께 첨부되어 있습니다. Homebrew를 쓰는 경우: `brew install muhittincamdali/tap/glassready`.
+프로젝트 안에서는 `npm install --save-dev @mcamdali/glassready`로 버전을 고정할 수 있으며, 이후 `npx glassready`는 그 사본을 실행합니다. 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases)에는 같은 패키지가 `glassready-<version>.tgz`로 `SHA256SUMS` 파일과 함께 첨부되어 있으며, npm으로 거기서 바로 설치할 수도 있습니다:
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+Homebrew를 쓰는 경우: `brew install muhittincamdali/tap/glassready`.
 
 ## 사용법
 

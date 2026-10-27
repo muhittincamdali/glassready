@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa2325a0ed6c60d15fd52b0af4b056d302f9673a status=reviewed -->
+<!-- i18n-source: README.md@34a80696b1bc00199e38cbe6a09694740b5c1812 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -148,8 +148,14 @@ glassready
 
 Em um projeto, `npm install --save-dev @mcamdali/glassready` fixa uma versão, e `npx glassready` passa a
 executar essa cópia. Cada [GitHub release](https://github.com/muhittincamdali/glassready/releases) traz o
-mesmo pacote como `glassready-<version>.tgz`, com um arquivo `SHA256SUMS`. Com o Homebrew:
-`brew install muhittincamdali/tap/glassready`.
+mesmo pacote como `glassready-<version>.tgz`, com um arquivo `SHA256SUMS`, e o npm também o instala
+de lá:
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+Com o Homebrew: `brew install muhittincamdali/tap/glassready`.
 
 ## Uso
 
