@@ -1,6 +1,13 @@
 // XML property lists, the format Xcode writes into projects. Only what Info.plist files use.
 import { lineIndex } from '../core/lines.js';
-import { type ParsedPlist, type PlistDict, PlistError, type PlistValue } from './plist-value.js';
+import {
+  emptyDict,
+  MAX_PLIST_DEPTH,
+  type ParsedPlist,
+  type PlistDict,
+  PlistError,
+  type PlistValue,
+} from './plist-value.js';
 
 interface Token {
   kind: 'open' | 'close' | 'empty' | 'text';
@@ -19,31 +26,58 @@ function decodeEntities(text: string): string {
   });
 }
 
+/** Markup whose end is a fixed string: comments, processing instructions, DOCTYPE, CDATA. */
+const SPANS = [
+  { open: '<!--', close: '-->', what: 'A comment' },
+  { open: '<?', close: '?>', what: 'A processing instruction' },
+  { open: '<!DOCTYPE', close: '>', what: 'The DOCTYPE' },
+  { open: '<![CDATA[', close: ']]>', what: 'A CDATA section' },
+] as const;
+
+const TAG_NAME = /\/?([A-Za-z_][\w.-]*)/y;
+
+/**
+ * Splits the document into tags and text in one pass. Every search starts where the previous one
+ * ended and markup that is not closed is an error, so a file of a million unclosed `<!--` or `<a`
+ * costs one scan instead of one scan per `<` (a 1 MB Info.plist took 40 s with a regex).
+ */
 function tokenize(xml: string): Token[] {
   const tokens: Token[] = [];
-  const tag =
-    /<!--[\s\S]*?-->|<\?[\s\S]*?\?>|<!DOCTYPE[^>]*>|<!\[CDATA\[([\s\S]*?)\]\]>|<(\/?)([A-Za-z_][\w.-]*)[^>]*?(\/?)>/g;
-  let last = 0;
-  for (let match = tag.exec(xml); match; match = tag.exec(xml)) {
-    if (match.index > last) {
-      tokens.push({
-        kind: 'text',
-        name: '',
-        text: decodeEntities(xml.slice(last, match.index)),
-        offset: last,
-      });
+  const text = (from: number, to: number, decode = true) => {
+    if (to <= from) return;
+    const raw = xml.slice(from, to);
+    tokens.push({ kind: 'text', name: '', text: decode ? decodeEntities(raw) : raw, offset: from });
+  };
+  let textStart = 0;
+  let position = xml.indexOf('<');
+  while (position !== -1) {
+    const span = SPANS.find((candidate) => xml.startsWith(candidate.open, position));
+    if (span) {
+      const close = xml.indexOf(span.close, position + span.open.length);
+      if (close === -1) throw new PlistError(`${span.what} is not closed.`);
+      text(textStart, position);
+      if (span.open === '<![CDATA[') text(position + span.open.length, close, false);
+      textStart = close + span.close.length;
+      position = xml.indexOf('<', textStart);
+      continue;
     }
-    last = tag.lastIndex;
-    if (match[1] !== undefined) {
-      tokens.push({ kind: 'text', name: '', text: match[1], offset: match.index });
-    } else if (match[3]) {
-      const kind = match[2] ? 'close' : match[4] ? 'empty' : 'open';
-      tokens.push({ kind, name: match[3], text: '', offset: match.index });
+    TAG_NAME.lastIndex = position + 1;
+    const name = TAG_NAME.exec(xml);
+    if (!name) {
+      // A "<" that starts no markup stays part of the text.
+      position = xml.indexOf('<', position + 1);
+      continue;
     }
+    const end = xml.indexOf('>', TAG_NAME.lastIndex);
+    if (end === -1) throw new PlistError(`<${name[1]}> is not closed.`);
+    text(textStart, position);
+    const closing = xml[position + 1] === '/';
+    const kind = closing ? 'close' : xml[end - 1] === '/' ? 'empty' : 'open';
+    tokens.push({ kind, name: name[1] ?? '', text: '', offset: position });
+    textStart = end + 1;
+    position = xml.indexOf('<', textStart);
   }
-  if (last < xml.length) {
-    tokens.push({ kind: 'text', name: '', text: decodeEntities(xml.slice(last)), offset: last });
-  }
+  text(textStart, xml.length);
   // Text between elements is whitespace except inside <key>, <string> and friends; merging
   // adjacent text (CDATA next to plain text) keeps one text token per element.
   const merged: Token[] = [];
@@ -57,6 +91,7 @@ function tokenize(xml: string): Token[] {
 
 class XmlReader {
   private index = 0;
+  private depth = 0;
   readonly keyLines = new Map<string, number>();
 
   constructor(
@@ -110,9 +145,8 @@ class XmlReader {
     if (token.kind === 'empty') return this.emptyValue(token.name);
     switch (token.name) {
       case 'dict':
-        return this.dict(topLevel);
       case 'array':
-        return this.array();
+        return this.nested(() => (token.name === 'dict' ? this.dict(topLevel) : this.array()));
       case 'string':
         return this.textUntil('string');
       case 'integer': {
@@ -139,6 +173,17 @@ class XmlReader {
     }
   }
 
+  private nested(read: () => PlistValue): PlistValue {
+    if (++this.depth > MAX_PLIST_DEPTH) {
+      throw new PlistError(`The plist nests more than ${MAX_PLIST_DEPTH} levels.`);
+    }
+    try {
+      return read();
+    } finally {
+      this.depth--;
+    }
+  }
+
   private emptyValue(name: string): PlistValue {
     switch (name) {
       case 'true':
@@ -146,7 +191,7 @@ class XmlReader {
       case 'false':
         return false;
       case 'dict':
-        return {};
+        return emptyDict();
       case 'array':
         return [];
       case 'string':
@@ -159,7 +204,7 @@ class XmlReader {
   }
 
   private dict(topLevel: boolean): PlistDict {
-    const result: PlistDict = {};
+    const result = emptyDict();
     for (;;) {
       const token = this.peek();
       if (!token) throw new PlistError('<dict> is not closed.');
