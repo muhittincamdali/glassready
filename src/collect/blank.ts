@@ -6,12 +6,12 @@ import type { Language } from './sources.js';
 /** Index just past the closing `quote` of a literal whose content starts at `from`. */
 function literalEnd(text: string, from: number, quote: string, escapes: boolean): number {
   const multiline = quote.length > 1;
-  let cursor = from;
-  while (cursor < text.length) {
-    if (escapes && text[cursor] === '\\') cursor += 2;
-    else if (text.startsWith(quote, cursor)) return cursor;
-    else if (!multiline && quote !== '`' && text[cursor] === '\n') return cursor;
-    else cursor++;
+  let position = from;
+  while (position < text.length) {
+    if (escapes && text[position] === '\\') position += 2;
+    else if (text.startsWith(quote, position)) return position;
+    else if (!multiline && quote !== '`' && text[position] === '\n') return position;
+    else position++;
   }
   return text.length;
 }
@@ -70,18 +70,18 @@ export function blankCommentsAndStrings(text: string, language: Language): strin
       // Swift and Dart block comments nest; Objective-C and JavaScript ones do not.
       const nests = language === 'swift' || language === 'dart';
       let depth = 1;
-      let cursor = index + 2;
-      while (cursor < text.length && depth > 0) {
-        if (text.startsWith('*/', cursor)) {
+      let position = index + 2;
+      while (position < text.length && depth > 0) {
+        if (text.startsWith('*/', position)) {
           depth--;
-          cursor += 2;
-        } else if (nests && text.startsWith('/*', cursor)) {
+          position += 2;
+        } else if (nests && text.startsWith('/*', position)) {
           depth++;
-          cursor += 2;
-        } else cursor++;
+          position += 2;
+        } else position++;
       }
-      blank(index, cursor);
-      index = cursor;
+      blank(index, position);
+      index = position;
       continue;
     }
     const literal = literalAt(text, index, language);
