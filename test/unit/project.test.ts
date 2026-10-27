@@ -1,7 +1,8 @@
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { collectApp } from '../../src/collect/app.js';
-import { detectProject, MANIFEST_NOT_CHECKED, ProjectError } from '../../src/detect/project.js';
+import { MANIFEST_NOT_CHECKED } from '../../src/detect/packages.js';
+import { detectProject, ProjectError } from '../../src/detect/project.js';
 import { minimalPbxproj, tree } from '../helpers/tree.js';
 
 const PBXPROJ = minimalPbxproj();
