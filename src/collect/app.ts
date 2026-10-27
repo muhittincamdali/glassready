@@ -175,10 +175,12 @@ export async function collectApp(project: Project): Promise<AppModel> {
   if (project.iosDir && project.xcodeProjects.length > 0 && targets.length === 0) {
     notes.push('No iOS app target was found in the Xcode project.');
   }
+  const sources = await readSources(sourceRoots(project), project.root);
+  notes.push(...sources.notes);
   return {
     project,
     targets,
-    sources: await readSources(sourceRoots(project)),
+    sources: sources.files,
     lastUpgradeCheck: upgrades.sort((left, right) => Number(left) - Number(right)).at(-1) ?? null,
     notes,
   };
