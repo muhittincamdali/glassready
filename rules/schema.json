@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "ruleSet": {
+      "type": "string",
+      "const": "liquid-glass"
+    },
+    "dataVersion": {
+      "type": "string",
+      "pattern": "^\\d{4}\\.\\d{2}\\.\\d{2}$"
+    },
+    "sdk": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "GLS001",
+              "GLS002",
+              "GLS003",
+              "GLS004",
+              "GLS005",
+              "GLS006",
+              "GLS007",
+              "GLS008",
+              "GLS009",
+              "GLS101",
+              "GLS102",
+              "GLS103",
+              "GLS104",
+              "GLS201",
+              "GLS202"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sources": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "title",
+                "url"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "fixes": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "enum": [
+                "info-plist",
+                "build-setting",
+                "expo-config",
+                "uikit",
+                "swiftui",
+                "react-native",
+                "expo",
+                "flutter"
+              ]
+            },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "steps": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "guide": {
+                  "type": "string",
+                  "pattern": "^docs\\/guides\\/[\\w-]+\\.md$"
+                }
+              },
+              "required": [
+                "title",
+                "steps",
+                "guide"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "title",
+          "summary",
+          "sources",
+          "fixes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "adoption": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "pattern",
+          "label"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "ruleSet",
+    "dataVersion",
+    "sdk",
+    "rules",
+    "adoption"
+  ],
+  "additionalProperties": false,
+  "title": "glassready rule data"
+}
