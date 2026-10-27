@@ -1,0 +1,88 @@
+glassready 0.1.0 · rules liquid-glass@2026.10.27
+
+Harbor · native iOS · fixtures/native-uikit-optout
+project settings last updated by Xcode 14.3 · deployment target iOS 17.0
+target Harbor: opts out of Liquid Glass (Harbor/Info.plist)
+
+The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 4 custom styles to review first
+Impact: high (78 of 100)
+
+ERROR    GLS001 Liquid Glass opt-out that the iOS 27 SDK ignores
+         Harbor/Info.plist:42
+         Harbor: UIDesignRequiresCompatibility is YES in the Info.plist.
+         Fix: [A] Remove the opt-out and review the screens with Liquid Glass
+
+WARNING  GLS002 Bar appearance with its own background
+         Harbor/AppDelegate.swift:28
+         UINavigationBarAppearance navigation: configureWithOpaqueBackground(), backgroundColor,
+         shadowColor.
+         Fix: [B] Let the system draw the bar background
+
+WARNING  GLS002 Bar appearance with its own background
+         Harbor/AppDelegate.swift:38
+         UITabBarAppearance tabs: configureWithOpaqueBackground(), backgroundColor.
+         Fix: [B] Let the system draw the bar background
+
+WARNING  GLS003 Bar colour or translucency set the old way
+         Harbor/AppDelegate.swift:42
+         isTranslucent = false makes the bar opaque.
+         Fix: [C] Remove the bar colour and let the bar stay translucent
+
+WARNING  GLS003 Bar colour or translucency set the old way
+         Harbor/AppDelegate.swift:44
+         barTintColor paints the bar background.
+         Fix: [C] Remove the bar colour and let the bar stay translucent
+
+INFO     GLS006 Blur layer without a Liquid Glass counterpart
+         Harbor/PortMapViewController.swift:5
+         A UIBlurEffect view.
+         Fix: [D] Decide what the blur is for
+
+INFO     GLS008 Fixed bar height or safe-area arithmetic
+         Harbor/PortMapViewController.swift:26
+         A number added to the safe-area insets.
+         Fix: [E] Lay out against the safe area instead of a number
+
+How to fix
+
+[A]      Remove the opt-out and review the screens with Liquid Glass
+         1. Delete the UIDesignRequiresCompatibility key from the Info.plist.
+         2. Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this
+            report are the places to look at first.
+         3. Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so
+            the system can draw the bars.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md
+
+[B]      Let the system draw the bar background
+         1. Remove configureWithOpaqueBackground() and the backgroundColor, backgroundImage,
+            backgroundEffect and shadow settings of the appearance, or apply them only before iOS 26
+            with if #available(iOS 26.0, *).
+         2. Move the brand colour to tintColor and the title text attributes.
+         3. Check the bar over scrolling content: the scroll edge effect replaces the hairline and
+            the opaque background.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+[C]      Remove the bar colour and let the bar stay translucent
+         1. Remove barTintColor, isTranslucent = false and the bar background and shadow images, or
+            apply them only before iOS 26 with if #available(iOS 26.0, *).
+         2. Use tintColor for the brand colour of the bar's buttons.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+[D]      Decide what the blur is for
+         1. Behind a popover or sheet's content: remove it and let the presentation draw its
+            background.
+         2. Behind a floating control or panel: use UIGlassEffect on iOS 26 and later (if
+            #available(iOS 26.0, *)) and keep the blur as the fallback.
+         3. Over content (a photo, a map): keep it.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+[E]      Lay out against the safe area instead of a number
+         1. Constrain to safeAreaLayoutGuide (or the keyboard and bar layout guides) instead of
+            adding a bar height to the insets.
+         2. Do not read the tab bar's frame for layout; check the screen with the tab bar minimized
+            as well.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+1 error, 4 warnings, 2 info
+Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)

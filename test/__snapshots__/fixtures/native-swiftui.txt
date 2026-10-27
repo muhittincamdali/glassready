@@ -1,0 +1,91 @@
+glassready 0.1.0 · rules liquid-glass@2026.10.27
+
+Trailhead · native iOS · fixtures/native-swiftui
+project settings last updated by Xcode 14.3 · deployment target iOS 18.0
+target Trailhead: opts out of Liquid Glass
+
+The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 4 custom styles to review first
+Impact: high (80 of 100)
+
+ERROR    GLS001 Liquid Glass opt-out that the iOS 27 SDK ignores
+         Trailhead.xcodeproj/project.pbxproj:121
+         Trailhead: the build setting INFOPLIST_KEY_UIDesignRequiresCompatibility is YES.
+         Fix: [A] Remove the build setting and review the screens with Liquid Glass
+
+WARNING  GLS004 SwiftUI bar background set by the app
+         Trailhead/TrailsView.swift:39
+         toolbarBackground(Color.green) sets the navigation bar background.
+         Fix: [B] Remove the bar background modifiers
+
+WARNING  GLS004 SwiftUI bar background set by the app
+         Trailhead/TrailsView.swift:40
+         toolbarBackgroundVisibility(.visible) keeps the navigation bar background visible.
+         Fix: [B] Remove the bar background modifiers
+
+WARNING  GLS005 Custom tab bar or bottom bar
+         Trailhead/TrailMapView.swift:17
+         The system tab bar is hidden with toolbar(.hidden, for: .tabBar).
+         Fix: [C] Use the system tab bar, or attach the custom bar with safeAreaBar
+
+WARNING  GLS007 Custom sheet or popover background
+         Trailhead/TrailsView.swift:45
+         presentationBackground replaces the sheet background.
+         Fix: [D] Remove presentationBackground for iOS 26 and later
+
+INFO     GLS008 Fixed bar height or safe-area arithmetic
+         Trailhead/TrailMapView.swift:14
+         A tab bar height written as a number.
+         Fix: [E] Let the safe area carry the bar's height
+
+INFO     GLS009 Section header written in capitals
+         Trailhead/TrailsView.swift:27
+         Section header "NEARBY" is written in capitals.
+         Fix: [F] Write the header in title case
+
+INFO     GLS009 Section header written in capitals
+         Trailhead/TrailsView.swift:32
+         Section header "SAVED" is written in capitals.
+         Fix: [F] Write the header in title case
+
+How to fix
+
+[A]      Remove the build setting and review the screens with Liquid Glass
+         1. Delete INFOPLIST_KEY_UIDesignRequiresCompatibility from the target's build settings.
+            Xcode 27.1 does not copy it into the Info.plist it generates, so it has no effect there
+            in any case.
+         2. Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this
+            report are the places to look at first.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md
+
+[B]      Remove the bar background modifiers
+         1. Remove toolbarBackground(_:for:) and toolbarBackgroundVisibility(_:for:), or apply them
+            only before iOS 26.
+         2. Keep the brand colour on tint(_:) and on the content, not on the bar.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+[C]      Use the system tab bar, or attach the custom bar with safeAreaBar
+         1. Where the custom bar only restyles tabs, use TabView with Tab and
+            tabBarMinimizeBehavior(_:) instead.
+         2. If the bar stays custom, attach it with safeAreaBar(edge:alignment:spacing:content:) so
+            content under it gets the scroll edge effect, and consider glassEffect(_:in:) for its
+            background.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+[D]      Remove presentationBackground for iOS 26 and later
+         1. Remove presentationBackground(_:), or apply it only before iOS 26.
+         2. Look at the half-height detent: the sheet is inset and the content behind it shows
+            around the edges.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+[E]      Let the safe area carry the bar's height
+         1. Remove the fixed height; place bottom content with safeAreaInset(edge:) or
+            safeAreaBar(edge:alignment:spacing:content:).
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+[F]      Write the header in title case
+         1. Write the header as "Account" instead of "ACCOUNT"; the system styles it.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+
+1 error, 4 warnings, 3 info
+Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md
+Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)

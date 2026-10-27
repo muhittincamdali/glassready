@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 0,
+  "tool": {
+    "name": "glassready",
+    "version": "0.1.0"
+  },
+  "rules": {
+    "ruleSet": "liquid-glass",
+    "dataVersion": "2026.10.27",
+    "sdk": "iOS 27 SDK (checked with Xcode 27.1, 27A9275, on the iOS 27.0 and iOS 26.4 simulators)"
+  },
+  "project": {
+    "path": "fixtures/native-uikit-optout",
+    "name": "Harbor",
+    "ecosystem": "native",
+    "versions": [],
+    "targets": [
+      {
+        "name": "Harbor",
+        "infoPlists": [
+          "Harbor/Info.plist"
+        ],
+        "optOut": "yes",
+        "deploymentTarget": "17.0"
+      }
+    ],
+    "xcode": {
+      "versionFile": null,
+      "lastUpgradeCheck": "1430"
+    }
+  },
+  "verdict": {
+    "code": "opt-out-ignored",
+    "text": "The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 4 custom styles to review first"
+  },
+  "impact": {
+    "score": 78,
+    "level": "high"
+  },
+  "findings": [
+    {
+      "rule": "GLS001",
+      "severity": "error",
+      "title": "Liquid Glass opt-out that the iOS 27 SDK ignores",
+      "message": "Harbor: UIDesignRequiresCompatibility is YES in the Info.plist.",
+      "file": "Harbor/Info.plist",
+      "line": 42,
+      "target": "Harbor",
+      "fix": {
+        "id": "GLS001/info-plist",
+        "title": "Remove the opt-out and review the screens with Liquid Glass",
+        "steps": [
+          "Delete the UIDesignRequiresCompatibility key from the Info.plist.",
+          "Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this report are the places to look at first.",
+          "Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so the system can draw the bars."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: UIDesignRequiresCompatibility",
+          "url": "https://developer.apple.com/documentation/bundleresources/information-property-list/uidesignrequirescompatibility"
+        },
+        {
+          "title": "Apple: Adopting Liquid Glass",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        }
+      ]
+    },
+    {
+      "rule": "GLS002",
+      "severity": "warning",
+      "title": "Bar appearance with its own background",
+      "message": "UINavigationBarAppearance navigation: configureWithOpaqueBackground(), backgroundColor, shadowColor.",
+      "file": "Harbor/AppDelegate.swift",
+      "line": 28,
+      "target": null,
+      "fix": {
+        "id": "GLS002/uikit",
+        "title": "Let the system draw the bar background",
+        "steps": [
+          "Remove configureWithOpaqueBackground() and the backgroundColor, backgroundImage, backgroundEffect and shadow settings of the appearance, or apply them only before iOS 26 with if #available(iOS 26.0, *).",
+          "Move the brand colour to tintColor and the title text attributes.",
+          "Check the bar over scrolling content: the scroll edge effect replaces the hairline and the opaque background."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: configureWithOpaqueBackground()",
+          "url": "https://developer.apple.com/documentation/uikit/uibarappearance/configurewithopaquebackground()"
+        },
+        {
+          "title": "Apple: UIBarAppearance.backgroundEffect",
+          "url": "https://developer.apple.com/documentation/uikit/uibarappearance/backgroundeffect"
+        }
+      ]
+    },
+    {
+      "rule": "GLS002",
+      "severity": "warning",
+      "title": "Bar appearance with its own background",
+      "message": "UITabBarAppearance tabs: configureWithOpaqueBackground(), backgroundColor.",
+      "file": "Harbor/AppDelegate.swift",
+      "line": 38,
+      "target": null,
+      "fix": {
+        "id": "GLS002/uikit",
+        "title": "Let the system draw the bar background",
+        "steps": [
+          "Remove configureWithOpaqueBackground() and the backgroundColor, backgroundImage, backgroundEffect and shadow settings of the appearance, or apply them only before iOS 26 with if #available(iOS 26.0, *).",
+          "Move the brand colour to tintColor and the title text attributes.",
+          "Check the bar over scrolling content: the scroll edge effect replaces the hairline and the opaque background."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: configureWithOpaqueBackground()",
+          "url": "https://developer.apple.com/documentation/uikit/uibarappearance/configurewithopaquebackground()"
+        },
+        {
+          "title": "Apple: UIBarAppearance.backgroundEffect",
+          "url": "https://developer.apple.com/documentation/uikit/uibarappearance/backgroundeffect"
+        }
+      ]
+    },
+    {
+      "rule": "GLS003",
+      "severity": "warning",
+      "title": "Bar colour or translucency set the old way",
+      "message": "isTranslucent = false makes the bar opaque.",
+      "file": "Harbor/AppDelegate.swift",
+      "line": 42,
+      "target": null,
+      "fix": {
+        "id": "GLS003/uikit",
+        "title": "Remove the bar colour and let the bar stay translucent",
+        "steps": [
+          "Remove barTintColor, isTranslucent = false and the bar background and shadow images, or apply them only before iOS 26 with if #available(iOS 26.0, *).",
+          "Use tintColor for the brand colour of the bar's buttons."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UINavigationBar.barTintColor",
+          "url": "https://developer.apple.com/documentation/uikit/uinavigationbar/bartintcolor"
+        },
+        {
+          "title": "Apple: UINavigationBar.isTranslucent",
+          "url": "https://developer.apple.com/documentation/uikit/uinavigationbar/istranslucent"
+        }
+      ]
+    },
+    {
+      "rule": "GLS003",
+      "severity": "warning",
+      "title": "Bar colour or translucency set the old way",
+      "message": "barTintColor paints the bar background.",
+      "file": "Harbor/AppDelegate.swift",
+      "line": 44,
+      "target": null,
+      "fix": {
+        "id": "GLS003/uikit",
+        "title": "Remove the bar colour and let the bar stay translucent",
+        "steps": [
+          "Remove barTintColor, isTranslucent = false and the bar background and shadow images, or apply them only before iOS 26 with if #available(iOS 26.0, *).",
+          "Use tintColor for the brand colour of the bar's buttons."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Visual refresh)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UINavigationBar.barTintColor",
+          "url": "https://developer.apple.com/documentation/uikit/uinavigationbar/bartintcolor"
+        },
+        {
+          "title": "Apple: UINavigationBar.isTranslucent",
+          "url": "https://developer.apple.com/documentation/uikit/uinavigationbar/istranslucent"
+        }
+      ]
+    },
+    {
+      "rule": "GLS006",
+      "severity": "info",
+      "title": "Blur layer without a Liquid Glass counterpart",
+      "message": "A UIBlurEffect view.",
+      "file": "Harbor/PortMapViewController.swift",
+      "line": 5,
+      "target": null,
+      "fix": {
+        "id": "GLS006/uikit",
+        "title": "Decide what the blur is for",
+        "steps": [
+          "Behind a popover or sheet's content: remove it and let the presentation draw its background.",
+          "Behind a floating control or panel: use UIGlassEffect on iOS 26 and later (if #available(iOS 26.0, *)) and keep the blur as the fallback.",
+          "Over content (a photo, a map): keep it."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Windows and modals)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UIGlassEffect",
+          "url": "https://developer.apple.com/documentation/uikit/uiglasseffect"
+        }
+      ]
+    },
+    {
+      "rule": "GLS008",
+      "severity": "info",
+      "title": "Fixed bar height or safe-area arithmetic",
+      "message": "A number added to the safe-area insets.",
+      "file": "Harbor/PortMapViewController.swift",
+      "line": 26,
+      "target": null,
+      "fix": {
+        "id": "GLS008/uikit",
+        "title": "Lay out against the safe area instead of a number",
+        "steps": [
+          "Constrain to safeAreaLayoutGuide (or the keyboard and bar layout guides) instead of adding a bar height to the insets.",
+          "Do not read the tab bar's frame for layout; check the screen with the tab bar minimized as well."
+        ],
+        "guide": "https://github.com/muhittincamdali/glassready/blob/main/docs/guides/native-ios.md"
+      },
+      "sources": [
+        {
+          "title": "Apple: Adopting Liquid Glass (Controls, Windows and modals)",
+          "url": "https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass"
+        },
+        {
+          "title": "Apple: UIView.safeAreaLayoutGuide",
+          "url": "https://developer.apple.com/documentation/uikit/uiview/safearealayoutguide"
+        }
+      ]
+    }
+  ],
+  "adopted": [],
+  "notes": [],
+  "summary": {
+    "errors": 1,
+    "warnings": 4,
+    "info": 2
+  }
+}

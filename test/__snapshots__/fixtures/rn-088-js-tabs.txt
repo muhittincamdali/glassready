@@ -1,0 +1,65 @@
+glassready 0.1.0 · rules liquid-glass@2026.10.27
+
+Greenline · React Native · fixtures/rn-088-js-tabs
+project settings last updated by Xcode 12.1 · deployment target iOS 15.1
+react-native 0.88.1 (declared)
+react-native-screens 4.30.0 (declared)
+@react-navigation/native-stack 7.21.0 (declared)
+@react-navigation/bottom-tabs 7.21.0 (declared)
+target HelloWorld: opts out of Liquid Glass (ios/HelloWorld/Info.plist)
+
+The Liquid Glass opt-out is ignored when built with the iOS 27 SDK; 1 custom style to review first
+Impact: high (60 of 100)
+
+ERROR    GLS001 Liquid Glass opt-out that the iOS 27 SDK ignores
+         ios/HelloWorld/Info.plist:57
+         HelloWorld: UIDesignRequiresCompatibility is YES in the Info.plist.
+         Fix: [A] Remove the opt-out and review the screens with Liquid Glass
+
+WARNING  GLS101 Native stack header with its own background
+         App.tsx:54
+         headerStyle.backgroundColor paints the header.
+         Fix: [B] Leave the header background to the system on iOS
+
+INFO     GLS008 Fixed bar height or safe-area arithmetic
+         App.tsx:37
+         A tab bar height written as a number.
+         Fix: [C] Use the bar's measured height
+
+INFO     GLS102 Tab bar drawn in JavaScript
+         App.tsx:29
+         createBottomTabNavigator draws the tab bar in JavaScript.
+         Fix: [D] Move to the native bottom tabs, or keep the JavaScript bar on purpose
+
+How to fix
+
+[A]      Remove the opt-out and review the screens with Liquid Glass
+         1. Delete the UIDesignRequiresCompatibility key from the Info.plist.
+         2. Build with Xcode 27 and run the app on an iOS 27 simulator; the other findings in this
+            report are the places to look at first.
+         3. Keep the brand colour on tint (buttons, selected tab) rather than on bar backgrounds, so
+            the system can draw the bars.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/opt-out.md
+
+[B]      Leave the header background to the system on iOS
+         1. Set headerStyle.backgroundColor, headerBackground and headerBlurEffect only for Android
+            (Platform.select) or for iOS before 26.
+         2. Keep the brand colour on headerTintColor.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md
+
+[C]      Use the bar's measured height
+         1. Remove the fixed height and read the height the navigator measures
+            (useBottomTabBarHeight, useHeaderHeight) or the safe-area insets.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md
+
+[D]      Move to the native bottom tabs, or keep the JavaScript bar on purpose
+         1. For the system tab bar, use createNativeBottomTabNavigator from
+            @react-navigation/bottom-tabs/unstable (React Native 0.79 or later, react-native-screens
+            4.30.0 or later).
+         2. If the custom bar is part of the brand, keep it and check it next to the Liquid Glass
+            headers on an iOS 27 simulator.
+         https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md
+
+1 error, 1 warning, 2 info
+Guide: https://github.com/muhittincamdali/glassready/blob/main/docs/guides/react-native-expo.md
+Will it launch with the iOS 27 SDK? npx @mcamdali/sdkbump (https://github.com/muhittincamdali/sdkbump)
