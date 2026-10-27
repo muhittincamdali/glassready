@@ -6,7 +6,7 @@
 #
 # Prints nothing when the project does not opt out. Inside this repository it runs the build in
 # dist/; elsewhere set GLASSREADY to the command you run glassready with (for example
-# "npx --yes @mcamdali/glassready@0.1").
+# "glassready" once it is installed from Homebrew or the GitHub release).
 set -eu
 project="${1:-.}"
 here="$(cd "$(dirname "$0")" && pwd)"

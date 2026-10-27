@@ -62,7 +62,10 @@ describe('examples/github-actions/glassready.yml', () => {
     .slice(2)
     .map((line) => line.replace(/^ {10}/, ''))
     .join('\n')
-    .replace(/npx --yes \S+/, `node ${JSON.stringify(join(ROOT, 'dist/cli/main.js'))} "$CHECK"`);
+    .replace(
+      /npx --yes --package=\S+ \\\n\s+glassready/,
+      `node ${JSON.stringify(join(ROOT, 'dist/cli/main.js'))} "$CHECK"`,
+    );
 
   const runStep = (check: string) => {
     const cwd = scratchDir('action');
@@ -101,7 +104,8 @@ describe('examples/github-actions/glassready.yml', () => {
   });
 
   it('replaces only the tarball command', () => {
-    expect(script).toContain('|| status=$?');
+    expect(script).not.toContain('npx');
+    expect(script).toContain('"$CHECK" --format markdown --output glassready.md || status=$?');
     expect(script).toContain('exit "$status"');
   });
 
