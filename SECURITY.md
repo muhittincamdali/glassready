@@ -40,3 +40,9 @@ no network requests and never runs project code. Reports that fit this policy in
 a crafted project file that makes glassready write outside the `--output` file, run code, hang or
 exhaust memory, or print terminal escape sequences or Markdown links from file names or plist
 values.
+
+The project you check may come from a pull request, so glassready limits what it reads: 32 MB per
+project file; for sources 4 MB per file, 20,000 files and 128 MB in total; 100,000 values per
+binary plist and 64 levels of nesting per plist. Files over a limit are skipped with a note in the
+report. A file under these limits that still takes much longer or much more memory than a real
+project of its size is in scope.

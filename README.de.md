@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@fa2325a0ed6c60d15fd52b0af4b056d302f9673a status=reviewed -->
+<!-- i18n-source: README.md@89b824ead3c172c0d22b2e287777cd052082312e status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -148,8 +148,14 @@ glassready
 
 In einem Projekt legt `npm install --save-dev @mcamdali/glassready` eine Version fest, und `npx glassready`
 führt dann diese Kopie aus. Jedes [GitHub-Release](https://github.com/muhittincamdali/glassready/releases)
-enthält dasselbe Paket als `glassready-<version>.tgz` mit einer Datei `SHA256SUMS`. Mit Homebrew:
-`brew install muhittincamdali/tap/glassready`.
+enthält dasselbe Paket als `glassready-<version>.tgz` mit einer Datei `SHA256SUMS`, und npm installiert es
+auch direkt von dort:
+
+```sh
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.0/glassready-0.1.0.tgz
+```
+
+Mit Homebrew: `brew install muhittincamdali/tap/glassready`.
 
 ## Verwendung
 
@@ -264,6 +270,10 @@ Lauf dauerte 0,17 Sekunden.
 - **Nur Dateien.** glassready baut die App nicht und sieht sich ihre Bildschirme nicht an. Die
   Simulator-Aufnahmen in diesem Repository stammen von den Skripten in `scripts/`, die auf einem Mac
   laufen.
+- **Begrenzte Eingabe.** Ein Projekt kann aus einem Pull Request stammen, daher liest glassready
+  höchstens 32 MB pro Projektdatei und bei den Quellen 4 MB pro Datei, 20.000 Dateien und 128 MB
+  insgesamt; was dabei ausgelassen wird, steht in den Hinweisen des Berichts. Eine binäre Plist
+  darf höchstens 100.000 Werte erzeugen und eine Plist höchstens 64 Ebenen tief verschachtelt sein.
 
 ## Dokumentation
 
