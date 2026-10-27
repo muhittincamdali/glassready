@@ -1,18 +1,17 @@
 import { mkdirSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { parseOpenStep, XcodeProjectError } from '../../src/collect/openstep.js';
 import {
   buildsForIOS,
   generatesInfoPlist,
   infoPlistFiles,
   iosAppTargets,
   lastUpgradeCheck,
-  parseOpenStep,
   readTargets,
   readXcodeProject,
   setting,
   type XcodeProject,
-  XcodeProjectError,
 } from '../../src/collect/pbxproj.js';
 import { scratchDir } from '../helpers/scratch.js';
 
