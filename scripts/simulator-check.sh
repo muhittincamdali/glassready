@@ -1,13 +1,14 @@
 #!/bin/bash
-# Builds one of the native fixtures with the installed Xcode, launches it on an iOS simulator and
+# Builds one of the fixtures with the installed Xcode, launches it on an iOS simulator and
 # takes a screenshot. This is how the screenshots in docs/media/simulator were recorded; it needs
-# macOS, Xcode with an iOS simulator runtime, and XcodeGen or Flutter.
+# macOS, Xcode with an iOS simulator runtime, and XcodeGen, Flutter or CocoaPods.
 #
 #   scripts/simulator-check.sh <fixture> <screenshot.png> [runtime]
 #
 #   fixture     a native fixture with a project.yml (native-uikit-optout, native-uikit-glass,
-#               native-swiftui), or flutter-cupertino (built with `flutter build ios --simulator`;
-#               FLUTTER names the flutter command, default `flutter`)
+#               native-swiftui), flutter-cupertino (built with `flutter build ios --simulator`;
+#               FLUTTER names the flutter command, default `flutter`), or rn-088-js-tabs (npm
+#               install, pod install and a Release build; needs CocoaPods and network access)
 #   runtime     iOS runtime version of the simulator, e.g. 27.0 (default) or 26.4
 #
 # REMOVE_PLIST_KEY=UIDesignRequiresCompatibility removes that key from the copy that is built,
@@ -23,8 +24,8 @@ screenshot="${2:?usage: scripts/simulator-check.sh <fixture> <screenshot.png> [r
 version="${3:-27.0}"
 root="$(cd "$(dirname "$0")/.." && pwd)"
 dir="$root/fixtures/$fixture"
-[ -f "$dir/project.yml" ] || [ -f "$dir/pubspec.yaml" ] ||
-  { echo "fixtures/$fixture has no project.yml or pubspec.yaml" >&2; exit 2; }
+[ -f "$dir/project.yml" ] || [ -f "$dir/pubspec.yaml" ] || [ -f "$dir/ios/Podfile" ] ||
+  { echo "fixtures/$fixture has no project.yml, pubspec.yaml or ios/Podfile" >&2; exit 2; }
 case "$screenshot" in /*) ;; *) screenshot="$PWD/$screenshot" ;; esac
 
 runtime="com.apple.CoreSimulator.SimRuntime.iOS-${version//./-}"
@@ -57,6 +58,18 @@ if [ -f "$work/pubspec.yaml" ]; then
   (cd "$work" && "${FLUTTER:-flutter}" build ios --simulator --debug > "$work/build.log" 2>&1) || true
   app="$(find "$work" -type d -name Runner.app -path '*iphonesimulator*' | head -1)"
   [ -n "$app" ] || { tail -20 "$work/build.log"; exit 1; }
+elif [ -f "$work/package.json" ] && [ -f "$work/ios/Podfile" ]; then
+  # React Native: install the packages and pods in the copy, then a Release build, which bundles
+  # the JavaScript into the app so it runs without Metro.
+  (cd "$work" && npm install --no-audit --no-fund && cd ios && pod install) > "$work/build.log" 2>&1 ||
+    { tail -20 "$work/build.log"; exit 1; }
+  workspace="$(cd "$work/ios" && ls -d ./*.xcworkspace | head -1)"
+  scheme="$(basename "$workspace" .xcworkspace)"
+  xcodebuild -workspace "$work/ios/$workspace" -scheme "$scheme" -configuration Release \
+    -destination "id=$udid" -derivedDataPath "$work/dd" build >> "$work/build.log" 2>&1 ||
+    { tail -20 "$work/build.log"; exit 1; }
+  app="$(find "$work/dd/Build/Products" -maxdepth 2 -name '*.app' | head -1)"
+  echo "packages:   $(cd "$work" && node -p '["react-native", "react-native-screens", "@react-navigation/native-stack", "@react-navigation/bottom-tabs"].map((name) => `${name} ${require(`${name}/package.json`).version}`).join(", ")')"
 else
   (cd "$work" && xcodegen generate --quiet)
   project="$(cd "$work" && ls -d ./*.xcodeproj | head -1)"

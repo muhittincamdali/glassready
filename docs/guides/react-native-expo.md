@@ -24,6 +24,44 @@ Expo Router's [JavaScript tabs](https://docs.expo.dev/router/advanced/tabs/) and
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="../media/demo-react-native-dark.svg"><source media="(prefers-color-scheme: light)" srcset="../media/demo-react-native-light.svg"><img src="../media/demo-react-native-light.svg" alt="glassready run on a React Native 0.88 app: the opt-out ignored, a native stack header colour, a fixed tab bar height and JavaScript bottom tabs"></picture>
 
+## What we saw in the simulator
+
+We built the [rn-088-js-tabs](../../fixtures/README.md) fixture (React Native 0.88.1,
+react-native-screens 4.30.0, a native stack header painted green and JavaScript bottom tabs) as a
+Release build with Xcode 27.1 (iOS 27.1 SDK), once as it is and once without
+`UIDesignRequiresCompatibility`, and compared screenshots on an iPhone 17 simulator with
+[scripts/simulator-compare.sh](../../scripts/simulator-compare.sh)
+([iOS 27.0 record](../media/simulator/rn-088-js-tabs-27.0.txt),
+[iOS 26.4 record](../media/simulator/rn-088-js-tabs-26.4.txt)):
+
+| Simulator | Pixels that differ without the key (1206 × 2562) | Native stack header (top 400 rows) | JavaScript tab bar (189 rows) |
+| --------- | ------------------------------------------------ | ---------------------------------- | ----------------------------- |
+| iOS 27.0  | 0: the key is ignored                            | 0                                  | 0                             |
+| iOS 26.4  | 92,543: the key still applies                    | 68,042                             | 0                             |
+
+<p align="center"><img src="../media/simulator/react-native-ios26-ios27.png" width="720" alt="The rn-088-js-tabs fixture on an iPhone 17 simulator, built with Xcode 27.1. From left: iOS 26.4 with the key, iOS 26.4 without it (a taller header with the title lower and the list moved down), iOS 27.0 with the key and iOS 27.0 without it (both with the taller header); the white JavaScript tab bar is the same in all four"></p>
+
+On iOS 26.4 the key decides how the native stack header looks: without it the header is the taller
+Liquid Glass navigation bar with the title lower, and the list starts further down. The JavaScript
+tab bar is the same pixels either way, because React Native draws it. On iOS 27.0 the build looks
+the same with and without the key. The header keeps the green that `headerStyle.backgroundColor`
+paints over it, which is what GLS101 reports.
+
+The rows were compared with the same 2% tolerance as the whole screen:
+
+```sh
+magick compare -metric AE -fuzz 2% \
+  \( rn-088-js-tabs-26.4-opt-out.png -crop 1206x400+0+0 +repage \) \
+  \( rn-088-js-tabs-26.4-no-key.png -crop 1206x400+0+0 +repage \) null:   # 68042
+magick compare -metric AE -fuzz 2% \
+  \( rn-088-js-tabs-26.4-opt-out.png -crop 1206x189+0+2373 +repage \) \
+  \( rn-088-js-tabs-26.4-no-key.png -crop 1206x189+0+2373 +repage \) null:   # 0
+```
+
+The tab bar rows start at 2373, the top of the 83-point (249-pixel) tab bar the fixture sets, and
+stop at the home indicator. The script runs `npm install` and `pod install` in a copy of the
+fixture, so it needs CocoaPods and network access.
+
 ## GLS001 in an Expo config
 
 With continuous native generation the Info.plist comes from the Expo config:

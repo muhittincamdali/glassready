@@ -1,0 +1,17 @@
+packages:   react-native 0.88.1, react-native-screens 4.30.0, @react-navigation/native-stack 7.21.0, @react-navigation/bottom-tabs 7.21.0
+fixture:    fixtures/rn-088-js-tabs
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 26.4
+opt-out:    UIDesignRequiresCompatibility = true in the built Info.plist
+screenshot: .simulator-work/screenshots/rn-088-js-tabs-26.4-opt-out.png
+
+packages:   react-native 0.88.1, react-native-screens 4.30.0, @react-navigation/native-stack 7.21.0, @react-navigation/bottom-tabs 7.21.0
+fixture:    fixtures/rn-088-js-tabs
+built with: Xcode 27.1 (27A9275), SDK iphonesimulator27.1
+simulator:  iPhone 17, iOS 26.4
+opt-out:    UIDesignRequiresCompatibility = not set in the built Info.plist
+screenshot: .simulator-work/screenshots/rn-088-js-tabs-26.4-no-key.png
+
+compared:   1206 x 2562 pixels above the home indicator, 2% tolerance
+different:  92543 pixels
+result:     different screens: the opt-out changes the app on iOS 26.4
