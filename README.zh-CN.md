@@ -49,13 +49,13 @@ fixture</a>，这是一个为测试编写的 UIKit 应用（<code>npm run demo</
 brew install muhittincamdali/tap/glassready
 ```
 
-或者用 npm 从 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) 安装，这需要 [Node.js](https://nodejs.org/) 22.12 或更高版本（`node --version` 可查看版本）：
+或者用 npm 从 registry 安装，这需要 [Node.js](https://nodejs.org/) 22.12 或更高版本（`node --version` 可查看版本）：
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-这个包还没有发布到 npm registry；计划以 `@mcamdali/glassready` 的名字发布。两条命令安装的是同一个 release tarball。
+如果不想安装，可以直接用 `npx @mcamdali/glassready` 运行。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) 还以 tarball 的形式附带同一个包，并附有 `SHA256SUMS` 文件，可用来固定或校验某个 release。
 
 **2. 在应用所在的文件夹中打开终端**，也就是包含 `.xcodeproj`、`pubspec.yaml` 或 `package.json` 的那个文件夹：
 
@@ -115,13 +115,13 @@ glassready
 
 ## 安装
 
-“快速开始”中的命令会从 GitHub release 安装 `glassready` 命令。每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带这个包，并附有 `SHA256SUMS` 文件。要在项目中固定某个 release：
+“快速开始”中的命令会从 npm registry 安装 `glassready` 命令。要把它加入项目：
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
-之后 `npx glassready` 会运行这份副本。这个包以 `@mcamdali/glassready` 的名字安装，下面的 JavaScript API 导入的也是这个名字。发布到 npm registry 已在计划中；在那之前，`npx @mcamdali/glassready` 找不到这个包。
+之后 `npx glassready` 会运行这份副本。这个包以 `@mcamdali/glassready` 的名字安装，下面的 JavaScript API 导入的也是这个名字。要固定或校验某个 release，每个 [GitHub release](https://github.com/muhittincamdali/glassready/releases) 都以 `glassready-<version>.tgz` 的形式附带这个包，并附有 `SHA256SUMS` 文件；`npm install --save-dev` 也接受这个 tarball 的 URL 来代替包名。
 
 ## 使用方法
 

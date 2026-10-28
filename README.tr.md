@@ -66,16 +66,16 @@ birlikte. Yalnızca projenizin dosyalarını okur; derlemez, çalıştırmaz, hi
 brew install muhittincamdali/tap/glassready
 ```
 
-Ya da npm ile [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3)
-üzerinden; bunun için [Node.js](https://nodejs.org/) 22.12 veya üstü gerekir (`node --version`
-sürümü yazdırır):
+Ya da npm ile kayıt defterinden; bunun için [Node.js](https://nodejs.org/) 22.12 veya üstü gerekir
+(`node --version` sürümü yazdırır):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-Paket henüz npm kayıt defterinde değil; orada `@mcamdali/glassready` olarak yayımlanması
-planlanıyor. İki komut da aynı release tarball'ını kurar.
+Kurmadan çalıştırmak için `npx @mcamdali/glassready` kullanın. Her [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) aynı
+paketi ayrıca bir `SHA256SUMS` dosyasıyla tarball olarak sunar; bir sürümü sabitlemek veya
+doğrulamak için.
 
 **2. Uygulamanızın klasöründe bir terminal açın**; `.xcodeproj`, `pubspec.yaml` veya
 `package.json` dosyasının bulunduğu klasör:
@@ -154,18 +154,17 @@ notlandırmaz.
 
 ## Kurulum
 
-Hızlı başlangıç bölümündeki komutlar `glassready` komutunu GitHub release'inden kurar. Her
-[GitHub release](https://github.com/muhittincamdali/glassready/releases) paketi
-`glassready-<version>.tgz` olarak bir `SHA256SUMS` dosyasıyla birlikte sunar. Bir projede bir sürümü
-sabitlemek için:
+Hızlı başlangıç bölümündeki komutlar `glassready` komutunu npm kayıt defterinden kurar. Bir projeye
+eklemek için:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
 Ardından `npx glassready` o kopyayı çalıştırır. Paket `@mcamdali/glassready` adıyla kurulur;
-aşağıdaki JavaScript API'si de bu adı içe aktarır. npm kayıt defterinde yayımlama planlanıyor; o
-zamana kadar `npx @mcamdali/glassready` paketi bulamaz.
+aşağıdaki JavaScript API'si de bu adı içe aktarır. Bir sürümü sabitlemek veya doğrulamak için her
+[GitHub release](https://github.com/muhittincamdali/glassready/releases) paketi `glassready-<version>.tgz` olarak bir `SHA256SUMS` dosyasıyla birlikte
+ayrıca sunar; `npm install --save-dev` paket adı yerine bu tarball URL'sini kabul eder.
 
 ## Kullanım
 

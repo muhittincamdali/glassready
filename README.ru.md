@@ -66,16 +66,15 @@ native-uikit-optout</a> — UIKit-приложении, написанном д�
 brew install muhittincamdali/tap/glassready
 ```
 
-Или через npm из
-[релиза на GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3); для этого
-нужен [Node.js](https://nodejs.org/) 22.12 или новее (`node --version` покажет версию):
+Или через npm из реестра; для этого нужен [Node.js](https://nodejs.org/) 22.12 или новее
+(`node --version` покажет версию):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-В реестре npm пакета пока нет; публикация под именем `@mcamdali/glassready` запланирована. Обе
-команды устанавливают один и тот же tarball из релиза.
+Чтобы запустить без установки, используйте `npx @mcamdali/glassready`. Каждый [релиз на GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3)
+также содержит тот же пакет в виде tarball с файлом `SHA256SUMS` — чтобы закрепить или проверить релиз.
 
 **2. Откройте терминал в папке вашего приложения** — той, где лежит `.xcodeproj`, `pubspec.yaml` или
 `package.json`:
@@ -151,17 +150,18 @@ API Liquid Glass, которые приложение уже используе�
 
 ## Установка
 
-Команды из раздела «Быстрый старт» устанавливают команду `glassready` из релиза на GitHub. Каждый
-[релиз на GitHub](https://github.com/muhittincamdali/glassready/releases) содержит пакет в виде
-`glassready-<version>.tgz` вместе с файлом `SHA256SUMS`. Чтобы закрепить релиз в проекте:
+Команды из раздела «Быстрый старт» устанавливают команду `glassready` из реестра npm. Чтобы
+добавить её в проект:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
 После этого `npx glassready` запускает эту копию. Пакет устанавливается под именем
-`@mcamdali/glassready`; под этим же именем его импортирует JavaScript API ниже. Публикация в реестре
-npm запланирована; до тех пор `npx @mcamdali/glassready` не находит пакет.
+`@mcamdali/glassready`; под этим же именем его импортирует JavaScript API ниже. Чтобы закрепить или
+проверить релиз, каждый [релиз на GitHub](https://github.com/muhittincamdali/glassready/releases) также содержит пакет в виде
+`glassready-<version>.tgz` вместе с файлом `SHA256SUMS`; `npm install --save-dev` принимает URL
+этого tarball вместо имени пакета.
 
 ## Использование
 

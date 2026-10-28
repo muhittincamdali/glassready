@@ -66,16 +66,16 @@ native-uikit-optout</a>, une app UIKit écrite pour les tests (<code>npm run dem
 brew install muhittincamdali/tap/glassready
 ```
 
-Ou avec npm depuis la
-[release GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3), ce qui demande
-[Node.js](https://nodejs.org/) 22.12 ou plus récent (`node --version` affiche la version) :
+Ou avec npm depuis le registre, ce qui demande [Node.js](https://nodejs.org/) 22.12 ou plus récent
+(`node --version` affiche la version) :
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-Le paquet n’est pas encore sur le registre npm ; sa publication sous le nom `@mcamdali/glassready`
-est prévue. Les deux commandes installent la même archive de la release.
+Pour l’exécuter sans l’installer, utilisez `npx @mcamdali/glassready`. Chaque [release GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3)
+contient aussi le même paquet sous forme d’archive avec un fichier `SHA256SUMS`, pour figer ou
+vérifier une release.
 
 **2. Ouvrez un terminal dans le dossier de votre app**, celui qui contient le `.xcodeproj`, `pubspec.yaml`
 ou `package.json` :
@@ -151,18 +151,18 @@ résultat info, 100 au maximum. Le score sert à classer les projets ; il ne no
 
 ## Installation
 
-Les commandes de la section Démarrage rapide installent la commande `glassready` depuis la release
-GitHub. Chaque [release GitHub](https://github.com/muhittincamdali/glassready/releases) contient le
-paquet sous la forme `glassready-<version>.tgz` avec un fichier `SHA256SUMS`. Pour figer une release
-dans un projet :
+Les commandes de la section Démarrage rapide installent la commande `glassready` depuis le registre
+npm. Pour l’ajouter à un projet :
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
 Ensuite, `npx glassready` exécute cette copie. Le paquet s’installe sous le nom
-`@mcamdali/glassready`, celui qu’importe aussi l’API JavaScript plus bas. La publication sur le
-registre npm est prévue ; d’ici là, `npx @mcamdali/glassready` ne trouve pas le paquet.
+`@mcamdali/glassready`, celui qu’importe aussi l’API JavaScript plus bas. Pour figer ou vérifier une
+release, chaque [release GitHub](https://github.com/muhittincamdali/glassready/releases) contient aussi le paquet sous la forme
+`glassready-<version>.tgz` avec un fichier `SHA256SUMS` ; `npm install --save-dev` accepte l’URL de
+cette archive à la place du nom du paquet.
 
 ## Utilisation
 

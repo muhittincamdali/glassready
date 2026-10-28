@@ -66,16 +66,16 @@ native-uikit-optout</a>, einer für die Tests geschriebenen UIKit-App (<code>npm
 brew install muhittincamdali/tap/glassready
 ```
 
-Oder mit npm aus dem
-[GitHub-Release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3); dafür brauchst
-du [Node.js](https://nodejs.org/) 22.12 oder neuer (`node --version` zeigt die Version an):
+Oder mit npm aus der Registry; dafür brauchst du [Node.js](https://nodejs.org/) 22.12 oder neuer
+(`node --version` zeigt die Version an):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-Das Paket ist noch nicht in der npm-Registry; die Veröffentlichung dort als `@mcamdali/glassready`
-ist geplant. Beide Befehle installieren dasselbe Release-Tarball.
+Ohne Installation läuft es mit `npx @mcamdali/glassready`. Jedes [GitHub-Release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) enthält
+dasselbe Paket außerdem als Tarball mit einer `SHA256SUMS`-Datei, um ein Release zu pinnen oder zu
+prüfen.
 
 **2. Öffne ein Terminal im Ordner deiner App**, in dem die `.xcodeproj`, `pubspec.yaml` oder
 `package.json` liegt:
@@ -151,17 +151,18 @@ warning, 2 pro info-Befund, höchstens 100. Der Wert sortiert Projekte; er bewer
 
 ## Installation
 
-Die Befehle unter Schnellstart installieren den Befehl `glassready` aus dem GitHub-Release. Jedes
-[GitHub-Release](https://github.com/muhittincamdali/glassready/releases) enthält das Paket als
-`glassready-<version>.tgz` mit einer `SHA256SUMS`-Datei. So pinnst du ein Release in einem Projekt:
+Die Befehle unter Schnellstart installieren den Befehl `glassready` aus der npm-Registry. So
+nimmst du ihn in ein Projekt auf:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
 Danach führt `npx glassready` diese Kopie aus. Das Paket wird unter dem Namen `@mcamdali/glassready`
-installiert, den auch die JavaScript-API weiter unten importiert. Die Veröffentlichung in der
-npm-Registry ist geplant; bis dahin findet `npx @mcamdali/glassready` das Paket nicht.
+installiert, den auch die JavaScript-API weiter unten importiert. Zum Pinnen oder Prüfen eines
+Releases enthält jedes [GitHub-Release](https://github.com/muhittincamdali/glassready/releases) das Paket außerdem als `glassready-<version>.tgz` mit
+einer `SHA256SUMS`-Datei; `npm install --save-dev` akzeptiert diese Tarball-URL anstelle des
+Paketnamens.
 
 ## Verwendung
 

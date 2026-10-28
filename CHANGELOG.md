@@ -7,6 +7,10 @@ All notable changes to glassready are listed here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The package is now on the npm registry as `@mcamdali/glassready`, and the README installs from it.
+
 ## [0.1.3] - 2026-10-28
 
 ### Security
