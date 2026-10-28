@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@9196f58b96864395911d2d092b128cd308d8cce4 status=reviewed -->
+<!-- i18n-source: README.md@5a33e2ed00b8a7f76f50cb3a1c066de8d9b966f5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -49,13 +49,13 @@ fixture</a> を実行して記録したものです。これはテスト用に�
 brew install muhittincamdali/tap/glassready
 ```
 
-または npm で [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) からインストールします。[Node.js](https://nodejs.org/) 22.12 以降が必要です（`node --version` で確認できます）：
+または npm レジストリから npm でインストールします。[Node.js](https://nodejs.org/) 22.12 以降が必要です（`node --version` で確認できます）：
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-このパッケージはまだ npm レジストリにありません。`@mcamdali/glassready` として公開する予定です。どちらのコマンドも同じ release の tarball をインストールします。
+インストールせずに実行するには `npx @mcamdali/glassready` を使います。各 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) には同じパッケージが tarball として `SHA256SUMS` ファイルと一緒に含まれており、release の固定や検証に使えます。
 
 **2. アプリのフォルダーでターミナルを開きます。** `.xcodeproj`、`pubspec.yaml`、または `package.json` があるフォルダーです。
 
@@ -115,13 +115,13 @@ Apple の [UIDesignRequiresCompatibility](https://developer.apple.com/documentat
 
 ## インストール
 
-「クイックスタート」のコマンドは、GitHub release から `glassready` コマンドをインストールします。各 [GitHub release](https://github.com/muhittincamdali/glassready/releases) には、パッケージが `glassready-<version>.tgz` として `SHA256SUMS` ファイルと一緒に含まれています。プロジェクトで release を固定するには：
+「クイックスタート」のコマンドは、npm レジストリから `glassready` コマンドをインストールします。プロジェクトに追加するには：
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
-その後は `npx glassready` がそのコピーを実行します。パッケージは `@mcamdali/glassready` という名前でインストールされ、後述の JavaScript API もこの名前で import します。npm レジストリへの公開は予定です。それまでは `npx @mcamdali/glassready` ではパッケージが見つかりません。
+その後は `npx glassready` がそのコピーを実行します。パッケージは `@mcamdali/glassready` という名前でインストールされ、後述の JavaScript API もこの名前で import します。release を固定または検証するには、各 [GitHub release](https://github.com/muhittincamdali/glassready/releases) にパッケージが `glassready-<version>.tgz` として `SHA256SUMS` ファイルと一緒に含まれています。`npm install --save-dev` はパッケージ名の代わりにこの tarball の URL を受け付けます。
 
 ## 使い方
 

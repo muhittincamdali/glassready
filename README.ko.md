@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@9196f58b96864395911d2d092b128cd308d8cce4 status=reviewed -->
+<!-- i18n-source: README.md@5a33e2ed00b8a7f76f50cb3a1c066de8d9b966f5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -53,13 +53,13 @@ fixture</a>를 실행해 녹화했습니다. 테스트용으로 작성한 UIKit 
 brew install muhittincamdali/tap/glassready
 ```
 
-또는 npm으로 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3)에서 설치합니다. [Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있습니다):
+또는 npm 레지스트리에서 npm으로 설치합니다. [Node.js](https://nodejs.org/) 22.12 이상이 필요합니다(`node --version`으로 확인할 수 있습니다):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-이 패키지는 아직 npm 레지스트리에 없습니다. `@mcamdali/glassready`로 게시할 예정입니다. 두 명령 모두 같은 release tarball을 설치합니다.
+설치하지 않고 실행하려면 `npx @mcamdali/glassready`를 사용합니다. 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3)에는 같은 패키지가 tarball로 `SHA256SUMS` 파일과 함께 들어 있어, release를 고정하거나 검증할 때 쓸 수 있습니다.
 
 **2. 앱 폴더에서 터미널을 엽니다.** `.xcodeproj`, `pubspec.yaml` 또는 `package.json`이 있는 폴더입니다.
 
@@ -124,13 +124,13 @@ Apple의
 
 ## 설치
 
-빠른 시작의 명령은 GitHub release에서 `glassready` 명령을 설치합니다. 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases)에는 패키지가 `glassready-<version>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있습니다. 프로젝트에서 release 하나를 고정하려면:
+빠른 시작의 명령은 npm 레지스트리에서 `glassready` 명령을 설치합니다. 프로젝트에 추가하려면:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
-그다음에는 `npx glassready`가 그 사본을 실행합니다. 패키지는 `@mcamdali/glassready`라는 이름으로 설치되며, 아래 JavaScript API도 이 이름으로 import합니다. npm 레지스트리 게시는 예정되어 있으며, 그 전까지 `npx @mcamdali/glassready`는 패키지를 찾지 못합니다.
+그다음에는 `npx glassready`가 그 사본을 실행합니다. 패키지는 `@mcamdali/glassready`라는 이름으로 설치되며, 아래 JavaScript API도 이 이름으로 import합니다. release를 고정하거나 검증하려면 각 [GitHub release](https://github.com/muhittincamdali/glassready/releases)에 패키지가 `glassready-<version>.tgz`로 `SHA256SUMS` 파일과 함께 들어 있습니다. `npm install --save-dev`는 패키지 이름 대신 이 tarball URL도 받습니다.
 
 ## 사용법
 

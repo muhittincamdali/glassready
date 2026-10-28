@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@9196f58b96864395911d2d092b128cd308d8cce4 status=reviewed -->
+<!-- i18n-source: README.md@5a33e2ed00b8a7f76f50cb3a1c066de8d9b966f5 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -66,16 +66,15 @@ native-uikit-optout</a>, um app UIKit escrito para os testes (<code>npm run demo
 brew install muhittincamdali/tap/glassready
 ```
 
-Ou com npm a partir da
-[release no GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3), o que exige
-o [Node.js](https://nodejs.org/) 22.12 ou superior (`node --version` mostra a versão):
+Ou com npm a partir do registro, o que exige o [Node.js](https://nodejs.org/) 22.12 ou superior
+(`node --version` mostra a versão):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm i -g @mcamdali/glassready
 ```
 
-O pacote ainda não está no registro do npm; a publicação lá como `@mcamdali/glassready` está
-planejada. Os dois comandos instalam o mesmo tarball da release.
+Para executar sem instalar, use `npx @mcamdali/glassready`. Cada [release no GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) também
+traz o mesmo pacote como tarball com um arquivo `SHA256SUMS`, para fixar ou verificar uma release.
 
 **2. Abra um terminal na pasta do seu app**, a que contém o `.xcodeproj`, o `pubspec.yaml` ou o
 `package.json`:
@@ -151,17 +150,17 @@ achado info, no máximo 100. A pontuação serve para ordenar projetos; ela não
 
 ## Instalação
 
-Os comandos de Início rápido instalam o comando `glassready` a partir da release no GitHub. Cada
-[release no GitHub](https://github.com/muhittincamdali/glassready/releases) traz o pacote como
-`glassready-<version>.tgz` com um arquivo `SHA256SUMS`. Para fixar uma release em um projeto:
+Os comandos de Início rápido instalam o comando `glassready` a partir do registro do npm. Para
+adicioná-lo a um projeto:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
+npm install --save-dev @mcamdali/glassready
 ```
 
 Depois, `npx glassready` executa essa cópia. O pacote é instalado com o nome `@mcamdali/glassready`,
-o mesmo que a API JavaScript mais abaixo importa. A publicação no registro do npm está planejada;
-até lá, `npx @mcamdali/glassready` não encontra o pacote.
+o mesmo que a API JavaScript mais abaixo importa. Para fixar ou verificar uma release, cada
+[release no GitHub](https://github.com/muhittincamdali/glassready/releases) também traz o pacote como `glassready-<version>.tgz` com um arquivo
+`SHA256SUMS`; `npm install --save-dev` aceita a URL desse tarball no lugar do nome do pacote.
 
 ## Uso
 
