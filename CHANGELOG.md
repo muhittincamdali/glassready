@@ -7,6 +7,22 @@ All notable changes to glassready are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-28
+
+### Security
+
+- A binary Info.plist can no longer make glassready decode one object many times. The cache of
+  strings, data and numbers was keyed by object reference, and any number of references may share
+  one offset: an array of 10,000 references to one 1 MB string decoded it 10,000 times and ran
+  Node out of memory. Objects are now cached by offset, and all strings and data in one plist may
+  decode at most as many bytes as the file has; past that the plist is not read and the report
+  says so.
+- Source files are read only inside the project folder. A source folder that is a link out of
+  the project (an `ios/` folder linked to another checkout) or a `..` path had its Swift,
+  Objective-C, JavaScript or Dart files read and matched by the rules, with their paths and lines
+  in the report. Such a folder is now skipped with a note ("ios is outside the project; its source
+  files were not read."); a folder linked to another folder inside the project is still read.
+
 ## [0.1.2] - 2026-10-28
 
 ### Fixed
@@ -106,7 +122,8 @@ inputs that hung the scan or ran it out of memory; they are fixed and each has a
 - Reports replace the bidirectional embedding, override and isolate controls (U+202A to U+202E,
   U+2066 to U+2069) as they already did C0 and C1 control characters.
 
-[Unreleased]: https://github.com/muhittincamdali/glassready/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/muhittincamdali/glassready/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/muhittincamdali/glassready/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/muhittincamdali/glassready/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/muhittincamdali/glassready/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/muhittincamdali/glassready/releases/tag/v0.1.0

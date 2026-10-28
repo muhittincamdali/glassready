@@ -1,6 +1,6 @@
 {
   "name": "@mcamdali/glassready",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Shows what Liquid Glass changes in a native iOS, Flutter or React Native/Expo app built with the iOS 27 SDK, which ignores the UIDesignRequiresCompatibility opt-out, and how to fix each place.",
   "keywords": [
     "liquid-glass",
