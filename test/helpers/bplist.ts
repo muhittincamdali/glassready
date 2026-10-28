@@ -66,3 +66,51 @@ export function sharedReferencePlist(depth: number, width: number): Uint8Array {
   objects.push({ true: true });
   return binaryPlist(objects);
 }
+
+/** A bplist00 file from raw object bytes and an offset table (4-byte offsets, 2-byte refs). */
+function rawPlist(body: Buffer, offsets: number[]): Uint8Array {
+  const magic = Buffer.from('bplist00', 'latin1');
+  const table = Buffer.alloc(offsets.length * OFFSET_SIZE);
+  offsets.forEach((offset, index) => {
+    table.writeUInt32BE(magic.length + offset, index * OFFSET_SIZE);
+  });
+  const trailer = Buffer.alloc(32);
+  trailer[6] = OFFSET_SIZE;
+  trailer[7] = REF_SIZE;
+  trailer.writeBigUInt64BE(BigInt(offsets.length), 8);
+  trailer.writeBigUInt64BE(0n, 16);
+  trailer.writeBigUInt64BE(BigInt(magic.length + body.length), 24);
+  return Uint8Array.from(Buffer.concat([magic, body, table, trailer]));
+}
+
+/** An array with `references` items, each its own object reference to one ASCII string of `length`. */
+export function sharedOffsetPlist(references: number, length: number): Uint8Array {
+  const array = Buffer.from([
+    ...lengthMarker(0xa, references),
+    ...Array.from({ length: references }, (_, index) => ref(index + 1)).flat(),
+  ]);
+  const string = Buffer.alloc(6 + length, 'x');
+  string[0] = 0x5f;
+  string[1] = 0x12; // a 4-byte integer length follows
+  string.writeUInt32BE(length, 2);
+  return rawPlist(Buffer.concat([array, string]), [
+    0,
+    ...Array.from({ length: references }, () => array.length),
+  ]);
+}
+
+/**
+ * An array of `run` references to objects at consecutive offsets of a run of 0x5E bytes: each byte
+ * starts an ASCII string of 14 bytes made of the bytes after it, so the strings overlap.
+ */
+export function overlappingStringsPlist(run: number): Uint8Array {
+  const array = Buffer.from([
+    ...lengthMarker(0xa, run),
+    ...Array.from({ length: run }, (_, index) => ref(index + 1)).flat(),
+  ]);
+  const strings = Buffer.alloc(run + 14, 0x5e);
+  return rawPlist(Buffer.concat([array, strings]), [
+    0,
+    ...Array.from({ length: run }, (_, index) => array.length + index),
+  ]);
+}
