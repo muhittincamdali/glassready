@@ -63,11 +63,11 @@ brew install muhittincamdali/tap/glassready
 ```
 
 Or with npm from the
-[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.2), which needs
+[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3), which needs
 [Node.js](https://nodejs.org/) 22.12 or later (`node --version` prints it):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
 ```
 
 The package is not on the npm registry yet; publishing it there as `@mcamdali/glassready` is
@@ -152,7 +152,7 @@ The commands under Quick start install the `glassready` command from the GitHub 
 `glassready-<version>.tgz` with a `SHA256SUMS` file. To pin a release in a project:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
 ```
 
 `npx glassready` then runs that copy. The package installs under the name `@mcamdali/glassready`,

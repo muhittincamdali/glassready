@@ -11,11 +11,11 @@ glassready
 ```
 
 Without Homebrew, npm installs the same package from the
-[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.2) (Node.js 22.12
+[GitHub release](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3) (Node.js 22.12
 or later):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
 ```
 
 Publishing to the npm registry as `@mcamdali/glassready` is planned.
