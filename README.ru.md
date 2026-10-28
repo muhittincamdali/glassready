@@ -1,4 +1,4 @@
-<!-- i18n-source: README.md@cc508d1f809458f745b5bab7c247f3a74e1abe82 status=reviewed -->
+<!-- i18n-source: README.md@9196f58b96864395911d2d092b128cd308d8cce4 status=reviewed -->
 <!-- brand:start -->
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg"><img src="https://raw.githubusercontent.com/muhittincamdali/glassready/main/.github/brand/banner-light.svg" alt="glassready: Shows what Liquid Glass changes in iOS, Flutter and React Native apps built with the iOS 27 SDK, and the fix for each."></picture></p>
@@ -67,11 +67,11 @@ brew install muhittincamdali/tap/glassready
 ```
 
 Или через npm из
-[релиза на GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.2); для этого
+[релиза на GitHub](https://github.com/muhittincamdali/glassready/releases/tag/v0.1.3); для этого
 нужен [Node.js](https://nodejs.org/) 22.12 или новее (`node --version` покажет версию):
 
 ```sh
-npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
+npm i -g https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
 ```
 
 В реестре npm пакета пока нет; публикация под именем `@mcamdali/glassready` запланирована. Обе
@@ -156,7 +156,7 @@ API Liquid Glass, которые приложение уже используе�
 `glassready-<version>.tgz` вместе с файлом `SHA256SUMS`. Чтобы закрепить релиз в проекте:
 
 ```sh
-npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.2/glassready-0.1.2.tgz
+npm install --save-dev https://github.com/muhittincamdali/glassready/releases/download/v0.1.3/glassready-0.1.3.tgz
 ```
 
 После этого `npx glassready` запускает эту копию. Пакет устанавливается под именем
