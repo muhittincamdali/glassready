@@ -1,3 +1,4 @@
+import { symlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
@@ -52,10 +53,13 @@ describe('readSources', () => {
   it('reads each file once, sorted, with its language', async () => {
     const root = tree({ 'lib/main.dart': 'void main() {}', 'lib/a/b.dart': '' });
     const dart = new Set(['dart'] as const);
-    const { files, notes } = await readSources([
-      { folder: join(root, 'lib'), languages: dart },
-      { folder: join(root, 'lib', 'a'), languages: dart },
-    ]);
+    const { files, notes } = await readSources(
+      [
+        { folder: join(root, 'lib'), languages: dart },
+        { folder: join(root, 'lib', 'a'), languages: dart },
+      ],
+      root,
+    );
     expect(notes).toEqual([]);
     expect(files.map((file) => [file.path.slice(root.length + 1), file.language])).toEqual([
       ['lib/a/b.dart', 'dart'],
@@ -105,6 +109,43 @@ describe('readSources', () => {
     expect(notes).toEqual([
       'Source files not read (after the first 0 MB of source): ios/F3.swift, ios/F4.swift, ios/F5.swift and 2 more.',
     ]);
+  });
+
+  it('does not read a source folder linked to a folder outside the project', async () => {
+    const outside = tree({ 'Secret.swift': 'let secret = 1' });
+    const root = tree({ 'App/Main.swift': 'let main = 1' });
+    symlinkSync(outside, join(root, 'ios'));
+    const { files, notes } = await readSources(
+      [
+        { folder: join(root, 'ios'), languages: swift },
+        { folder: join(root, 'App'), languages: swift },
+      ],
+      root,
+    );
+    expect(files.map((file) => file.path.slice(root.length + 1))).toEqual(['App/Main.swift']);
+    expect(notes).toEqual(['ios is outside the project; its source files were not read.']);
+  });
+
+  it('does not read a source folder given as a .. path out of the project', async () => {
+    const parent = tree({ 'other/Secret.swift': 'let secret = 1', 'app/Main.swift': '' });
+    const root = join(parent, 'app');
+    const { files, notes } = await readSources(
+      [{ folder: join(root, '..', 'other'), languages: swift }],
+      root,
+    );
+    expect(files).toEqual([]);
+    expect(notes).toEqual(['../other is outside the project; its source files were not read.']);
+  });
+
+  it('reads a source folder linked to a folder inside the project', async () => {
+    const root = tree({ 'native/ios/App.swift': '' });
+    symlinkSync(join(root, 'native', 'ios'), join(root, 'ios'));
+    const { files, notes } = await readSources(
+      [{ folder: join(root, 'ios'), languages: swift }],
+      root,
+    );
+    expect(files.map((file) => file.path.slice(root.length + 1))).toEqual(['ios/App.swift']);
+    expect(notes).toEqual([]);
   });
 
   it('gives line numbers by offset', () => {

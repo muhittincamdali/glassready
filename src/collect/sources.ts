@@ -1,9 +1,9 @@
 // The source files of an app that the rules read: Swift and Objective-C under the iOS folder,
 // JavaScript and TypeScript of a React Native or Expo app, Dart under a Flutter app's lib/. Each
 // file is kept as written and with its comments and string contents blanked out.
-import { readdir } from 'node:fs/promises';
+import { readdir, realpath } from 'node:fs/promises';
 import { extname, join, relative, sep } from 'node:path';
-import { megabytes, readProjectFile } from '../core/files.js';
+import { isInside, megabytes, readProjectFile } from '../core/files.js';
 import { lineIndex } from '../core/lines.js';
 import { blankCommentsAndStrings } from './blank.js';
 
@@ -136,14 +136,21 @@ interface ReadResult {
   overBudget: string[];
 }
 
-/** Reads `paths` in order, skipping files over the per-file limit and stopping at the total. */
-async function readWithin(paths: string[], limits: Readonly<SourceLimits>): Promise<ReadResult> {
+/**
+ * Reads `paths` in order, skipping files outside `root` or over the per-file limit and stopping at
+ * the total.
+ */
+async function readWithin(
+  paths: string[],
+  root: string,
+  limits: Readonly<SourceLimits>,
+): Promise<ReadResult> {
   const result: ReadResult = { files: [], tooLarge: [], overBudget: [] };
   let total = 0;
   for (let start = 0; start < paths.length; start += READ_BATCH) {
     const batch = paths.slice(start, start + READ_BATCH);
     const reads = await Promise.all(
-      batch.map((path) => readProjectFile(path, null, limits.fileBytes)),
+      batch.map((path) => readProjectFile(path, root, limits.fileBytes)),
     );
     reads.forEach((read, index) => {
       const path = batch[index] ?? '';
@@ -160,28 +167,62 @@ async function readWithin(paths: string[], limits: Readonly<SourceLimits>): Prom
   return result;
 }
 
+/** `path` relative to `base`, with forward slashes. */
+const shownPath = (path: string, base: string) => relative(base, path).split(sep).join('/');
+
 /**
- * Reads every source file under the given roots, each file once, sorted by path, within `limits`.
- * What the limits leave out is listed in `notes`, with paths relative to `base`.
+ * The source roots whose real path is inside the real `projectRoot`. A folder from the project may
+ * be a link (ios/ -> /somewhere/else) or a `..` path; its files are not the project's and are not
+ * read.
+ */
+async function rootsInside(
+  roots: readonly SourceRoot[],
+  projectRoot: string,
+  notes: string[],
+): Promise<SourceRoot[]> {
+  const realRoot = await realpath(projectRoot).catch(() => projectRoot);
+  const inside: SourceRoot[] = [];
+  for (const root of roots) {
+    const real = await realpath(root.folder).catch(() => null);
+    // A missing folder has no files to read.
+    if (real === null) continue;
+    if (isInside(real, realRoot)) {
+      inside.push(root);
+      continue;
+    }
+    const shown = shownPath(root.folder, projectRoot);
+    notes.push(`${shown} is outside the project; its source files were not read.`);
+  }
+  return inside;
+}
+
+/**
+ * Reads every source file under the given roots that is inside `projectRoot`, each file once,
+ * sorted by path, within `limits`. What is left out is listed in `notes`, with paths relative to
+ * `projectRoot`.
  */
 export async function readSources(
   roots: readonly SourceRoot[],
-  base?: string,
+  projectRoot: string,
   limits: Readonly<SourceLimits> = SOURCE_LIMITS,
 ): Promise<SourceSet> {
-  const shown = (paths: string[]) =>
-    base === undefined ? paths : paths.map((path) => relative(base, path).split(sep).join('/'));
+  const shown = (paths: string[]) => paths.map((path) => shownPath(path, projectRoot));
+  const notes: string[] = [];
+  const inside = await rootsInside(roots, projectRoot, notes);
   const lists = await Promise.all(
-    roots.map((root) => listSourceFiles(root.folder, root.languages)),
+    inside.map((root) => listSourceFiles(root.folder, root.languages)),
   );
   const paths = [...new Set(lists.flat())].sort();
-  const notes: string[] = [];
   if (paths.length > limits.files) {
     notes.push(
       `The project has ${paths.length} source files; glassready read the first ${limits.files} by path.`,
     );
   }
-  const { files, tooLarge, overBudget } = await readWithin(paths.slice(0, limits.files), limits);
+  const { files, tooLarge, overBudget } = await readWithin(
+    paths.slice(0, limits.files),
+    projectRoot,
+    limits,
+  );
   if (tooLarge.length > 0) {
     notes.push(skippedNote(shown(tooLarge), `larger than ${megabytes(limits.fileBytes)} each`));
   }
