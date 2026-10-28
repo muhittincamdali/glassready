@@ -1,9 +1,15 @@
 import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { MAX_BINARY_PLIST_VALUES } from '../../src/collect/plist-binary.js';
 import { excerpt, MAX_EXCERPT_LENGTH, MAX_PLIST_DEPTH } from '../../src/collect/plist-value.js';
 import { isDict, type PlistDict, PlistError, parsePlist } from '../../src/collect/plist.js';
-import { type BinaryObject, binaryPlist, sharedReferencePlist } from '../helpers/bplist.js';
+import {
+  type BinaryObject,
+  binaryPlist,
+  overlappingStringsPlist,
+  sharedOffsetPlist,
+  sharedReferencePlist,
+} from '../helpers/bplist.js';
 
 const data = (name: string) => readFileSync(new URL(`../data/${name}`, import.meta.url));
 
@@ -203,6 +209,32 @@ describe('parsePlist (binary)', () => {
     const { value } = parsePlist(bytes);
     if (!isDict(value)) throw new Error('not a dict');
     expect(value.k).toEqual(Array.from({ length: 1000 }, () => text));
+  });
+
+  it('decodes a large string once when many references share its offset', () => {
+    // 10,000 references, each its own entry in the offset table, all at one 1 MB string. Keyed by
+    // reference, the cache decoded the string 10,000 times (10 GB).
+    const references = 10_000;
+    const bytes = sharedOffsetPlist(references, 1_000_000);
+    const decode = vi.spyOn(TextDecoder.prototype, 'decode');
+    try {
+      const { value } = parsePlist(bytes);
+      expect(Array.isArray(value) && value.length).toBe(references);
+      const decoded = decode.mock.calls.reduce((sum, [input]) => sum + (input?.byteLength ?? 0), 0);
+      expect(decoded / bytes.length).toBeLessThanOrEqual(1);
+    } finally {
+      decode.mockRestore();
+    }
+  });
+
+  it('stops overlapping strings at the decoded-bytes budget', () => {
+    // Every byte of a run is a 14-byte string marker, and each offset names the next byte: the
+    // strings overlap and together decode 14 times the run.
+    const run = 20_000;
+    const bytes = overlappingStringsPlist(run);
+    expect(() => parsePlist(bytes)).toThrow(
+      new PlistError('Binary plist decodes to more bytes than the file holds.'),
+    );
   });
 
   it('keeps a __proto__ key as a key', () => {
